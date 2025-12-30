@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator - Anurag Karundia & Co</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; display: flex; justify-content: center; padding: 20px; min-height: 100vh; position: relative; }
+        .watermark-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><text fill='rgba(26, 115, 232, 0.12)' font-size='20' font-family='Arial' font-weight='bold' x='0' y='0' transform='translate(40,150) rotate(-35)'>ANURAG KARUNDIA & CO</text></svg>"); background-repeat: repeat; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; position: relative; z-index: 1; border: 1px solid #e0e0e0; }
+        .header { text-align: center; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; margin-bottom: 20px; }
+        .header h1 { color: #1a73e8; font-size: 19px; margin: 0; }
+        .regime-tag { background: #e3f2fd; color: #1a73e8; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 5px; display: inline-block; margin-top: 8px; }
+        label { font-weight: bold; display: block; margin-top: 15px; font-size: 13px; color: #555; }
+        input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; text-transform: uppercase; }
+        .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; }
+        #resultBox { margin-top: 20px; display: none; }
+        .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .tax-val { font-size: 32px; color: #d32f2f; font-weight: bold; }
+        #detailedReport { display: none; background: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #4caf50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        td { padding: 9px 0; border-bottom: 1px dashed #eee; }
+        .val { text-align: right; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="watermark-overlay"></div>
+<div class="card">
+    <div class="header">
+        <h1>Anurag Karundia & Company</h1>
+        <div class="regime-tag">FY 2025-26 | New Tax Regime</div>
+    </div>
+    <label>Client Name</label>
+    <input type="text" id="uName" placeholder="Full Name" style="text-transform: none;">
+    <label>Mobile Number</label>
+    <input type="text" id="uMob" maxlength="10" placeholder="Enter Mobile Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" style="text-transform: none;">
+    <label>Individual PAN Number</label>
+    <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN">
+    <label>Gross Total Income (GTI)</label>
+    <input type="number" id="uInc" placeholder="Enter Total Income" style="text-transform: none;">
+    <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
+    <div id="resultBox">
+        <div class="tax-card">
+            <p style="margin:0; font-size:14px;">Net Tax Payable:</p>
+            <div class="tax-val" id="resTax">₹0</div>
+            <p id="lockText" style="font-size:12px; color:#e67e22; font-weight:bold; margin-top:5px;">🔒 Computation Detail is Locked</p>
+        </div>
+        <button id="waButton" class="btn-wa" onclick="unlockAndSend()">If you want complete calculation detail,<br>please click on WhatsApp</button>
+        <div id="detailedReport">
+            <h3 style="margin:0 0 10px 0; color:#2e7d32; font-size:16px; border-bottom: 2px solid #4caf50;">Tax Computation Sheet</h3>
+            <table>
+                <tr><td>Gross Total Income (A)</td><td class="val" id="rowGti">₹0</td></tr>
+                <tr><td>Standard Deduction</td><td class="val">-₹75,000</td></tr>
+                <tr style="background:#f9f9f9;"><td>Net Taxable Income (B)</td><td class="val" id="rowNet">₹0</td></tr>
+                <tr><td>Tax on Slab Rates</td><td class="val" id="rowSlab">₹0</td></tr>
+                <tr id="rowReliefLine" style="color:blue;"><td id="reliefLabel">Relief</td><td class="val" id="rowRelief">₹0</td></tr>                
+                <tr><td>Health & Edu. Cess (4%)</td><td class="val" id="rowCess">₹0</td></tr>
+                <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax Payable</b></td><td class="val" id="rowFinal">₹0</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateTax() {
+        var n = document.getElementById('uName').value.trim();
+        var i = parseFloat(document.getElementById('uInc').value);
+        var p = document.getElementById('uPan').value.trim().toUpperCase();
+        var m = document.getElementById('uMob').value.trim();
+        
+        var mobPattern = /^[6-9]\d{9}$/;
+        var isRepeating = /^(.)\1+$/.test(m); 
+        var panPattern = /^[A-Z]{3}[P]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
+        
+        if(!n) { alert("Please Enter Client Name"); return; }
+        if(!mobPattern.test(m) || isRepeating) { alert("Enter Valid Mobile Number"); return; }
+        if(!panPattern.test(p)) { alert("Enter Valid PAN Number"); return; }
+        if(isNaN(i) || i <= 0) { alert("Please Enter Valid Income"); return; }
+
+        var stdDed = 75000;
+        var taxable = i - stdDed; if (taxable < 0) taxable = 0;
+        var slabTax = 0;
+
+        if (taxable > 2400000) slabTax = 300000 + (taxable - 2400000) * 0.30;
+        else if (taxable > 2000000) slabTax = 200000 + (taxable - 2000000) * 0.25;
+        else if (taxable > 1600000) slabTax = 120000 + (taxable - 1600000) * 0.20;
+        else if (taxable > 1200000) slabTax = 60000 + (taxable - 1200000) * 0.15;
+        else if (taxable > 800000) slabTax = 20000 + (taxable - 800000) * 0.10;
+        else if (taxable > 400000) slabTax = (taxable - 400000) * 0.05;
+
+        var relief = 0;
+        var rLabel = "Relief"; 
+        if (taxable <= 1200000) { relief = slabTax; rLabel = "Rebate u/s 87A"; }
+        else {
+            var extraIncome = taxable - 1200000;
+            if (slabTax > extraIncome) { relief = slabTax - extraIncome; rLabel = "Marginal Relief u/s 115BAC"; }
+        }
+        document.getElementById('reliefLabel').innerText = rLabel;
+
+        var taxBeforeCess = slabTax - relief;
+        var cess = taxBeforeCess * 0.04;
+        var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
+
+        document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
+        document.getElementById('rowGti').innerText = "₹" + i.toLocaleString('en-IN');
+        document.getElementById('rowNet').innerText = "₹" + taxable.toLocaleString('en-IN');
+        document.getElementById('rowSlab').innerText = "₹" + Math.round(slabTax).toLocaleString('en-IN');
+        document.getElementById('rowRelief').innerText = "-₹" + Math.round(relief).toLocaleString('en-IN');
+        document.getElementById('rowCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
+        document.getElementById('rowFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
+
+        document.getElementById('resultBox').style.display = "block";
+        document.getElementById('detailedReport').style.display = "none";
+        document.getElementById('waButton').style.display = "block";
+        document.getElementById('lockText').style.display = "block";
+    }
+
+    function unlockAndSend() {
+        var n = document.getElementById('uName').value;
+        var t = document.getElementById('resTax').innerText;
+        var m = document.getElementById('uMob').value.trim();
+        var p = document.getElementById('uPan').value.trim().toUpperCase();
+        
+        var msg = "TAX COMPUTATION%0A*Anurag Karundia & Company*%0A--------------------------%0A*Client:* " + n + "%0A*PAN:* " + p + "%0A*Mobile:* " + m + "%0A*Net Tax:* " + t;
+        
+        window.open("https://wa.me/919634100100?text=" + msg, '_blank');
+
+        var myCode = (m.slice(-3) + p.slice(-3)).toUpperCase();
+        setTimeout(function() {
+            var uInput = prompt("WhatsApp पर जानकारी भेज दी गई है।\n\nसिक्योरिटी कोड डालें (Mobile के आखिरी 3 + PAN के आखिरी 3):");
+            if (uInput !== null && uInput.trim().toUpperCase() === myCode) {
+                document.getElementById('waButton').style.display = "none";
+                document.getElementById('lockText').style.display = "none";
+                document.getElementById('detailedReport').style.display = "block";
+            } else if (uInput !== null) { alert("गलत कोड!"); }
+        }, 1000);
+    }
+</script>
+</body>
+</html>
