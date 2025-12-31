@@ -138,4 +138,19 @@
     }
 </script>
 </body>
+    <script>
+    // 1. राइट क्लिक को पूरी तरह बंद करने के लिए
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // 2. F12, Ctrl+U और Inspect Element जैसे शॉर्टकट रोकने के लिए
+    document.onkeydown = function(e) {
+        if (event.keyCode == 123 || 
+           (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
+           (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) || 
+           (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) || 
+           (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            return false;
+        }
+    };
+</script>
 </html>
