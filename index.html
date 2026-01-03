@@ -23,7 +23,6 @@ gtag('config', 'G-YH2229N6RG');
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; }
         
-        /* Revised Share Button - WhatsApp Style */
         .btn-share { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         
         #resultBox { margin-top: 20px; display: none; }
@@ -154,20 +153,19 @@ gtag('config', 'G-YH2229N6RG');
     function shareReport() {
         var n = document.getElementById('uName').value;
         var p = document.getElementById('uPan').value.toUpperCase();
-        var g = document.getElementById('rowGti').innerText;
-        var t = document.getElementById('rowFinal').innerText;
+        var g = document.getElementById('rowGti').innerText.replace('₹', '');
+        var t = document.getElementById('rowFinal').innerText.replace('₹', '');
 
         var shareText = "TAX COMPUTATION REPORT%0A" +
                         "Anurag Karundia & Company%0A" +
                         "---------------------------%0A" +
                         "Client: " + n + "%0A" +
                         "PAN: " + p + "%0A" +
-                        "Gross Income: " + g + "%0A" +
-                        "Final Net Tax: " + t + "%0A" +
+                        "Gross Income: Rs. " + g + "%0A" +
+                        "Final Net Tax: Rs. " + t + "%0A" +
                         "---------------------------%0A" +
                         "FY 2025-26 | New Regime";
 
-        // This method works universally on all mobile browsers
         window.open("https://wa.me/?text=" + shareText, '_blank');
     }
 </script>
