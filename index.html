@@ -10,7 +10,7 @@
         .header { text-align: center; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; margin-bottom: 20px; }
         .header h1 { color: #1a73e8; font-size: 19px; margin: 0; }
         label { font-weight: bold; display: block; margin-top: 15px; font-size: 13px; color: #555; }
-        input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
+        input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; text-transform: uppercase; }
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; text-align: center; line-height: 1.4; }
         .btn-report { width: 100%; padding: 15px; background: #d32f2f; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 16px; }
@@ -26,18 +26,18 @@
 <div class="card">
     <div class="header">
         <h1>Anurag Karundia & Company</h1>
-        <p style="font-size:11px; font-weight:bold; color:#1a73e8;">FY 2025-26 | New Tax Regime</p>
+        <p style="font-size:11px; font-weight:bold; color:#1a73e8; margin-top:5px;">FY 2025-26 | New Tax Regime</p>
     </div>
     
     <div id="inputArea">
         <label>Client Name</label>
-        <input type="text" id="uName" placeholder="Full Name">
+        <input type="text" id="uName" placeholder="Full Name" style="text-transform:none;">
         <label>Mobile Number</label>
-        <input type="text" id="uMob" maxlength="10" placeholder="Enter Mobile Number">
+        <input type="text" id="uMob" maxlength="10" placeholder="Enter Mobile Number" style="text-transform:none;">
         <label>Individual PAN Number</label>
-        <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN" style="text-transform: uppercase;">
+        <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN">
         <label>Gross Total Income (GTI)</label>
-        <input type="number" id="uInc" placeholder="Enter Total Income">
+        <input type="number" id="uInc" placeholder="Enter Total Income" style="text-transform:none;">
         <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
     </div>
 
@@ -52,33 +52,32 @@
 
         <div id="detailedReport">
             <h3 style="margin:0 0 10px 0; color:#2e7d32; font-size:16px; border-bottom: 2px solid #4caf50;">Tax Computation Sheet</h3>
-            <table id="myTable">
+            <table>
                 <tr><td>Gross Income (A)</td><td class="val" id="rowGti"></td></tr>
                 <tr><td>Std. Deduction</td><td class="val">-₹75,000</td></tr>
-                <tr><td>Taxable Income (B)</td><td class="val" id="rowNet"></td></tr>
+                <tr style="background:#f9f9f9;"><td>Net Taxable Income (B)</td><td class="val" id="rowNet"></td></tr>
                 <tr><td>Tax on Slab</td><td class="val" id="rowSlab"></td></tr>
                 <tr style="color:blue;"><td>Relief/Rebate</td><td class="val" id="rowRelief"></td></tr>
                 <tr><td>Cess (4%)</td><td class="val" id="rowCess"></td></tr>
                 <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax</b></td><td class="val" id="rowFinal"></td></tr>
             </table>
-            <button class="btn-report" onclick="viewReport()">📥 Get Tax Report (PDF View)</button>
+            <button class="btn-report" onclick="window.print()">📥 Print / Save as PDF</button>
         </div>
     </div>
 </div>
 
 <script>
-var reportData = "";
-
 function calculateTax() {
     var n = document.getElementById('uName').value;
     var i = parseFloat(document.getElementById('uInc').value);
-    var p = document.getElementById('uPan').value.toUpperCase();
+    var p = document.getElementById('uPan').value;
     var m = document.getElementById('uMob').value;
 
-    if(!n || isNaN(i) || !p || !m) { alert("Please fill all details correctly."); return; }
+    if(!n || isNaN(i) || !p || !m) { alert("कृपया सभी जानकारी सही से भरें।"); return; }
 
     var taxable = Math.max(0, i - 75000);
     var slabTax = 0;
+    
     if (taxable > 2400000) slabTax = 300000 + (taxable - 2400000) * 0.30;
     else if (taxable > 2000000) slabTax = 200000 + (taxable - 2000000) * 0.25;
     else if (taxable > 1600000) slabTax = 120000 + (taxable - 1600000) * 0.20;
@@ -87,18 +86,17 @@ function calculateTax() {
     else if (taxable > 400000) slabTax = (taxable - 400000) * 0.05;
 
     var relief = (taxable <= 1200000) ? slabTax : 0;
-    var finalTax = Math.round((slabTax - relief) * 1.04 / 10) * 10;
+    var taxBeforeCess = Math.max(0, slabTax - relief);
+    var cess = taxBeforeCess * 0.04;
+    var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
 
     document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
     document.getElementById('rowGti').innerText = "₹" + i.toLocaleString('en-IN');
     document.getElementById('rowNet').innerText = "₹" + taxable.toLocaleString('en-IN');
     document.getElementById('rowSlab').innerText = "₹" + Math.round(slabTax).toLocaleString('en-IN');
     document.getElementById('rowRelief').innerText = "-₹" + Math.round(relief).toLocaleString('en-IN');
-    document.getElementById('rowCess').innerText = "₹" + Math.round((slabTax-relief)*0.04).toLocaleString('en-IN');
+    document.getElementById('rowCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
     document.getElementById('rowFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
-
-    // Store data for report
-    reportData = TAX REPORT - ${n}\nPAN: ${p}\nIncome: ₹${i.toLocaleString('en-IN')}\nNet Tax: ₹${finalTax.toLocaleString('en-IN')}\n\nAnurag Karundia & Company;
 
     document.getElementById('resultBox').style.display = "block";
     document.getElementById('detailedReport').style.display = "none";
@@ -108,37 +106,18 @@ function unlockAndSend() {
     var n = document.getElementById('uName').value;
     var m = document.getElementById('uMob').value;
     var t = document.getElementById('resTax').innerText;
-    var msg = TAX REPORT REQUEST\nClient: ${n}\nTax: ${t};
-    window.open("https://wa.me/919634100100?text=" + encodeURIComponent(msg), '_blank');
+    var msg = "TAX REPORT REQUEST%0AClient: " + n + "%0ATax: " + t;
+    
+    window.open("https://wa.me/919634100100?text=" + msg, '_blank');
 
     setTimeout(function() {
-        var input = prompt("Enter last 3 digits of your Mobile Number:");
+        var input = prompt("वेरिफिकेशन: मोबाइल नंबर के आखिरी 3 अंक डालें:");
         if(input === m.slice(-3)) {
             document.getElementById('waButton').style.display = "none";
             document.getElementById('lockText').style.display = "none";
             document.getElementById('detailedReport').style.display = "block";
         }
     }, 1000);
-}
-
-function viewReport() {
-    // This method will NOT crash because it uses zero libraries
-    var n = document.getElementById('uName').value;
-    var win = window.open("", "_blank");
-    win.document.write(`
-        <html><head><title>Tax Report</title></head>
-        <body style="font-family:sans-serif; padding:20px; line-height:1.6;">
-            <h2 style="color:#1a73e8;">Anurag Karundia & Company</h2>
-            <hr>
-            <p><b>Client Name:</b> ${n}</p>
-            <p><b>PAN:</b> ${document.getElementById('uPan').value.toUpperCase()}</p>
-            <p><b>Total Income:</b> ${document.getElementById('rowGti').innerText}</p>
-            <p><b>Final Net Tax:</b> ${document.getElementById('rowFinal').innerText}</p>
-            <br>
-            <p style="color:red;">Note: You can take a screenshot or print this page as PDF.</p>
-            <button onclick="window.print()" style="padding:10px; background:blue; color:white; border:none; border-radius:5px;">Print / Save as PDF</button>
-        </body></html>
-    `);
 }
 </script>
 </body>
