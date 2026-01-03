@@ -22,9 +22,7 @@ gtag('config', 'G-YH2229N6RG');
         input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; text-transform: uppercase; }
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; }
-        
-        .btn-share { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        
+        .btn-share { width: 100%; padding: 15px; background: #075E54; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         #resultBox { margin-top: 20px; display: none; }
         .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
         .tax-val { font-size: 32px; color: #d32f2f; font-weight: bold; }
@@ -79,27 +77,22 @@ gtag('config', 'G-YH2229N6RG');
         var i = parseFloat(document.getElementById('uInc').value);
         var p = document.getElementById('uPan').value.trim().toUpperCase();
         var m = document.getElementById('uMob').value.trim();
-        
         var mobPattern = /^[6-9]\d{9}$/;
         var isRepeating = /^(.)\1+$/.test(m); 
         var panPattern = /^[A-Z]{3}[P]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
-        
         if(!n) { alert("Please Enter Client Name"); return; }
         if(!mobPattern.test(m) || isRepeating) { alert("Enter Valid Mobile Number"); return; }
         if(!panPattern.test(p)) { alert("Enter Valid PAN Number"); return; }
         if(isNaN(i) || i <= 0) { alert("Please Enter Valid Income"); return; }
-
         var stdDed = 75000;
         var taxable = i - stdDed; if (taxable < 0) taxable = 0;
         var slabTax = 0;
-
         if (taxable > 2400000) slabTax = 300000 + (taxable - 2400000) * 0.30;
         else if (taxable > 2000000) slabTax = 200000 + (taxable - 2000000) * 0.25;
         else if (taxable > 1600000) slabTax = 120000 + (taxable - 1600000) * 0.20;
         else if (taxable > 1200000) slabTax = 60000 + (taxable - 1200000) * 0.15;
         else if (taxable > 800000) slabTax = 20000 + (taxable - 800000) * 0.10;
         else if (taxable > 400000) slabTax = (taxable - 400000) * 0.05;
-
         var relief = 0;
         var rLabel = "Relief"; 
         if (taxable <= 1200000) { relief = slabTax; rLabel = "Rebate u/s 87A"; }
@@ -108,11 +101,9 @@ gtag('config', 'G-YH2229N6RG');
             if (slabTax > extraIncome) { relief = slabTax - extraIncome; rLabel = "Marginal Relief u/s 115BAC"; }
         }
         document.getElementById('reliefLabel').innerText = rLabel;
-
         var taxBeforeCess = slabTax - relief;
         var cess = taxBeforeCess * 0.04;
         var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
-
         document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
         document.getElementById('rowGti').innerText = "₹" + i.toLocaleString('en-IN');
         document.getElementById('rowNet').innerText = "₹" + taxable.toLocaleString('en-IN');
@@ -120,7 +111,6 @@ gtag('config', 'G-YH2229N6RG');
         document.getElementById('rowRelief').innerText = "-₹" + Math.round(relief).toLocaleString('en-IN');
         document.getElementById('rowCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
         document.getElementById('rowFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
-
         document.getElementById('resultBox').style.display = "block";
         document.getElementById('detailedReport').style.display = "none";
         document.getElementById('waButton').style.display = "block";
@@ -132,11 +122,8 @@ gtag('config', 'G-YH2229N6RG');
         var t = document.getElementById('resTax').innerText;
         var m = document.getElementById('uMob').value.trim();
         var p = document.getElementById('uPan').value.trim().toUpperCase();
-        
         var msg = "TAX COMPUTATION%0A*Anurag Karundia & Company*%0A--------------------------%0A*Client:* " + n + "%0A*PAN:* " + p + "%0A*Mobile:* " + m + "%0A*Net Tax:* " + t;
-        
         window.open("https://wa.me/919634100100?text=" + msg, '_blank');
-
         var myCode = m.slice(-3);
         setTimeout(function() {
             var uInput = prompt("Security Verification:\n\nPlease enter the LAST 3 digits of your Mobile Number:");
@@ -144,42 +131,30 @@ gtag('config', 'G-YH2229N6RG');
                 document.getElementById('waButton').style.display = "none";
                 document.getElementById('lockText').style.display = "none";
                 document.getElementById('detailedReport').style.display = "block";
-            } else if (uInput !== null) { 
-                alert("Incorrect Code! Please try again."); 
-            }
+            } else if (uInput !== null) { alert("Incorrect Code!"); }
         }, 1000);
     }
 
     function shareReport() {
         var n = document.getElementById('uName').value;
         var p = document.getElementById('uPan').value.toUpperCase();
-        var g = document.getElementById('rowGti').innerText.replace('₹', '');
-        var t = document.getElementById('rowFinal').innerText.replace('₹', '');
-
-        var shareText = "TAX COMPUTATION REPORT%0A" +
-                        "Anurag Karundia & Company%0A" +
-                        "---------------------------%0A" +
-                        "Client: " + n + "%0A" +
-                        "PAN: " + p + "%0A" +
-                        "Gross Income: Rs. " + g + "%0A" +
-                        "Final Net Tax: Rs. " + t + "%0A" +
-                        "---------------------------%0A" +
-                        "FY 2025-26 | New Regime";
-
-        window.open("https://wa.me/?text=" + shareText, '_blank');
+        var g = document.getElementById('rowGti').innerText;
+        var t = document.getElementById('rowFinal').innerText;
+        var content = "TAX COMPUTATION REPORT\n" +
+                      "Anurag Karundia & Company\n" +
+                      "---------------------------\n" +
+                      "Client: " + n + "\n" +
+                      "PAN: " + p + "\n" +
+                      "Gross Income: " + g + "\n" +
+                      "Final Net Tax: " + t + "\n" +
+                      "---------------------------\n" +
+                      "FY 2025-26 | New Regime";
+        window.open("https://wa.me/?text=" + encodeURIComponent(content), '_blank');
     }
-</script>
 
-<script>
     document.addEventListener('contextmenu', event => event.preventDefault());
     document.onkeydown = function(e) {
-        if (event.keyCode == 123 || 
-           (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
-           (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) || 
-           (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) || 
-           (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
-            return false;
-        }
+        if (event.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0))) return false;
     };
 </script>
 </body>
