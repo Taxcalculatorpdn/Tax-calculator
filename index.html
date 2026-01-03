@@ -126,14 +126,17 @@
         
         window.open("https://wa.me/919634100100?text=" + msg, '_blank');
 
-        var myCode = (m.slice(-3);
-       setTimeout(function() {
-            var uInput = prompt("Security Verification:\n\nPlease enter the LAST 3 digit of your mobile number:");
-            if (uInput !== null && uInput.trim().toUpperCase() === myCode) {
+        var myCode = m.slice(-3);
+        setTimeout(function() {
+            var uInput = prompt("Security Verification:\n\nPlease enter the LAST 3 digits of your Mobile Number:");
+            
+            if (uInput !== null && uInput.trim() === myCode) {
                 document.getElementById('waButton').style.display = "none";
                 document.getElementById('lockText').style.display = "none";
                 document.getElementById('detailedReport').style.display = "block";
-            } else if (uInput !== null) { alert("Incorrect Code! Please try again."); }
+            } else if (uInput !== null) { 
+                alert("Incorrect Code! Please try again."); 
+            }
         }, 1000);
     }
 </script>
