@@ -3,122 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YH2229N6RG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YH2229N6RG');
+</script>
     <title>Tax Calculator - Anurag Karundia & Co</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; display: flex; justify-content: center; padding: 20px; min-height: 100vh; }
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; border: 1px solid #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; display: flex; justify-content: center; padding: 20px; min-height: 100vh; position: relative; }
+        .watermark-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><text fill='rgba(26, 115, 232, 0.12)' font-size='20' font-family='Arial' font-weight='bold' x='0' y='0' transform='translate(40,150) rotate(-35)'>ANURAG KARUNDIA & CO</text></svg>"); background-repeat: repeat; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; position: relative; z-index: 1; border: 1px solid #e0e0e0; }
         .header { text-align: center; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; margin-bottom: 20px; }
         .header h1 { color: #1a73e8; font-size: 19px; margin: 0; }
+        .regime-tag { background: #e3f2fd; color: #1a73e8; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 5px; display: inline-block; margin-top: 8px; }
         label { font-weight: bold; display: block; margin-top: 15px; font-size: 13px; color: #555; }
         input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; text-transform: uppercase; }
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; text-align: center; line-height: 1.4; }
-        .btn-report { width: 100%; padding: 15px; background: #d32f2f; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 16px; }
+        .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; }
         #resultBox { margin-top: 20px; display: none; }
-        #detailedReport { display: none; background: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #4caf50; margin-top: 10px; }
+        .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .tax-val { font-size: 32px; color: #d32f2f; font-weight: bold; }
+        #detailedReport { display: none; background: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #4caf50; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
         td { padding: 9px 0; border-bottom: 1px dashed #eee; }
         .val { text-align: right; font-weight: bold; }
     </style>
 </head>
 <body>
-
+<div class="watermark-overlay"></div>
 <div class="card">
     <div class="header">
         <h1>Anurag Karundia & Company</h1>
-        <p style="font-size:11px; font-weight:bold; color:#1a73e8; margin-top:5px;">FY 2025-26 | New Tax Regime</p>
+        <div class="regime-tag">FY 2025-26 | New Tax Regime</div>
     </div>
-    
-    <div id="inputArea">
-        <label>Client Name</label>
-        <input type="text" id="uName" placeholder="Full Name" style="text-transform:none;">
-        <label>Mobile Number</label>
-        <input type="text" id="uMob" maxlength="10" placeholder="Enter Mobile Number" style="text-transform:none;">
-        <label>Individual PAN Number</label>
-        <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN">
-        <label>Gross Total Income (GTI)</label>
-        <input type="number" id="uInc" placeholder="Enter Total Income" style="text-transform:none;">
-        <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
-    </div>
-
+    <label>Client Name</label>
+    <input type="text" id="uName" placeholder="Full Name" style="text-transform: none;">
+    <label>Mobile Number</label>
+    <input type="text" id="uMob" maxlength="10" placeholder="Enter Mobile Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" style="text-transform: none;">
+    <label>Individual PAN Number</label>
+    <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN">
+    <label>Gross Total Income (GTI)</label>
+    <input type="number" id="uInc" placeholder="Enter Total Income" style="text-transform: none;">
+    <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
     <div id="resultBox">
-        <div style="background:#fffde7; padding:15px; border-radius:12px; text-align:center; border:1px solid #fbc02d;">
+        <div class="tax-card">
             <p style="margin:0; font-size:14px;">Net Tax Payable:</p>
-            <h2 id="resTax" style="color:#d32f2f; margin:5px 0; font-size:30px;">₹0</h2>
+            <div class="tax-val" id="resTax">₹0</div>
             <p id="lockText" style="font-size:12px; color:#e67e22; font-weight:bold; margin-top:5px;">🔒 Computation Detail is Locked</p>
         </div>
-        
-        <button id="waButton" class="btn-wa" onclick="unlockAndSend()">Click to WhatsApp &<br>Unlock Detailed Report</button>
-
+        <button id="waButton" class="btn-wa" onclick="unlockAndSend()">If you want complete calculation detail,<br>please click on WhatsApp</button>
         <div id="detailedReport">
             <h3 style="margin:0 0 10px 0; color:#2e7d32; font-size:16px; border-bottom: 2px solid #4caf50;">Tax Computation Sheet</h3>
             <table>
-                <tr><td>Gross Income (A)</td><td class="val" id="rowGti"></td></tr>
-                <tr><td>Std. Deduction</td><td class="val">-₹75,000</td></tr>
-                <tr style="background:#f9f9f9;"><td>Net Taxable Income (B)</td><td class="val" id="rowNet"></td></tr>
-                <tr><td>Tax on Slab</td><td class="val" id="rowSlab"></td></tr>
-                <tr style="color:blue;"><td>Relief/Rebate</td><td class="val" id="rowRelief"></td></tr>
-                <tr><td>Cess (4%)</td><td class="val" id="rowCess"></td></tr>
-                <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax</b></td><td class="val" id="rowFinal"></td></tr>
+                <tr><td>Gross Total Income (A)</td><td class="val" id="rowGti">₹0</td></tr>
+                <tr><td>Standard Deduction</td><td class="val">-₹75,000</td></tr>
+                <tr style="background:#f9f9f9;"><td>Net Taxable Income (B)</td><td class="val" id="rowNet">₹0</td></tr>
+                <tr><td>Tax on Slab Rates</td><td class="val" id="rowSlab">₹0</td></tr>
+                <tr id="rowReliefLine" style="color:blue;"><td id="reliefLabel">Relief</td><td class="val" id="rowRelief">₹0</td></tr>                
+                <tr><td>Health & Edu. Cess (4%)</td><td class="val" id="rowCess">₹0</td></tr>
+                <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax Payable</b></td><td class="val" id="rowFinal">₹0</td></tr>
             </table>
-            <button class="btn-report" onclick="window.print()">📥 Print / Save as PDF</button>
         </div>
     </div>
 </div>
 
 <script>
-function calculateTax() {
-    var n = document.getElementById('uName').value;
-    var i = parseFloat(document.getElementById('uInc').value);
-    var p = document.getElementById('uPan').value;
-    var m = document.getElementById('uMob').value;
+    function calculateTax() {
+        var n = document.getElementById('uName').value.trim();
+        var i = parseFloat(document.getElementById('uInc').value);
+        var p = document.getElementById('uPan').value.trim().toUpperCase();
+        var m = document.getElementById('uMob').value.trim();
+        
+        var mobPattern = /^[6-9]\d{9}$/;
+        var isRepeating = /^(.)\1+$/.test(m); 
+        var panPattern = /^[A-Z]{3}[P]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
+        
+        if(!n) { alert("Please Enter Client Name"); return; }
+        if(!mobPattern.test(m) || isRepeating) { alert("Enter Valid Mobile Number"); return; }
+        if(!panPattern.test(p)) { alert("Enter Valid PAN Number"); return; }
+        if(isNaN(i) || i <= 0) { alert("Please Enter Valid Income"); return; }
 
-    if(!n || isNaN(i) || !p || !m) { alert("कृपया सभी जानकारी सही से भरें।"); return; }
+        var stdDed = 75000;
+        var taxable = i - stdDed; if (taxable < 0) taxable = 0;
+        var slabTax = 0;
 
-    var taxable = Math.max(0, i - 75000);
-    var slabTax = 0;
-    
-    if (taxable > 2400000) slabTax = 300000 + (taxable - 2400000) * 0.30;
-    else if (taxable > 2000000) slabTax = 200000 + (taxable - 2000000) * 0.25;
-    else if (taxable > 1600000) slabTax = 120000 + (taxable - 1600000) * 0.20;
-    else if (taxable > 1200000) slabTax = 60000 + (taxable - 1200000) * 0.15;
-    else if (taxable > 800000) slabTax = 20000 + (taxable - 800000) * 0.10;
-    else if (taxable > 400000) slabTax = (taxable - 400000) * 0.05;
+        if (taxable > 2400000) slabTax = 300000 + (taxable - 2400000) * 0.30;
+        else if (taxable > 2000000) slabTax = 200000 + (taxable - 2000000) * 0.25;
+        else if (taxable > 1600000) slabTax = 120000 + (taxable - 1600000) * 0.20;
+        else if (taxable > 1200000) slabTax = 60000 + (taxable - 1200000) * 0.15;
+        else if (taxable > 800000) slabTax = 20000 + (taxable - 800000) * 0.10;
+        else if (taxable > 400000) slabTax = (taxable - 400000) * 0.05;
 
-    var relief = (taxable <= 1200000) ? slabTax : 0;
-    var taxBeforeCess = Math.max(0, slabTax - relief);
-    var cess = taxBeforeCess * 0.04;
-    var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
-
-    document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
-    document.getElementById('rowGti').innerText = "₹" + i.toLocaleString('en-IN');
-    document.getElementById('rowNet').innerText = "₹" + taxable.toLocaleString('en-IN');
-    document.getElementById('rowSlab').innerText = "₹" + Math.round(slabTax).toLocaleString('en-IN');
-    document.getElementById('rowRelief').innerText = "-₹" + Math.round(relief).toLocaleString('en-IN');
-    document.getElementById('rowCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
-    document.getElementById('rowFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
-
-    document.getElementById('resultBox').style.display = "block";
-    document.getElementById('detailedReport').style.display = "none";
-}
-
-function unlockAndSend() {
-    var n = document.getElementById('uName').value;
-    var m = document.getElementById('uMob').value;
-    var t = document.getElementById('resTax').innerText;
-    var msg = "TAX REPORT REQUEST%0AClient: " + n + "%0ATax: " + t;
-    
-    window.open("https://wa.me/919634100100?text=" + msg, '_blank');
-
-    setTimeout(function() {
-        var input = prompt("वेरिफिकेशन: मोबाइल नंबर के आखिरी 3 अंक डालें:");
-        if(input === m.slice(-3)) {
-            document.getElementById('waButton').style.display = "none";
-            document.getElementById('lockText').style.display = "none";
-            document.getElementById('detailedReport').style.display = "block";
+        var relief = 0;
+        var rLabel = "Relief"; 
+        if (taxable <= 1200000) { relief = slabTax; rLabel = "Rebate u/s 87A"; }
+        else {
+            var extraIncome = taxable - 1200000;
+            if (slabTax > extraIncome) { relief = slabTax - extraIncome; rLabel = "Marginal Relief u/s 115BAC"; }
         }
-    }, 1000);
-}
+        document.getElementById('reliefLabel').innerText = rLabel;
+
+        var taxBeforeCess = slabTax - relief;
+        var cess = taxBeforeCess * 0.04;
+        var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
+
+        document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
+        document.getElementById('rowGti').innerText = "₹" + i.toLocaleString('en-IN');
+        document.getElementById('rowNet').innerText = "₹" + taxable.toLocaleString('en-IN');
+        document.getElementById('rowSlab').innerText = "₹" + Math.round(slabTax).toLocaleString('en-IN');
+        document.getElementById('rowRelief').innerText = "-₹" + Math.round(relief).toLocaleString('en-IN');
+        document.getElementById('rowCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
+        document.getElementById('rowFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
+
+        document.getElementById('resultBox').style.display = "block";
+        document.getElementById('detailedReport').style.display = "none";
+        document.getElementById('waButton').style.display = "block";
+        document.getElementById('lockText').style.display = "block";
+    }
+
+    function unlockAndSend() {
+        var n = document.getElementById('uName').value;
+        var t = document.getElementById('resTax').innerText;
+        var m = document.getElementById('uMob').value.trim();
+        var p = document.getElementById('uPan').value.trim().toUpperCase();
+        
+        var msg = "TAX COMPUTATION%0A*Anurag Karundia & Company*%0A--------------------------%0A*Client:* " + n + "%0A*PAN:* " + p + "%0A*Mobile:* " + m + "%0A*Net Tax:* " + t;
+        
+        window.open("https://wa.me/919634100100?text=" + msg, '_blank');
+
+        var myCode = m.slice(-3);
+        setTimeout(function() {
+            var uInput = prompt("Security Verification:\n\nPlease enter the LAST 3 digits of your Mobile Number:");
+            if (uInput !== null && uInput.trim() === myCode) {
+                document.getElementById('waButton').style.display = "none";
+                document.getElementById('lockText').style.display = "none";
+                document.getElementById('detailedReport').style.display = "block";
+            } else if (uInput !== null) { 
+                alert("Incorrect Code! Please try again."); 
+            }
+        }, 1000);
+    }
+</script>
+
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if (event.keyCode == 123 || 
+           (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
+           (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) || 
+           (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) || 
+           (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            return false;
+        }
+    };
 </script>
 </body>
 </html>
