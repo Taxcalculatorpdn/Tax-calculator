@@ -126,14 +126,14 @@
         
         window.open("https://wa.me/919634100100?text=" + msg, '_blank');
 
-        var myCode = (m.slice(-3) + p.slice(-3)).toUpperCase();
+        var myCode = (m.slice(-3);
        setTimeout(function() {
-            var uInput = prompt("WhatsApp पर जानकारी भेज दी गई है।\n\nसिक्योरिटी कोड डालें (Mobile के आखिरी 3 + PAN के आखिरी 3):");
+            var uInput = prompt("Security Verification:\n\nPlease enter the LAST 3 digit of your mobile number:");
             if (uInput !== null && uInput.trim().toUpperCase() === myCode) {
                 document.getElementById('waButton').style.display = "none";
                 document.getElementById('lockText').style.display = "none";
                 document.getElementById('detailedReport').style.display = "block";
-            } else if (uInput !== null) { alert("गलत कोड!"); }
+            } else if (uInput !== null) { alert("Incorrect Code! Please try again."); }
         }, 1000);
     }
 </script>
