@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -129,7 +129,6 @@
         var myCode = m.slice(-3);
         setTimeout(function() {
             var uInput = prompt("Security Verification:\n\nPlease enter the LAST 3 digits of your Mobile Number:");
-            
             if (uInput !== null && uInput.trim() === myCode) {
                 document.getElementById('waButton').style.display = "none";
                 document.getElementById('lockText').style.display = "none";
@@ -140,12 +139,9 @@
         }, 1000);
     }
 </script>
-</body>
-    <script>
-    // 1. राइट क्लिक को पूरी तरह बंद करने के लिए
-    document.addEventListener('contextmenu', event => event.preventDefault());
 
-    // 2. F12, Ctrl+U और Inspect Element जैसे शॉर्टकट रोकने के लिए
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
     document.onkeydown = function(e) {
         if (event.keyCode == 123 || 
            (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
@@ -156,4 +152,5 @@
         }
     };
 </script>
+</body>
 </html>
