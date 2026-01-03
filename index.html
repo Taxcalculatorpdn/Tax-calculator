@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YH2229N6RG"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -22,6 +23,7 @@ gtag('config', 'G-YH2229N6RG');
         input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; text-transform: uppercase; }
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; }
+        .btn-pdf { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         #resultBox { margin-top: 20px; display: none; }
         .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
         .tax-val { font-size: 32px; color: #d32f2f; font-weight: bold; }
@@ -54,6 +56,7 @@ gtag('config', 'G-YH2229N6RG');
             <p id="lockText" style="font-size:12px; color:#e67e22; font-weight:bold; margin-top:5px;">🔒 Computation Detail is Locked</p>
         </div>
         <button id="waButton" class="btn-wa" onclick="unlockAndSend()">If you want complete calculation detail,<br>please click on WhatsApp</button>
+        
         <div id="detailedReport">
             <h3 style="margin:0 0 10px 0; color:#2e7d32; font-size:16px; border-bottom: 2px solid #4caf50;">Tax Computation Sheet</h3>
             <table>
@@ -65,6 +68,7 @@ gtag('config', 'G-YH2229N6RG');
                 <tr><td>Health & Edu. Cess (4%)</td><td class="val" id="rowCess">₹0</td></tr>
                 <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax Payable</b></td><td class="val" id="rowFinal">₹0</td></tr>
             </table>
+            <button class="btn-pdf" onclick="downloadPDF()">📥 Download PDF Report</button>
         </div>
     </div>
 </div>
@@ -144,6 +148,63 @@ gtag('config', 'G-YH2229N6RG');
                 alert("Incorrect Code! Please try again."); 
             }
         }, 1000);
+    }
+
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        var name = document.getElementById('uName').value;
+        var pan = document.getElementById('uPan').value;
+        var mobile = document.getElementById('uMob').value;
+        var gti = document.getElementById('rowGti').innerText;
+        var net = document.getElementById('rowNet').innerText;
+        var slab = document.getElementById('rowSlab').innerText;
+        var relief = document.getElementById('rowRelief').innerText;
+        var cess = document.getElementById('rowCess').innerText;
+        var final = document.getElementById('rowFinal').innerText;
+
+        doc.setFontSize(18);
+        doc.setTextColor(26, 115, 232);
+        doc.text("Anurag Karundia & Company", 20, 20);
+        
+        doc.setFontSize(12);
+        doc.setTextColor(100);
+        doc.text("Tax Computation Report (FY 2025-26)", 20, 28);
+        doc.line(20, 32, 190, 32);
+
+        doc.setTextColor(0);
+        doc.text("Client Name: " + name, 20, 45);
+        doc.text("PAN Number: " + pan, 20, 53);
+        doc.text("Mobile: " + mobile, 20, 61);
+
+        doc.text("Gross Total Income (A):", 20, 75);
+        doc.text(gti, 150, 75);
+
+        doc.text("Standard Deduction:", 20, 83);
+        doc.text("-₹75,000", 150, 83);
+
+        doc.setFont(undefined, 'bold');
+        doc.text("Net Taxable Income (B):", 20, 91);
+        doc.text(net, 150, 91);
+        doc.setFont(undefined, 'normal');
+
+        doc.text("Tax on Slab Rates:", 20, 99);
+        doc.text(slab, 150, 99);
+
+        doc.text("Rebate/Relief:", 20, 107);
+        doc.text(relief, 150, 107);
+
+        doc.text("Health & Edu. Cess (4%):", 20, 115);
+        doc.text(cess, 150, 115);
+
+        doc.line(20, 120, 190, 120);
+        doc.setFontSize(14);
+        doc.setTextColor(211, 47, 47);
+        doc.text("Final Net Tax Payable:", 20, 130);
+        doc.text(final, 150, 130);
+
+        doc.save(name + "_Tax_Report.pdf");
     }
 </script>
 
