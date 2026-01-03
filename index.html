@@ -22,6 +22,10 @@ gtag('config', 'G-YH2229N6RG');
         input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; text-transform: uppercase; }
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; }
+        
+        /* New Share Button Style */
+        .btn-share { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        
         #resultBox { margin-top: 20px; display: none; }
         .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
         .tax-val { font-size: 32px; color: #d32f2f; font-weight: bold; }
@@ -65,6 +69,7 @@ gtag('config', 'G-YH2229N6RG');
                 <tr><td>Health & Edu. Cess (4%)</td><td class="val" id="rowCess">₹0</td></tr>
                 <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax Payable</b></td><td class="val" id="rowFinal">₹0</td></tr>
             </table>
+            <button class="btn-share" onclick="shareReport()">📤 Share / Save Report Details</button>
         </div>
     </div>
 </div>
@@ -144,6 +149,32 @@ gtag('config', 'G-YH2229N6RG');
                 alert("Incorrect Code! Please try again."); 
             }
         }, 1000);
+    }
+
+    function shareReport() {
+        var n = document.getElementById('uName').value;
+        var p = document.getElementById('uPan').value.toUpperCase();
+        var g = document.getElementById('rowGti').innerText;
+        var t = document.getElementById('rowFinal').innerText;
+
+        var shareText = "TAX COMPUTATION REPORT\n" +
+                        "Anurag Karundia & Company\n" +
+                        "---------------------------\n" +
+                        "Client: " + n + "\n" +
+                        "PAN: " + p + "\n" +
+                        "Gross Income: " + g + "\n" +
+                        "Final Net Tax: " + t + "\n" +
+                        "---------------------------\n" +
+                        "FY 2025-26 | New Regime";
+
+        if (navigator.share) {
+            navigator.share({
+                title: 'Tax Report - ' + n,
+                text: shareText
+            }).catch(console.error);
+        } else {
+            alert("Sharing not supported on this browser. Please take a screenshot.");
+        }
     }
 </script>
 
