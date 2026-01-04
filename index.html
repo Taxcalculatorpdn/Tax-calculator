@@ -31,8 +31,8 @@
         td { padding: 6px 0; border-bottom: 1px solid #eee; }
         .val { text-align: right; font-weight: bold; }
         .action-btns { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-wa { flex: 1; padding: 12px; background: #25D366; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
-        .btn-unlock { flex: 1; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-wa { flex: 1; padding: 12px; background: #25D366; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .btn-unlock { flex: 1; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
     </style>
 </head>
 <body>
@@ -44,35 +44,35 @@
     </div>
 
     <label>Taxpayer Name</label>
-    <input type="text" id="uName" placeholder="Full Name">
+    <input type="text" id="uName" placeholder="Enter Full Name">
     <label>Mobile Number</label>
-    <input type="text" id="uMob" maxlength="10" placeholder="10 Digit Mobile" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+    <input type="text" id="uMob" maxlength="10" placeholder="10 Digit Number" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
     <label>PAN Number</label>
     <input type="text" id="uPan" maxlength="10" placeholder="ABCDE1234F" style="text-transform: uppercase;">
 
-    <label>Tax Regime</label>
+    <label>Choose Regime</label>
     <div class="regime-selector">
         <div id="btnNew" class="regime-btn active" onclick="switchRegime('NEW')">New Regime</div>
         <div id="btnOld" class="regime-btn" onclick="switchRegime('OLD')">Old Regime</div>
     </div>
 
     <label>Salary / Business Income</label>
-    <input type="number" id="uSal" value="0">
+    <input type="number" id="uSal" value="0" onclick="this.select()">
     <label>Other Sources Income</label>
-    <input type="number" id="uOther" value="0">
+    <input type="number" id="uOther" value="0" onclick="this.select()">
 
     <div id="oldInputs" style="display:none; background:#f9f9f9; padding:10px; border-radius:8px; border:1px dashed #1a73e8; margin-top:10px;">
         <label>Home Loan Interest (24b)</label>
         <input type="number" id="uLoan" value="0">
         <label>Sec 80C (Max 1.5L)</label>
         <input type="number" id="u80c" value="0">
-        <label>Sec 80D (Health Insurance)</label>
+        <label>Sec 80D (Insurance)</label>
         <input type="number" id="u80d" value="0">
-        <label>NPS 80CCD (Max 50k)</label>
+        <label>NPS (Max 50k)</label>
         <input type="number" id="uNps" value="0">
     </div>
 
-    <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
+    <button id="mainCalcBtn" class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
 
     <div id="taxBox" class="tax-card">
         <p style="margin:0; font-size:13px;">Net Tax Payable (<span id="resRegimeName">New</span>):</p>
@@ -80,12 +80,12 @@
         
         <div class="action-btns">
             <button class="btn-wa" onclick="shareOnWhatsApp()">WhatsApp Share</button>
-            <button class="btn-unlock" id="unlockBtn" onclick="unlockDetails()">View Details</button>
+            <button class="btn-unlock" id="unlockBtn" onclick="unlockDetails()">View Computation</button>
         </div>
     </div>
 
     <div id="detailedReport">
-        <h4 style="margin:0; color:#2e7d32; border-bottom:2px solid #4caf50;">Professional Computation</h4>
+        <h4 style="margin:0; color:#2e7d32; border-bottom:2px solid #4caf50; padding-bottom:5px;">Professional Computation</h4>
         <table id="compTable"></table>
     </div>
 </div>
@@ -111,15 +111,17 @@
         var sal = parseFloat(document.getElementById('uSal').value) || 0;
         var other = parseFloat(document.getElementById('uOther').value) || 0;
 
-        if(!n || m.length !== 10 || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(p)) {
-            alert("⚠️ Please enter valid Name, 10-digit Mobile and correct PAN.");
-            return;
-        }
+        // Validations
+        if(!n) { alert("⚠️ Please enter Name"); return; }
+        if(m.length !== 10) { alert("⚠️ Enter 10-digit Mobile"); return; }
+        if(!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(p)) { alert("⚠️ Invalid PAN Format (Example: ABCDE1234F)"); return; }
 
         var stdDed = (currentRegime === "NEW") ? 75000 : 50000;
         var loan = (currentRegime === "OLD") ? Math.min(200000, parseFloat(document.getElementById('uLoan').value) || 0) : 0;
-        var balInc = Math.max(0, sal - stdDed - loan);
-        var gti = balInc + other;
+        
+        // Sequence: Salary -> Deductions -> Balance -> Other -> GTI
+        var balanceIncome = Math.max(0, sal - stdDed - loan);
+        var gti = balanceIncome + other;
         
         var d80c = (currentRegime === "OLD") ? Math.min(150000, parseFloat(document.getElementById('u80c').value) || 0) : 0;
         var d80d = (currentRegime === "OLD") ? (parseFloat(document.getElementById('u80d').value) || 0) : 0;
@@ -140,43 +142,51 @@
             else if (taxable > 250000) tax = (taxable - 250000) * 0.05;
         }
 
-        var rebate = (currentRegime === "NEW" && taxable <= 1200000) ? tax : (currentRegime === "OLD" && taxable <= 500000 ? Math.min(tax, 12500) : 0);
-        if (currentRegime === "NEW" && taxable > 1200000 && tax > (taxable - 1200000)) rebate = tax - (taxable - 1200000);
+        var rebate = 0;
+        if (currentRegime === "NEW") {
+            if (taxable <= 1200000) rebate = tax;
+            else if (tax > (taxable - 1200000)) rebate = tax - (taxable - 1200000);
+        } else if (taxable <= 500000) {
+            rebate = Math.min(tax, 12500);
+        }
 
         var taxAfterRebate = Math.max(0, tax - rebate);
-        finalTaxValue = Math.round((taxAfterRebate + (taxAfterRebate * 0.04)) / 10) * 10;
+        var cess = taxAfterRebate * 0.04;
+        finalTaxValue = Math.round((taxAfterRebate + cess) / 10) * 10;
 
         document.getElementById('resTax').innerText = "₹" + finalTaxValue.toLocaleString('en-IN');
         document.getElementById('resRegimeName').innerText = currentRegime;
         document.getElementById('taxBox').style.display = "block";
         document.getElementById('unlockBtn').style.display = "block";
-        document.getElementById('detailedReport').style.display = "none";
 
         var tableHtml = `
             <tr><td>Income from Salary</td><td class="val">₹${sal.toLocaleString('en-IN')}</td></tr>
-            <tr><td>Standard Deduction</td><td class="val">-₹${stdDed.toLocaleString('en-IN')}</td></tr>
-            <tr style="color:#1a73e8;"><td><b>Balance Income</b></td><td class="val">₹${balInc.toLocaleString('en-IN')}</td></tr>
-            <tr><td>Gross Total Income</td><td class="val">₹${gti.toLocaleString('en-IN')}</td></tr>
+            <tr><td>Std. Deduction</td><td class="val">-₹${stdDed.toLocaleString('en-IN')}</td></tr>`;
+        if(currentRegime === "OLD") tableHtml += <tr><td>Loan Int (24b)</td><td class="val">-₹${loan.toLocaleString('en-IN')}</td></tr>;
+        tableHtml += `
+            <tr style="color:#1a73e8;"><td><b>Balance Income</b></td><td class="val">₹${balanceIncome.toLocaleString('en-IN')}</td></tr>
+            <tr><td>Other Sources</td><td class="val">₹${other.toLocaleString('en-IN')}</td></tr>
+            <tr style="background:#eee;"><td><b>Gross Total Income</b></td><td class="val">₹${gti.toLocaleString('en-IN')}</td></tr>
             <tr style="color:red;"><td><b>Net Taxable Income</b></td><td class="val">₹${taxable.toLocaleString('en-IN')}</td></tr>
-            <tr style="background:#e8f5e9;"><td><b>Total Tax</b></td><td class="val">₹${finalTaxValue.toLocaleString('en-IN')}</td></tr>`;
+            <tr style="background:#e8f5e9;"><td><b>Final Tax</b></td><td class="val">₹${finalTaxValue.toLocaleString('en-IN')}</td></tr>`;
         document.getElementById('compTable').innerHTML = tableHtml;
         
-        gtag('event', 'tax_calculated', {'name': n, 'regime': currentRegime});
+        gtag('event', 'calculate', {'name': n});
     }
 
     function shareOnWhatsApp() {
-        var name = document.getElementById('uName').value;
-        var msg = Tax Report: ${name}%0AIncome: ₹${document.getElementById('uSal').value}%0ARegime: ${currentRegime}%0ANet Tax: ₹${finalTaxValue}%0A%0AComputed by Anurag Karundia & Co.;
+        var n = document.getElementById('uName').value;
+        var msg = *Tax Report - Anurag Karundia & Co*%0A*Name:* ${n}%0A*Regime:* ${currentRegime}%0A*Net Tax Payable:* ₹${finalTaxValue.toLocaleString('en-IN')}%0A%0A_Calculate yours here!_;
         window.open(https://wa.me/?text=${msg}, '_blank');
     }
 
     function unlockDetails() {
         var m = document.getElementById('uMob').value;
-        var code = prompt("Enter last 3 digits of Mobile:");
+        var code = prompt("Enter last 3 digits of Mobile to unlock:");
         if(code === m.slice(-3)) {
             document.getElementById('unlockBtn').style.display = "none";
             document.getElementById('detailedReport').style.display = "block";
-        } else { alert("Wrong code!"); }
+        } else { alert("Wrong Code!"); }
     }
 </script>
 </body>
