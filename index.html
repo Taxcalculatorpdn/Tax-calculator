@@ -66,7 +66,7 @@ gtag('config', 'G-YH2229N6RG');
                 <tr><td>Health & Edu. Cess (4%)</td><td class="val" id="rowCess">₹0</td></tr>
                 <tr style="font-size:16px; color:#d32f2f;"><td><b>Final Net Tax Payable</b></td><td class="val" id="rowFinal">₹0</td></tr>
             </table>
-            <button class="btn-share" onclick="shareReport()">📲 Share Report on WhatsApp</button>
+            <button class="btn-share" onclick="shareReport()">📲 Share Full Report on WhatsApp</button>
         </div>
     </div>
 </div>
@@ -138,24 +138,34 @@ gtag('config', 'G-YH2229N6RG');
     function shareReport() {
         var n = document.getElementById('uName').value;
         var p = document.getElementById('uPan').value.toUpperCase();
-        var g = document.getElementById('rowGti').innerText;
-        var t = document.getElementById('rowFinal').innerText;
+        var gti = document.getElementById('rowGti').innerText;
+        var net = document.getElementById('rowNet').innerText;
+        var slab = document.getElementById('rowSlab').innerText;
+        var rLabel = document.getElementById('reliefLabel').innerText;
+        var rVal = document.getElementById('rowRelief').innerText;
+        var cess = document.getElementById('rowCess').innerText;
+        var final = document.getElementById('rowFinal').innerText;
+
+        // Corrected Structure
         var content = "TAX COMPUTATION REPORT\n" +
+                      "FY 2025-26 | New Tax Regime\n" +
                       "Anurag Karundia & Company\n" +
                       "---------------------------\n" +
                       "Client: " + n + "\n" +
                       "PAN: " + p + "\n" +
-                      "Gross Income: " + g + "\n" +
-                      "Final Net Tax: " + t + "\n" +
                       "---------------------------\n" +
-                      "FY 2025-26 | New Regime";
+                      "Gross Total Income: " + gti + "\n" +
+                      "Standard Deduction: -₹75,000\n" +
+                      "Net Taxable Income: " + net + "\n" +
+                      "Tax on Slab Rates: " + slab + "\n" +
+                      "" + rLabel + ": " + rVal + "\n" +
+                      "Health & Edu. Cess: " + cess + "\n" +
+                      "---------------------------\n" +
+                      "FINAL NET TAX: " + final + "\n" +
+                      "---------------------------\n";
+
         window.open("https://wa.me/?text=" + encodeURIComponent(content), '_blank');
     }
-
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.onkeydown = function(e) {
-        if (event.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0))) return false;
-    };
 </script>
 </body>
 </html>
