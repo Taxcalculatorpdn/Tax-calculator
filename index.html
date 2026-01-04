@@ -1,105 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YH2229N6RG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YH2229N6RG');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tax Calculator - AKC</title>
+    <title>Professional Tax Calculator - Anurag Karundia & Co.</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f4f8; padding: 20px; display: flex; justify-content: center; }
-        .box { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 380px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #ddd; }
-        .header { text-align: center; border-bottom: 2px solid #1a73e8; margin-bottom: 15px; padding-bottom: 10px; }
-        .regime-tag { background: #e3f2fd; color: #1a73e8; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 5px; display: inline-block; margin: 8px 0; }
-        label { font-weight: bold; display: block; margin-top: 15px; font-size: 13px; color: #333; }
-        input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; display: block; }
-        .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .res-box { display: none; margin-top: 20px; text-align: center; }
-        .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; }
-        #report { display: none; margin-top: 15px; background: #f9f9f9; border: 1px solid #4caf50; padding: 10px; border-radius: 10px; text-align: left; font-size: 13px; }
+        :root {
+            --primary-color: #0d47a1;
+            --accent-color: #1a73e8;
+            --bg-color: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: var(--bg-color); 
+            margin: 0; padding: 20px; 
+            display: flex; justify-content: center; 
+        }
+
+        .container { 
+            background: var(--card-bg); 
+            width: 100%; max-width: 420px; 
+            border-radius: 20px; 
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            border: 1px solid #e1e8ed;
+        }
+
+        .header { 
+            background: var(--primary-color); 
+            color: white; padding: 25px 20px; text-align: center;
+        }
+
+        .header h2 { margin: 0; font-size: 20px; letter-spacing: 0.5px; }
+        .header p { margin: 5px 0 0; font-size: 11px; opacity: 0.8; font-weight: bold; text-transform: uppercase; }
+
+        .content-padding { padding: 20px; }
+
+        .section-title {
+            font-size: 12px; font-weight: 800; color: var(--accent-color);
+            text-transform: uppercase; margin-bottom: 15px; margin-top: 10px;
+            display: flex; align-items: center;
+        }
+
+        .section-title::after {
+            content: ""; flex: 1; height: 1px; background: #eee; margin-left: 10px;
+        }
+
+        .input-group { margin-bottom: 15px; }
+        
+        label { font-weight: 600; display: block; font-size: 13px; color: var(--text-dark); margin-bottom: 6px; }
+        
+        input { 
+            width: 100%; padding: 12px 15px; 
+            border: 2px solid #edf2f7; border-radius: 10px; 
+            box-sizing: border-box; font-size: 16px; 
+            transition: all 0.3s ease; background: #fafbfc;
+            outline: none;
+        }
+
+        input:focus { 
+            border-color: var(--accent-color); 
+            background: #fff; box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1); 
+        }
+
+        /* Calculate Tax Button with Press Effect */
+        .btn-calc { 
+            width: 100%; padding: 16px; background: var(--primary-color); 
+            color: white; border: none; border-radius: 12px; 
+            font-size: 16px; font-weight: 700; cursor: pointer; 
+            margin-top: 10px; position: relative;
+            transition: all 0.1s;
+            box-shadow: 0 4px #08306b;
+            outline: none;
+        }
+
+        .btn-calc:active { 
+            transform: translateY(4px);
+            box-shadow: 0 0 #08306b;
+        }
+
+        .res-box { display: none; margin-top: 25px; animation: fadeIn 0.5s; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .tax-card { 
+            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+            border: 2px solid #d1e3f8; padding: 20px; border-radius: 16px; 
+            text-align: center; margin-bottom: 20px;
+        }
+
+        .tax-card h1 { color: #d32f2f; margin: 10px 0; font-size: 32px; }
+
+        #report { 
+            display: none; background: #fff; border: 1px solid #e1e8ed; 
+            padding: 15px; border-radius: 12px; font-size: 12px; 
+        }
+
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 8px 0; border-bottom: 1px solid #eee; }
-        .wa-btn { background: #25D366; color: white; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; width: 100%; margin-top: 10px; font-size: 13px; line-height: 1.4; }
+        td { padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #444; }
+        
+        /* WhatsApp Button with Press Effect */
+        .wa-btn { 
+            background: #25D366; color: white; padding: 15px; 
+            border-radius: 12px; font-weight: bold; cursor: pointer; 
+            border: none; width: 100%; font-size: 13px; margin-bottom: 10px;
+            transition: all 0.1s;
+            box-shadow: 0 4px #128C7E;
+            position: relative;
+            outline: none;
+        }
+
+        .wa-btn:active { 
+            transform: translateY(4px);
+            box-shadow: 0 0 #128C7E;
+        }
+
+        #blueAlert { 
+            display: none; position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); background: #fff; 
+            padding: 25px; border-radius: 15px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 9999; 
+            text-align: center; width: 85%; max-width: 320px; 
+            border: 1px solid #eee;
+        }
+        
+        .overlay { 
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background: rgba(0,0,0,0.6); 
+            z-index: 9998; backdrop-filter: blur(4px);
+        }
+
+        .close-pop { 
+            margin-top: 15px; background: var(--primary-color); 
+            color: white; border: none; padding: 10px 25px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold; 
+        }
     </style>
 </head>
 <body>
 
-<div class="box">
+<div class="overlay" id="overlay"></div>
+<div id="blueAlert">
+    <div id="alertMsg" style="color: #333; font-size: 16px; margin-bottom: 10px;"></div>
+    <button class="close-pop" onclick="closePopup()">OK</button>
+</div>
+
+<div class="container">
     <div class="header">
-        <h2 style="color:#1a73e8; margin:0;">Anurag Karundia & Co.</h2>
-        <div class="regime-tag">FY 2025-26 | New Tax Regime</div>
+        <h2>Anurag Karundia & Co.</h2>
+        <p>Income Tax Calculator | FY 2025-26</p>
     </div>
 
-    <label>Taxpayer Name</label>
-    <input type="text" id="uName" placeholder="Enter Full Name" autocomplete="off">
+    <div class="content-padding">
+        <div class="section-title">Personal Details</div>
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="uName" placeholder="Enter Taxpayer Name">
+        </div>
+        <div class="input-group">
+            <label>Mobile Number</label>
+            <input type="text" id="uMob" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Enter Mobile Number">
+        </div>
+        <div class="input-group">
+            <label>PAN Number</label>
+            <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
+        </div>
 
-    <label>Mobile Number</label>
-    <input type="text" id="uMob" maxlength="10" placeholder="Enter 10 Digit Number" autocomplete="off">
-
-    <label>PAN Number</label>
-    <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN Number" style="text-transform: uppercase;" autocomplete="off">
-
-    <label>Salary Income</label>
-    <input type="number" id="vSal" value="0">
-
-    <label>Business Income</label>
-    <input type="number" id="vBus" value="0">
-
-    <label>Short Term Gain (STCG)</label>
-    <input type="number" id="vSTCG" value="0">
-
-    <label>Long Term Gain (LTCG)</label>
-    <input type="number" id="vLTCG" value="0">
-
-    <button class="btn-calc" onclick="runCalculation()">Calculate Tax</button>
-
-    <div id="resDiv" class="res-box">
-        <div class="tax-card">
-            <p style="margin:0; font-weight:bold;">Net Tax Payable:</p>
-            <h1 id="finalTaxVal" style="color:#d32f2f; margin:5px 0;">Rs. 0</h1>
-            <small id="lockLabel" style="color:#f57c00; font-weight:bold;">Details Locked</small>
+        <div class="section-title">Income Sources</div>
+        <div class="input-group">
+            <label>Salary Income</label>
+            <input type="number" id="vSal" value="0" onclick="this.select()">
+        </div>
+        <div class="input-group">
+            <label>Business Income</label>
+            <input type="number" id="vBus" value="0" onclick="this.select()">
         </div>
         
-        <button id="waBtn" class="wa-btn" onclick="sendWA()">For Computation details click here and come back</button>
+        <div class="input-group">
+            <label>Short Term Cap. Gain (STCG)</label>
+            <input type="number" id="vSTCG" value="0" onclick="this.select()">
+        </div>
+        <div class="input-group">
+            <label>Long Term Cap. Gain (LTCG)</label>
+            <input type="number" id="vLTCG" value="0" onclick="this.select()">
+        </div>
 
-        <div id="report">
-            <h4 style="margin:0; border-bottom: 2px solid #4caf50; padding-bottom:5px;">Computation Summary</h4>
-            <table>
-                <tr><td>Net Normal Income</td><td id="rNormal" align="right" style="font-weight:bold;">0</td></tr>
-                <tbody id="rSlabRows"></tbody>
-                <tr><td>Special Rate Tax</td><td id="rSpecial" align="right" style="font-weight:bold;">0</td></tr>
-                <tr style="color:green;"><td>Rebate (u/s 87A)</td><td id="rRebate" align="right" style="font-weight:bold;">0</td></tr>
-                <tr style="color:#d32f2f; font-weight:bold; font-size:15px;"><td>TOTAL NET TAX</td><td id="rFinalTotal" align="right">0</td></tr>
-            </table>
+        <button class="btn-calc" onclick="runCalculation()">Calculate Tax</button>
+
+        <div id="resDiv" class="res-box">
+            <div class="tax-card">
+                <div style="font-size: 13px; font-weight: bold; color: #555;">Final Net Tax Payable</div>
+                <h1 id="finalTaxVal">Rs. 0</h1>
+                <div id="lockLabel" style="font-size: 11px; color: #f57c00; font-weight: 800; letter-spacing: 1px;">DETAILS LOCKED &#128274;</div>            </div>
+            
+            <button id="waBtn" class="wa-btn" onclick="sendWA()">For computation details click here and come back</button>
+            
+            <div id="report">
+                <div style="text-align:center; font-weight: bold; margin-bottom: 10px; color: var(--primary-color);">TAX COMPUTATION</div>
+                <table>
+                    <tr><td>Gross Total Income</td><td id="rGross" align="right" style="font-weight:600;">0</td></tr>
+                    <tr><td>Standard Deduction</td><td id="rSD" align="right" style="color:red;">0</td></tr>
+                    <tr style="background:#f8f9fa; font-weight:bold;"><td>Net Taxable Income</td><td id="rNetInc" align="right">0</td></tr>
+                    <tbody id="rSlabRows"></tbody>
+                    <tr><td>Tax on STCG (20%)</td><td id="rSTCGTax" align="right">0</td></tr>
+                    <tr><td>Tax on LTCG (12.5%)</td><td id="rLTCGTax" align="right">0</td></tr>
+                    <tr><td>Rebate u/s 87A</td><td id="rRebate" align="right" style="color:green;">0</td></tr>
+                    <tr><td>Marginal Relief</td><td id="rMarginal" align="right" style="color:green;">0</td></tr>
+                    <tr><td>Cess (4%)</td><td id="rCess" align="right">0</td></tr>
+                    <tr style="border-top: 2px solid #333; font-weight:900; font-size:14px;"><td>NET TAX PAYABLE</td><td id="rFinalTotal" align="right" style="color:#d32f2f;">0</td></tr>
+                </table>
+                <button class="wa-btn" style="margin-top: 20px;" onclick="
+    var n = document.getElementById('uName').value;
+    var g = document.getElementById('rGross').innerText;
+    var ni = document.getElementById('rNetInc').innerText;
+    var st = document.getElementById('rSTCGTax').innerText;
+    var lt = document.getElementById('rLTCGTax').innerText;
+    var rb = document.getElementById('rRebate').innerText;
+    var cs = document.getElementById('rCess').innerText;
+    var f = document.getElementById('finalTaxVal').innerText;
+    
+    // ????? ????? ?? ????? ???? ?? ???
+    var sRows = document.getElementById('rSlabRows').innerText.replace(/\t/g, ': ').replace(/\n/g, ' | ').replace(/\+/g, '');
+
+    var msg = 'INCOME TAX REPORT (FY 2025-26)\n' +
+              '------------------------------------\n' +
+              'Name: ' + n + '\n' +
+              'Gross Income: Rs. ' + g + '\n' +
+              'Net Taxable: Rs. ' + ni + '\n' +
+              '------------------------------------\n' +
+              'TAX COMPUTATION:\n' +
+              'Normal Tax: Rs. ' + (sRows || '0') + '\n' +
+              'STCG Tax: Rs. ' + st + '\n' +
+              'LTCG Tax: Rs. ' + lt + '\n' +
+              'Less Rebate: Rs. ' + rb + '\n' +
+              'Add Cess (4%): Rs. ' + cs + '\n' +
+              '------------------------------------\n' +
+              'NET TAX PAYABLE: ' + f + '\n' +
+              '------------------------------------\n' +
+              'Anurag Karundia & Co.';
+                  
+    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+">Share on WhatsApp</button>            </div>
         </div>
     </div>
 </div>
 
 <script>
+function showBluePopup(msg) {
+    document.getElementById('alertMsg').innerText = msg;
+    document.getElementById('blueAlert').style.display = "block";
+    document.getElementById('overlay').style.display = "block";
+}
+function closePopup() {
+    document.getElementById('blueAlert').style.display = "none";
+    document.getElementById('overlay').style.display = "none";
+}
+
 function runCalculation() {
     var name = document.getElementById('uName').value.trim();
     var mob = document.getElementById('uMob').value.trim();
     var pan = document.getElementById('uPan').value.trim().toUpperCase();
 
-    // 1. Name Check (Strict)
-    var badNames = ["DEMO", "ADMIN", "USER", "TEST", "TAXPAYER"];
-    if (name.length < 3 || badNames.includes(name.toUpperCase())) {
-        alert("Please enter a valid Taxpayer Name.");
-        return;
+    var junkRepeat = /(.)\1{2,}/; 
+    var badNames = ["demo", "admin", "asdf", "qwerty", "test", "abcd"];
+    if (name.length < 3 || junkRepeat.test(name) || badNames.includes(name.toLowerCase())) {
+        showBluePopup("Enter Valid Taxpayer Name."); return;
     }
-
-    // 2. Mobile Check (6-9 start, No Repeat)
     var mobPattern = /^[6-9]\d{9}$/;
-    var isRepeated = /^(.)\1+$/.test(mob); 
-    if (!mobPattern.test(mob) || isRepeated) { 
-        alert("Please enter a valid 10-digit mobile number."); 
-        return; 
-    }
+    var isDuplicateMob = /^(.)\1{9}$/.test(mob);
+    if (!mobPattern.test(mob) || isDuplicateMob) { showBluePopup("Enter Valid Mobile Number."); return; }
     
-    // 3. PAN Check (Individual)
-    var panPattern = /^[A-Z]{3}[P]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
-    if (!panPattern.test(pan)) { 
-        alert("Invalid PAN Number."); 
-        return; 
-    }
+    var panPattern = /^[A-Z]{3}P[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
+    if (!panPattern.test(pan)) { showBluePopup("Enter Valid PAN Number."); return; }
+
+    gtag('event', 'tax_calculated', {'user_name': name, 'user_mob': mob, 'user_pan': pan});
 
     var sal = parseFloat(document.getElementById('vSal').value) || 0;
     var bus = parseFloat(document.getElementById('vBus').value) || 0;
@@ -107,47 +292,47 @@ function runCalculation() {
     var lt = parseFloat(document.getElementById('vLTCG').value) || 0;
 
     var sd = sal > 0 ? 75000 : 0;
-    var nInc = Math.max(0, (sal - sd) + bus);
-    var tInc = nInc + st + lt;
+    var normalIncome = (sal - sd) + bus;
+    var netTaxableTotal = normalIncome + st + lt;
 
-    var nt = 0;
-    var rows = "";
-    var tmp = nInc;
-
-    var slabs = [
-        {limit: 2400000, rate: 0.30}, {limit: 2000000, rate: 0.25}, 
-        {limit: 1600000, rate: 0.20}, {limit: 1200000, rate: 0.15}, 
-        {limit: 800000, rate: 0.10}, {limit: 400000, rate: 0.05}
-    ];
-
+    var slabTax = 0; var rows = ""; var tmp = normalIncome;
+    var slabs = [{l:2400000, r:0.3}, {l:2000000, r:0.25}, {l:1600000, r:0.2}, {l:1200000, r:0.15}, {l:800000, r:0.1}, {l:400000, r:0.05}];
     slabs.forEach(function(s) {
-        if (tmp > s.limit) {
-            var amt = tmp - s.limit;
-            var tx = amt * s.rate;
-            nt += tx;
-            rows = "<tr><td style='color:#666;'>└ " + (s.rate*100) + "% Slab</td><td align='right'>Rs. " + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
-            tmp = s.limit;
+        if (tmp > s.l) {
+            var tx = (tmp - s.l) * s.r; slabTax += tx;
+            rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "%</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
+            tmp = s.l;
         }
     });
 
-    var spTax = (st * 0.15) + (Math.max(0, lt - 125000) * 0.125);
-    var raw = nt + spTax;
-    var reb = 0;
-
-    if (tInc <= 1200000) { reb = raw; }
-    else if (tInc <= 1275000) { 
-        var d = tInc - 1200000; 
-        if (raw > d) reb = raw - d; 
+    var rebate = 0; var marginal = 0;
+    if (normalIncome <= 1200000) {
+        rebate = slabTax;
+    } else if (normalIncome <= 1275000) {
+        var diff = normalIncome - 1200000;
+        if (slabTax > diff) marginal = slabTax - diff;
     }
 
-    var final = Math.round((raw - reb) * 1.04 / 10) * 10;
+    var normalTaxAfterRelief = Math.max(0, slabTax - rebate - marginal);
+    var stcgTax = st * 0.20; 
+    var ltcgTax = Math.max(0, lt - 125000) * 0.125;
 
-    document.getElementById('finalTaxVal').innerText = "Rs. " + final.toLocaleString('en-IN');
-    document.getElementById('rNormal').innerText = "Rs. " + nInc.toLocaleString('en-IN');
+    var totalTaxPreCess = normalTaxAfterRelief + stcgTax + ltcgTax;
+    var cess = totalTaxPreCess * 0.04;
+    var final = Math.round((totalTaxPreCess + cess) / 10) * 10;
+
+    document.getElementById('rGross').innerText = Math.round(sal+bus+st+lt).toLocaleString('en-IN');
+    document.getElementById('rSD').innerText = "-" + sd.toLocaleString('en-IN');
+    document.getElementById('rNetInc').innerText = Math.round(netTaxableTotal).toLocaleString('en-IN');
     document.getElementById('rSlabRows').innerHTML = rows;
-    document.getElementById('rSpecial').innerText = "Rs. " + Math.round(spTax).toLocaleString('en-IN');
-    document.getElementById('rRebate').innerText = "-Rs. " + Math.round(reb).toLocaleString('en-IN');
+    document.getElementById('rSTCGTax').innerText = Math.round(stcgTax).toLocaleString('en-IN');
+    document.getElementById('rLTCGTax').innerText = Math.round(ltcgTax).toLocaleString('en-IN');
+    document.getElementById('rRebate').innerText = "-" + Math.round(rebate).toLocaleString('en-IN');
+    document.getElementById('rMarginal').innerText = "-" + Math.round(marginal).toLocaleString('en-IN');
+    document.getElementById('rCess').innerText = Math.round(cess).toLocaleString('en-IN');
+    
     document.getElementById('rFinalTotal').innerText = "Rs. " + final.toLocaleString('en-IN');
+    document.getElementById('finalTaxVal').innerText = "Rs. " + final.toLocaleString('en-IN');
 
     document.getElementById('resDiv').style.display = "block";
     document.getElementById('report').style.display = "none";
@@ -157,10 +342,9 @@ function runCalculation() {
 
 function sendWA() {
     var m = document.getElementById('uMob').value;
-    var n = document.getElementById('uName').value;
-    window.open("https://wa.me/919634100100?text=Tax Report Requested for " + n, "_blank");
+    window.open("https://wa.me/919634100100?text=Tax Report Requested", "_blank");
     setTimeout(function() {
-        var c = prompt("Enter last 3 digits of mobile number to unlock:");
+        var c = prompt("Enter last 3 digits of mobile to unlock report:");
         if (c === m.slice(-3)) {
             document.getElementById('waBtn').style.display = "none";
             document.getElementById('lockLabel').style.display = "none";
