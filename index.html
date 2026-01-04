@@ -3,13 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YH2229N6RG"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-YH2229N6RG');
-    </script>
     <title>Tax Calculator - Anurag Karundia & Co.</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; display: flex; justify-content: center; padding: 20px; min-height: 100vh; }
@@ -18,10 +11,9 @@
         .header h1 { color: #1a73e8; font-size: 19px; margin: 0; }
         .regime-tag { background: #e3f2fd; color: #1a73e8; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 5px; display: inline-block; margin-top: 8px; }
         label { font-weight: bold; display: block; margin-top: 15px; font-size: 13px; color: #555; }
-        /* Vertical Layout Fix */
         input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px; display: block; }
         .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; line-height: 1.4; text-align: center; display: block; text-decoration: none; }
+        .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; text-align: center; display: block; text-decoration: none; }
         #resultBox { margin-top: 20px; display: none; }
         .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
         .tax-val { font-size: 32px; color: #d32f2f; font-weight: bold; }
@@ -29,7 +21,6 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         td { padding: 8px 0; border-bottom: 1px dashed #eee; }
         .val { text-align: right; font-weight: bold; }
-        /* Custom Alert Style */
         #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; }
         #customAlert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 2px solid #1a73e8; padding: 25px; border-radius: 15px; z-index: 10000; width: 280px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
     </style>
@@ -49,7 +40,7 @@
     <input type="text" id="uName" placeholder="Enter Full Name">
 
     <label>Mobile Number</label>
-    <input type="text" id="uMob" maxlength="10" placeholder="10 Digit Mobile" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+    <input type="text" id="uMob" maxlength="10" placeholder="10 Digit Mobile">
 
     <label>PAN Number</label>
     <input type="text" id="uPan" maxlength="10" placeholder="ABCDE1234F" style="text-transform: uppercase;">
@@ -91,33 +82,38 @@
 </div>
 
 <script>
-    function showMyAlert(msg) { document.getElementById('alertMsg').innerText = msg; document.getElementById('overlay').style.display = 'block'; document.getElementById('customAlert').style.display = 'block'; }
-    function closeAlert() { document.getElementById('overlay').style.display = 'none'; document.getElementById('customAlert').style.display = 'none'; }
+    function showMyAlert(msg) { 
+        document.getElementById('alertMsg').innerText = msg; 
+        document.getElementById('overlay').style.display = 'block'; 
+        document.getElementById('customAlert').style.display = 'block'; 
+    }
+    function closeAlert() { 
+        document.getElementById('overlay').style.display = 'none'; 
+        document.getElementById('customAlert').style.display = 'none'; 
+    }
 
     function calculateTax() {
         let n = document.getElementById('uName').value.trim();
         let m = document.getElementById('uMob').value.trim();
         let p = document.getElementById('uPan').value.trim().toUpperCase();
 
-        // 1. Specific Errors
+        // Error Handling
         if(!n) { showMyAlert("Please Enter Taxpayer Name"); return; }
-        // 5. Smart Name Filter
-        let badNames = ["DEMO", "TEST", "ADMIN", "USER", "XYZ"];
-        if(badNames.includes(n.toUpperCase()) || n.length < 3) { showMyAlert("Please Enter a Valid Genuine Name"); return; }
-        if(m.length < 10) { showMyAlert("Please Enter Valid 10-Digit Mobile Number"); return; }
-        if(!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(p)) { showMyAlert("Please Enter Valid PAN Number"); return; }
+        let bad = ["DEMO", "TEST", "ADMIN", "USER", "XYZ"];
+        if(bad.includes(n.toUpperCase()) || n.length < 3) { showMyAlert("Please Enter a Valid Name"); return; }
+        if(m.length < 10) { showMyAlert("Please Enter 10-Digit Mobile"); return; }
+        if(!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(p)) { showMyAlert("Please Enter Valid PAN"); return; }
 
         let sal = parseFloat(document.getElementById('uSal').value) || 0;
         let bus = parseFloat(document.getElementById('uBus').value) || 0;
         let stcg = parseFloat(document.getElementById('uSTCG').value) || 0;
         let ltcg = parseFloat(document.getElementById('uLTCG').value) || 0;
 
-        // 6 & 7. 87A and Marginal Logic
         let sd = sal > 0 ? 75000 : 0;
         let taxableNormal = Math.max(0, (sal - sd) + bus);
         let totalInc = taxableNormal + stcg + ltcg;
 
-        // Slab Breakdown FY 25-26
+        // Slab Calc
         let slabs = [
             {l: 0, u: 400000, r: 0},
             {l: 400000, u: 800000, r: 0.05},
@@ -125,18 +121,18 @@
             {l: 1200000, u: 1600000, r: 0.15},
             {l: 1600000, u: 2000000, r: 0.20},
             {l: 2000000, u: 2400000, r: 0.25},
-            {l: 2400000, u: Infinity, r: 0.30}
+            {l: 2400000, u: 999999999, r: 0.30}
         ];
 
         let nTax = 0;
         let slabHtml = "";
         slabs.forEach(s => {
             if (taxableNormal > s.l) {
-                let amtInSlab = Math.min(taxableNormal, s.u) - s.l;
-                let sTax = amtInSlab * s.r;
-                nTax += sTax;
-                if(s.r > 0 && amtInSlab > 0) {
-                    slabHtml += <tr><td style="font-size:11px; color:#666;">└ Slab ${s.r*100}% on ${amtInSlab.toLocaleString('en-IN')}</td><td class="val">₹${Math.round(sTax).toLocaleString('en-IN')}</td></tr>;
+                let amt = Math.min(taxableNormal, s.u) - s.l;
+                let t = amt * s.r;
+                nTax += t;
+                if(s.r > 0 && amt > 0) {
+                    slabHtml += <tr><td style="color:#666;">└ ${s.r*100}% on ${amt.toLocaleString()}</td><td class="val">₹${Math.round(t).toLocaleString()}</td></tr>;
                 }
             }
         });
@@ -144,49 +140,42 @@
         let sTax = (stcg * 0.15) + (Math.max(0, ltcg - 125000) * 0.125);
         let rawTax = nTax + sTax;
 
-        // 87A & Marginal Relief Logic
+        // 87A & Marginal Relief
         let rebate = 0;
         if (totalInc <= 1200000) {
             rebate = rawTax;
         } else if (totalInc > 1200000 && totalInc <= 1275000) {
-            // Marginal Relief: Tax cannot exceed (Income - 12 Lakhs)
-            let excessInc = totalInc - 1200000;
-            if (rawTax > excessInc) {
-                rebate = rawTax - excessInc;
-            }
+            let excess = totalInc - 1200000;
+            if (rawTax > excess) rebate = rawTax - excess;
         }
 
-        let taxAfterRebate = Math.max(0, rawTax - rebate);
-        let cess = taxAfterRebate * 0.04;
-        let finalTax = Math.round((taxAfterRebate + cess) / 10) * 10;
+        let taxFinal = Math.max(0, rawTax - rebate);
+        let cess = taxFinal * 0.04;
+        let pay = Math.round((taxFinal + cess) / 10) * 10;
 
-        // UI Updates
-        document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
-        document.getElementById('repNormalInc').innerText = "₹" + taxableNormal.toLocaleString('en-IN');
+        document.getElementById('resTax').innerText = "₹" + pay.toLocaleString('en-IN');
+        document.getElementById('repNormalInc').innerText = "₹" + taxableNormal.toLocaleString();
         document.getElementById('slabBreakup').innerHTML = slabHtml;
-        document.getElementById('repSpecialTax').innerText = "₹" + Math.round(sTax).toLocaleString('en-IN');
-        document.getElementById('repRebate').innerText = "-₹" + Math.round(rebate).toLocaleString('en-IN');
-        document.getElementById('repCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
-        document.getElementById('repFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
+        document.getElementById('repSpecialTax').innerText = "₹" + Math.round(sTax).toLocaleString();
+        document.getElementById('repRebate').innerText = "-₹" + Math.round(rebate).toLocaleString();
+        document.getElementById('repCess').innerText = "₹" + Math.round(cess).toLocaleString();
+        document.getElementById('repFinal').innerText = "₹" + pay.toLocaleString();
 
         document.getElementById('resultBox').style.display = "block";
         document.getElementById('detailedReport').style.display = "none";
         document.getElementById('waButton').style.display = "block";
-        document.getElementById('lockText').style.display = "block";
     }
 
     function unlockAndSend() {
         let m = document.getElementById('uMob').value;
         let n = document.getElementById('uName').value;
-        window.open(https://wa.me/919634100100?text=Tax Calculation for ${n}. Final Tax: ${document.getElementById('resTax').innerText}, '_blank');
-        
+        window.open(https://wa.me/919634100100?text=Tax for ${n}: ${document.getElementById('resTax').innerText}, '_blank');
         setTimeout(() => {
-            let code = prompt("Enter LAST 3 Digits of Mobile to view report:");
-            if(code === m.slice(-3)) {
+            let c = prompt("Enter Last 3 Digits of Mobile:");
+            if(c === m.slice(-3)) {
                 document.getElementById('waButton').style.display = "none";
-                document.getElementById('lockText').style.display = "none";
                 document.getElementById('detailedReport').style.display = "block";
-            } else { alert("Incorrect Verification Code!"); }
+            }
         }, 1000);
     }
 </script>
