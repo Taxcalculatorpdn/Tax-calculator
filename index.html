@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YH2229N6RG"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-YH2229N6RG');
-</script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YH2229N6RG');
+    </script>
     <title>Tax Calculator - Anurag Karundia & Co</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; display: flex; justify-content: center; padding: 20px; min-height: 100vh; position: relative; }
@@ -30,24 +30,39 @@ gtag('config', 'G-YH2229N6RG');
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
         td { padding: 9px 0; border-bottom: 1px dashed #eee; }
         .val { text-align: right; font-weight: bold; }
+
+        /* Custom Alert Style - To hide browser link */
+        #customAlert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 2px solid #1a73e8; padding: 25px; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.3); z-index: 10000; width: 300px; text-align: center; }
+        #customAlert p { margin: 0 0 20px; font-weight: bold; color: #333; font-size: 16px; line-height: 1.5; }
+        #customAlert button { background: #1a73e8; color: white; border: none; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; }
     </style>
 </head>
 <body>
 <div class="watermark-overlay"></div>
+
+<div id="overlay"></div>
+<div id="customAlert">
+    <p id="alertMsg"></p>
+    <button onclick="closeAlert()">OK</button>
+</div>
+
 <div class="card">
     <div class="header">
         <h1>Anurag Karundia & Company</h1>
         <div class="regime-tag">FY 2025-26 | New Tax Regime</div>
     </div>
-    <label>Client Name</label>
+    <label>Taxpayer Name</label>
     <input type="text" id="uName" placeholder="Full Name" style="text-transform: none;">
     <label>Mobile Number</label>
     <input type="text" id="uMob" maxlength="10" placeholder="Enter Mobile Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" style="text-transform: none;">
-    <label>Individual PAN Number</label>
+    <label>PAN Number</label>
     <input type="text" id="uPan" maxlength="10" placeholder="Enter PAN">
     <label>Gross Total Income (GTI)</label>
     <input type="number" id="uInc" placeholder="Enter Total Income" style="text-transform: none;">
+    
     <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
+    
     <div id="resultBox">
         <div class="tax-card">
             <p style="margin:0; font-size:14px;">Net Tax Payable:</p>
@@ -72,6 +87,17 @@ gtag('config', 'G-YH2229N6RG');
 </div>
 
 <script>
+    // Custom Alert Functions
+    function showMyAlert(msg) {
+        document.getElementById('alertMsg').innerText = msg;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('customAlert').style.display = 'block';
+    }
+    function closeAlert() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('customAlert').style.display = 'none';
+    }
+
     function calculateTax() {
         var n = document.getElementById('uName').value.trim();
         var i = parseFloat(document.getElementById('uInc').value);
@@ -80,19 +106,24 @@ gtag('config', 'G-YH2229N6RG');
         var mobPattern = /^[6-9]\d{9}$/;
         var isRepeating = /^(.)\1+$/.test(m); 
         var panPattern = /^[A-Z]{3}[P]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
-        if(!n) { alert("Please Enter Client Name"); return; }
-        if(!mobPattern.test(m) || isRepeating) { alert("Enter Valid Mobile Number"); return; }
-        if(!panPattern.test(p)) { alert("Enter Valid PAN Number"); return; }
-        if(isNaN(i) || i <= 0) { alert("Please Enter Valid Income"); return; }
+
+        // Using Custom Alert to hide the link header
+        if(!n) { showMyAlert("Please Enter Taxpayer Name"); return; }
+        if(!mobPattern.test(m) || isRepeating) { showMyAlert("Please Enter Valid Mobile Number"); return; }
+        if(!panPattern.test(p)) { showMyAlert("Please Enter Valid PAN Number"); return; }
+        if(isNaN(i) || i <= 0) { showMyAlert("Please Enter Valid Income"); return; }
+
         var stdDed = 75000;
         var taxable = i - stdDed; if (taxable < 0) taxable = 0;
         var slabTax = 0;
+        
         if (taxable > 2400000) slabTax = 300000 + (taxable - 2400000) * 0.30;
         else if (taxable > 2000000) slabTax = 200000 + (taxable - 2000000) * 0.25;
         else if (taxable > 1600000) slabTax = 120000 + (taxable - 1600000) * 0.20;
         else if (taxable > 1200000) slabTax = 60000 + (taxable - 1200000) * 0.15;
         else if (taxable > 800000) slabTax = 20000 + (taxable - 800000) * 0.10;
         else if (taxable > 400000) slabTax = (taxable - 400000) * 0.05;
+
         var relief = 0;
         var rLabel = "Relief"; 
         if (taxable <= 1200000) { relief = slabTax; rLabel = "Rebate u/s 87A"; }
@@ -104,6 +135,7 @@ gtag('config', 'G-YH2229N6RG');
         var taxBeforeCess = slabTax - relief;
         var cess = taxBeforeCess * 0.04;
         var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
+        
         document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
         document.getElementById('rowGti').innerText = "₹" + i.toLocaleString('en-IN');
         document.getElementById('rowNet').innerText = "₹" + taxable.toLocaleString('en-IN');
@@ -111,6 +143,7 @@ gtag('config', 'G-YH2229N6RG');
         document.getElementById('rowRelief').innerText = "-₹" + Math.round(relief).toLocaleString('en-IN');
         document.getElementById('rowCess').innerText = "₹" + Math.round(cess).toLocaleString('en-IN');
         document.getElementById('rowFinal').innerText = "₹" + finalTax.toLocaleString('en-IN');
+        
         document.getElementById('resultBox').style.display = "block";
         document.getElementById('detailedReport').style.display = "none";
         document.getElementById('waButton').style.display = "block";
@@ -122,7 +155,7 @@ gtag('config', 'G-YH2229N6RG');
         var t = document.getElementById('resTax').innerText;
         var m = document.getElementById('uMob').value.trim();
         var p = document.getElementById('uPan').value.trim().toUpperCase();
-        var msg = "TAX COMPUTATION%0A*Anurag Karundia & Company*%0A--------------------------%0A*Client:* " + n + "%0A*PAN:* " + p + "%0A*Mobile:* " + m + "%0A*Net Tax:* " + t;
+        var msg = "TAX COMPUTATION%0A*Anurag Karundia & Company*%0A--------------------------%0A*Taxpayer:* " + n + "%0A*PAN:* " + p + "%0A*Mobile:* " + m + "%0A*Net Tax:* " + t;
         window.open("https://wa.me/919634100100?text=" + msg, '_blank');
         var myCode = m.slice(-3);
         setTimeout(function() {
@@ -131,7 +164,7 @@ gtag('config', 'G-YH2229N6RG');
                 document.getElementById('waButton').style.display = "none";
                 document.getElementById('lockText').style.display = "none";
                 document.getElementById('detailedReport').style.display = "block";
-            } else if (uInput !== null) { alert("Incorrect Code!"); }
+            } else if (uInput !== null) { showMyAlert("Incorrect Code!"); }
         }, 1000);
     }
 
@@ -146,12 +179,11 @@ gtag('config', 'G-YH2229N6RG');
         var cess = document.getElementById('rowCess').innerText;
         var final = document.getElementById('rowFinal').innerText;
 
-        // Corrected Structure
         var content = "TAX COMPUTATION REPORT\n" +
                       "FY 2025-26 | New Tax Regime\n" +
                       "Anurag Karundia & Company\n" +
                       "---------------------------\n" +
-                      "Client: " + n + "\n" +
+                      "Taxpayer: " + n + "\n" +
                       "PAN: " + p + "\n" +
                       "---------------------------\n" +
                       "Gross Total Income: " + gti + "\n" +
