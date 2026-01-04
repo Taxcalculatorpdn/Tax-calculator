@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-47M2S59YQ6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-47M2S59YQ6');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tax Calculator - Anurag Karundia & Co</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; display: flex; justify-content: center; padding: 20px; min-height: 100vh; position: relative; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; padding: 15px; display: flex; justify-content: center; }
         .watermark-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><text fill='rgba(26, 115, 232, 0.12)' font-size='20' font-family='Arial' font-weight='bold' x='0' y='0' transform='translate(40,150) rotate(-35)'>ANURAG KARUNDIA & CO</text></svg>"); background-repeat: repeat; }
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; position: relative; z-index: 1; border: 1px solid #e0e0e0; }
-        .header { text-align: center; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; margin-bottom: 20px; }
-        .header h1 { color: #1a73e8; font-size: 19px; margin: 0; }
-        .regime-selector { display: flex; background: #eee; border-radius: 10px; margin: 15px 0; padding: 5px; }
-        .regime-btn { flex: 1; padding: 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
-        .regime-btn.active { color: white; background: #1a73e8; border-radius: 8px; }
-        label { font-weight: bold; display: block; margin-top: 15px; font-size: 12px; color: #555; }
-        input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; outline-color: #1a73e8; }
-        .btn-calc { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .btn-wa { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 10px; text-align: center; }
-        .btn-share { width: 100%; padding: 15px; background: #075E54; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        #oldInputs { display: none; background: #fdfdfd; padding: 12px; border: 1px dashed #1a73e8; border-radius: 10px; margin-top: 10px; }
-        #resultBox { margin-top: 20px; display: none; }
-        .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 12px; text-align: center; }
-        .tax-val { font-size: 30px; color: #d32f2f; font-weight: bold; }
-        #detailedReport { display: none; background: #fff; padding: 15px; border-radius: 12px; border: 1px solid #4caf50; margin-top: 15px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; position: relative; z-index: 1; border: 1px solid #e0e0e0; }
+        .header { text-align: center; border-bottom: 2px solid #1a73e8; margin-bottom: 15px; padding-bottom: 10px; }
+        .header h1 { color: #1a73e8; font-size: 18px; margin: 0; }
+        .regime-selector { display: flex; background: #eee; border-radius: 8px; margin: 10px 0; padding: 4px; }
+        .regime-btn { flex: 1; padding: 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 13px; }
+        .regime-btn.active { color: white; background: #1a73e8; border-radius: 6px; }
+        label { font-weight: bold; display: block; margin-top: 12px; font-size: 12px; color: #444; }
+        input { width: 100%; padding: 10px; margin-top: 4px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; outline: none; }
+        .btn-calc { width: 100%; padding: 14px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .tax-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center; display: none; }
+        .tax-val { font-size: 28px; color: #d32f2f; font-weight: bold; }
+        #detailedReport { display: none; margin-top: 15px; background: #fff; padding: 10px; border: 1px solid #4caf50; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
         td { padding: 6px 0; border-bottom: 1px solid #eee; }
         .val { text-align: right; font-weight: bold; }
-        .subtotal { color: #1a73e8; background: #f0f7ff; }
+        .action-btns { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-wa { flex: 1; padding: 12px; background: #25D366; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-unlock { flex: 1; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -34,168 +40,143 @@
 <div class="card">
     <div class="header">
         <h1>Anurag Karundia & Company</h1>
-        <div id="displayRegime" style="color:#1a73e8; font-weight:bold; font-size:11px; margin-top:5px;">FY 2025-26 | New Tax Regime</div>
+        <div id="displayRegime" style="font-size:11px; font-weight:bold; color:#1a73e8;">FY 2025-26 | New Regime</div>
     </div>
 
     <label>Taxpayer Name</label>
     <input type="text" id="uName" placeholder="Full Name">
-
     <label>Mobile Number</label>
-    <input type="text" id="uMob" maxlength="10" placeholder="10 Digit Mobile No." oninput="this.value=this.value.replace(/[^0-9]/g,'');">
-
+    <input type="text" id="uMob" maxlength="10" placeholder="10 Digit Mobile" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
     <label>PAN Number</label>
     <input type="text" id="uPan" maxlength="10" placeholder="ABCDE1234F" style="text-transform: uppercase;">
 
-    <label>Tax Regime (Touch to Switch)</label>
+    <label>Tax Regime</label>
     <div class="regime-selector">
         <div id="btnNew" class="regime-btn active" onclick="switchRegime('NEW')">New Regime</div>
         <div id="btnOld" class="regime-btn" onclick="switchRegime('OLD')">Old Regime</div>
     </div>
 
-    <label>Income from Salary / Business</label>
+    <label>Salary / Business Income</label>
     <input type="number" id="uSal" value="0">
-
-    <label>Other Sources Income (Interest/Others)</label>
+    <label>Other Sources Income</label>
     <input type="number" id="uOther" value="0">
 
-    <div id="oldInputs">
-        <label>Home Loan Interest (Sec 24b)</label>
+    <div id="oldInputs" style="display:none; background:#f9f9f9; padding:10px; border-radius:8px; border:1px dashed #1a73e8; margin-top:10px;">
+        <label>Home Loan Interest (24b)</label>
         <input type="number" id="uLoan" value="0">
-        <label>Section 80C (Max 1.5L)</label>
+        <label>Sec 80C (Max 1.5L)</label>
         <input type="number" id="u80c" value="0">
-        <label>Section 80D (Health Ins.)</label>
+        <label>Sec 80D (Health Insurance)</label>
         <input type="number" id="u80d" value="0">
-        <label>Section 80CCD (NPS - Max 50k)</label>
+        <label>NPS 80CCD (Max 50k)</label>
         <input type="number" id="uNps" value="0">
     </div>
 
     <button class="btn-calc" onclick="calculateTax()">Calculate Tax</button>
 
-    <div id="resultBox">
-        <div class="tax-card">
-            <p style="margin:0; font-size:13px;">Net Tax Payable (<span id="resRegimeName">New</span>):</p>
-            <div class="tax-val" id="resTax">₹0</div>
-        </div>
-        <button id="waButton" class="btn-wa" onclick="unlockAndSend()">Unlock Full Detailed Computation<br>(WhatsApp)</button>
+    <div id="taxBox" class="tax-card">
+        <p style="margin:0; font-size:13px;">Net Tax Payable (<span id="resRegimeName">New</span>):</p>
+        <div class="tax-val" id="resTax">₹0</div>
         
-        <div id="detailedReport">
-            <h4 style="margin:0; color:#2e7d32; border-bottom: 2px solid #4caf50;">Computation of Income</h4>
-            <table id="compTable"></table>
-            <button class="btn-share" onclick="shareReport()">📲 Share Report on WhatsApp</button>
+        <div class="action-btns">
+            <button class="btn-wa" onclick="shareOnWhatsApp()">WhatsApp Share</button>
+            <button class="btn-unlock" id="unlockBtn" onclick="unlockDetails()">View Details</button>
         </div>
+    </div>
+
+    <div id="detailedReport">
+        <h4 style="margin:0; color:#2e7d32; border-bottom:2px solid #4caf50;">Professional Computation</h4>
+        <table id="compTable"></table>
     </div>
 </div>
 
 <script>
     var currentRegime = "NEW";
+    var finalTaxValue = 0;
 
     function switchRegime(type) {
         currentRegime = type;
         document.getElementById('btnNew').classList.toggle('active', type === 'NEW');
         document.getElementById('btnOld').classList.toggle('active', type === 'OLD');
-        document.getElementById('displayRegime').innerText = "FY 2025-26 | " + type + " Tax Regime";
+        document.getElementById('displayRegime').innerText = "FY 2025-26 | " + type + " Regime";
         document.getElementById('oldInputs').style.display = (type === 'OLD') ? "block" : "none";
-        document.getElementById('resultBox').style.display = "none";
+        document.getElementById('taxBox').style.display = "none";
+        document.getElementById('detailedReport').style.display = "none";
     }
 
     function calculateTax() {
-        var n = document.getElementById('uName').value;
-        var m = document.getElementById('uMob').value;
-        var p = document.getElementById('uPan').value;
+        var n = document.getElementById('uName').value.trim();
+        var m = document.getElementById('uMob').value.trim();
+        var p = document.getElementById('uPan').value.trim().toUpperCase();
         var sal = parseFloat(document.getElementById('uSal').value) || 0;
         var other = parseFloat(document.getElementById('uOther').value) || 0;
 
-        if(!n || m.length<10 || p.length<10) { alert("Please enter all details correctly!"); return; }
+        if(!n || m.length !== 10 || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(p)) {
+            alert("⚠️ Please enter valid Name, 10-digit Mobile and correct PAN.");
+            return;
+        }
 
         var stdDed = (currentRegime === "NEW") ? 75000 : 50000;
-        var dLoan = (currentRegime === "OLD") ? Math.min(200000, parseFloat(document.getElementById('uLoan').value) || 0) : 0;
-        
-        // --- PRO SEQUENCE ---
-        var balanceSal = Math.max(0, sal - stdDed - dLoan);
-        var gti = balanceSal + other; // Gross Total Income (GTI)
+        var loan = (currentRegime === "OLD") ? Math.min(200000, parseFloat(document.getElementById('uLoan').value) || 0) : 0;
+        var balInc = Math.max(0, sal - stdDed - loan);
+        var gti = balInc + other;
         
         var d80c = (currentRegime === "OLD") ? Math.min(150000, parseFloat(document.getElementById('u80c').value) || 0) : 0;
         var d80d = (currentRegime === "OLD") ? (parseFloat(document.getElementById('u80d').value) || 0) : 0;
         var dNps = (currentRegime === "OLD") ? Math.min(50000, parseFloat(document.getElementById('uNps').value) || 0) : 0;
-        
-        var taxableNet = Math.max(0, gti - d80c - d80d - dNps); // Net Taxable Income
+        var taxable = Math.max(0, gti - d80c - d80d - dNps);
 
-        var slabTax = 0;
+        var tax = 0;
         if (currentRegime === "NEW") {
-            if (taxableNet > 2400000) slabTax = 300000 + (taxableNet - 2400000) * 0.3;
-            else if (taxableNet > 2000000) slabTax = 200000 + (taxableNet - 2000000) * 0.25;
-            else if (taxableNet > 1600000) slabTax = 120000 + (taxableNet - 1600000) * 0.2;
-            else if (taxableNet > 1200000) slabTax = 60000 + (taxableNet - 1200000) * 0.15;
-            else if (taxableNet > 800000) slabTax = 20000 + (taxableNet - 800000) * 0.1;
-            else if (taxableNet > 400000) slabTax = (taxableNet - 400000) * 0.05;
+            if (taxable > 2400000) tax = 300000 + (taxable - 2400000) * 0.3;
+            else if (taxable > 2000000) tax = 200000 + (taxable - 2000000) * 0.25;
+            else if (taxable > 1600000) tax = 120000 + (taxable - 1600000) * 0.2;
+            else if (taxable > 1200000) tax = 60000 + (taxable - 1200000) * 0.15;
+            else if (taxable > 800000) tax = 20000 + (taxable - 800000) * 0.1;
+            else if (taxable > 400000) tax = (taxable - 400000) * 0.05;
         } else {
-            if (taxableNet > 1000000) slabTax = 112500 + (taxableNet - 1000000) * 0.3;
-            else if (taxableNet > 500000) slabTax = 12500 + (taxableNet - 500000) * 0.2;
-            else if (taxableNet > 250000) slabTax = (taxableNet - 250000) * 0.05;
+            if (taxable > 1000000) tax = 112500 + (taxable - 1000000) * 0.3;
+            else if (taxable > 500000) tax = 12500 + (taxable - 500000) * 0.2;
+            else if (taxable > 250000) tax = (taxable - 250000) * 0.05;
         }
 
-        var rebate = 0;
-        if (currentRegime === "NEW") {
-            if (taxableNet <= 1200000) rebate = slabTax;
-            else if (slabTax > (taxableNet - 1200000)) rebate = slabTax - (taxableNet - 1200000);
-        } else {
-            if (taxableNet <= 500000) rebate = Math.min(slabTax, 12500);
-        }
+        var rebate = (currentRegime === "NEW" && taxable <= 1200000) ? tax : (currentRegime === "OLD" && taxable <= 500000 ? Math.min(tax, 12500) : 0);
+        if (currentRegime === "NEW" && taxable > 1200000 && tax > (taxable - 1200000)) rebate = tax - (taxable - 1200000);
 
-        var taxBeforeCess = Math.max(0, slabTax - rebate);
-        var cess = taxBeforeCess * 0.04;
-        var finalTax = Math.round((taxBeforeCess + cess) / 10) * 10;
+        var taxAfterRebate = Math.max(0, tax - rebate);
+        finalTaxValue = Math.round((taxAfterRebate + (taxAfterRebate * 0.04)) / 10) * 10;
 
-        document.getElementById('resTax').innerText = "₹" + finalTax.toLocaleString('en-IN');
+        document.getElementById('resTax').innerText = "₹" + finalTaxValue.toLocaleString('en-IN');
         document.getElementById('resRegimeName').innerText = currentRegime;
-        
-        var tableHtml = `
-            <tr><td>Income from Salary/Business</td><td class="val">₹${sal.toLocaleString('en-IN')}</td></tr>
-            <tr><td>Less: Standard Deduction</td><td class="val">-₹${stdDed.toLocaleString('en-IN')}</td></tr>`;
-        
-        if(currentRegime === "OLD") {
-            tableHtml += <tr><td>Less: Home Loan Int (24b)</td><td class="val">-₹${dLoan.toLocaleString('en-IN')}</td></tr>;
-        }
-        
-        tableHtml += <tr class="subtotal"><td><b>Balance Income</b></td><td class="val">₹${balanceSal.toLocaleString('en-IN')}</td></tr>;
-        tableHtml += <tr><td>Add: Other Sources Income</td><td class="val">₹${other.toLocaleString('en-IN')}</td></tr>;
-        tableHtml += <tr style="background:#eee;"><td><b>Gross Total Income (GTI)</b></td><td class="val">₹${gti.toLocaleString('en-IN')}</td></tr>;
-
-        if(currentRegime === "OLD") {
-            tableHtml += <tr><td>Less: Deductions (80C, 80D, NPS)</td><td class="val">-₹${(d80c+d80d+dNps).toLocaleString('en-IN')}</td></tr>;
-        }
-
-        tableHtml += `
-            <tr style="background:#f9f9f9; color:#d32f2f;"><td><b>Net Taxable Income</b></td><td class="val">₹${taxableNet.toLocaleString('en-IN')}</td></tr>
-            <tr><td>Tax on Slab</td><td class="val">₹${Math.round(slabTax).toLocaleString('en-IN')}</td></tr>
-            <tr><td>Rebate/Relief</td><td class="val">-₹${Math.round(rebate).toLocaleString('en-IN')}</td></tr>
-            <tr><td>Cess (4%)</td><td class="val">₹${Math.round(cess).toLocaleString('en-IN')}</td></tr>
-            <tr style="font-size:15px; background:#e8f5e9;"><td><b>Final Tax Payable</b></td><td class="val"><b>₹${finalTax.toLocaleString('en-IN')}</b></td></tr>
-        `;
-        document.getElementById('compTable').innerHTML = tableHtml;
-        document.getElementById('resultBox').style.display = "block";
+        document.getElementById('taxBox').style.display = "block";
+        document.getElementById('unlockBtn').style.display = "block";
         document.getElementById('detailedReport').style.display = "none";
-        document.getElementById('waButton').style.display = "block";
+
+        var tableHtml = `
+            <tr><td>Income from Salary</td><td class="val">₹${sal.toLocaleString('en-IN')}</td></tr>
+            <tr><td>Standard Deduction</td><td class="val">-₹${stdDed.toLocaleString('en-IN')}</td></tr>
+            <tr style="color:#1a73e8;"><td><b>Balance Income</b></td><td class="val">₹${balInc.toLocaleString('en-IN')}</td></tr>
+            <tr><td>Gross Total Income</td><td class="val">₹${gti.toLocaleString('en-IN')}</td></tr>
+            <tr style="color:red;"><td><b>Net Taxable Income</b></td><td class="val">₹${taxable.toLocaleString('en-IN')}</td></tr>
+            <tr style="background:#e8f5e9;"><td><b>Total Tax</b></td><td class="val">₹${finalTaxValue.toLocaleString('en-IN')}</td></tr>`;
+        document.getElementById('compTable').innerHTML = tableHtml;
+        
+        gtag('event', 'tax_calculated', {'name': n, 'regime': currentRegime});
     }
 
-    function unlockAndSend() {
+    function shareOnWhatsApp() {
+        var name = document.getElementById('uName').value;
+        var msg = Tax Report: ${name}%0AIncome: ₹${document.getElementById('uSal').value}%0ARegime: ${currentRegime}%0ANet Tax: ₹${finalTaxValue}%0A%0AComputed by Anurag Karundia & Co.;
+        window.open(https://wa.me/?text=${msg}, '_blank');
+    }
+
+    function unlockDetails() {
         var m = document.getElementById('uMob').value;
-        window.open(https://wa.me/919634100100?text=Computation Unlock Request, '_blank');
-        setTimeout(function() {
-            var input = prompt("Security: Enter last 3 digits of mobile:");
-            if (input === m.slice(-3)) {
-                document.getElementById('waButton').style.display = "none";
-                document.getElementById('detailedReport').style.display = "block";
-            }
-        }, 1000);
-    }
-
-    function shareReport() {
-        var n = document.getElementById('uName').value;
-        var p = document.getElementById('uPan').value;
-        var final = document.getElementById('resTax').innerText;
-        var report = *TAX REPORT - ANURAG KARUNDIA & CO*\n---------------------------\n*Taxpayer:* ${n}\n*PAN:* ${p}\n*Regime:* ${currentRegime}\n*Net Tax Payable:* ${final}\n---------------------------\n_Professional Calculation_;
-        window.open(https://wa.me/?text=${encodeURIComponent(report)}, '_blank');
+        var code = prompt("Enter last 3 digits of Mobile:");
+        if(code === m.slice(-3)) {
+            document.getElementById('unlockBtn').style.display = "none";
+            document.getElementById('detailedReport').style.display = "block";
+        } else { alert("Wrong code!"); }
     }
 </script>
 </body>
