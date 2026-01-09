@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- ADD THIS META TAG -->
+    <meta name="notification" content="Kindly Calculate your Income Tax and deduct accordingly in monthly salary.">
+    
 <style>
     body {
         font-family: 'Segoe UI', Arial, sans-serif;
@@ -48,32 +51,88 @@
         text-align: right;
     }
 
-    /* Optional pulse effect */
     .notification-container:hover {
         box-shadow: 0 0 15px rgba(26,115,232,0.2);
         transition: 0.3s;
     }
 </style>
+
+<script>
+// Auto-detect and show notification
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        // Get notification content
+        var title = "Important Notification";
+        var message = "Kindly Calculate your Income Tax and deduct accordingly in monthly salary.";
+        
+        // Try all methods to show notification
+        showAndroidNotificationIfAvailable(title, message);
+    }, 1000); // 1 second delay
+});
+
+function showAndroidNotificationIfAvailable(title, message) {
+    // Method 1: Direct function
+    if (typeof showAndroidNotification !== 'undefined') {
+        showAndroidNotification(title, message);
+        return;
+    }
+    
+    // Method 2: Android interface
+    if (typeof Android !== 'undefined' && Android.showNotification) {
+        Android.showNotification(title, message);
+        return;
+    }
+    
+    // Method 3: Custom event
+    try {
+        var event = new CustomEvent('showNotification', {
+            detail: { title: title, message: message }
+        });
+        document.dispatchEvent(event);
+    } catch(e) {
+        console.log("Notification methods not available");
+    }
+}
+
+// Make function globally available
+window.showNotificationInApp = function() {
+    var title = "Important Notification";
+    var message = "Kindly Calculate your Income Tax and deduct accordingly in monthly salary.";
+    
+    showAndroidNotificationIfAvailable(title, message);
+};
+</script>
 </head>
 <body>
 
-<div class="notification-container">
+<div class="notification-container" data-title="Important Notification">
     <div class="notification-title">
         🔔 Important Notification
     </div>
 
     <div class="notification-message">
         Kindly Calculate your <b>Income Tax </b> and deduct accordingly in monthly salary. 
-
     </div>
-
-    
-       
 
     <div class="notification-time">
         Updated: Today
     </div>
 </div>
+
+<button onclick="showNotificationInApp()" style="
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+">
+    📱 Show in App Notification
+</button>
 
 </body>
 </html>
