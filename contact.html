@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f4f7f9;
+        margin: 0;
+        padding: 15px;
+        color: #333;
+    }
+
+    /* Top Header */
+    .header {
+        background: #1a73e8;
+        color: #fff;
+        padding: 14px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 12px 12px 0 0;
+        animation: slideDown 0.8s ease;
+        letter-spacing: 0.5px;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border: 1px solid #e0e0e0;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .info-row {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 18px;
+        font-size: 14px;
+    }
+
+    .icon {
+        width: 36px;
+        height: 36px;
+        background: #e8f0fe;
+        color: #1a73e8;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    .label {
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 4px;
+        color: #2c3e50;
+    }
+
+    .value {
+        color: #444;
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+        margin-top: 30px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .whatsapp-box {
+        background: #25D366;
+        padding: 14px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .whatsapp-box:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 18px rgba(37, 211, 102, 0.55);
+    }
+
+    .whatsapp-box img {
+        width: 26px;
+        height: 26px;
+        margin-right: 10px;
+    }
+
+    .whatsapp-text {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 0.3px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    Contact & Support
+</div>
+
+<div class="container">
+
+    <div class="info-row">
+        <div class="icon">📞</div>
+        <div>
+            <div class="label">Phone</div>
+            <div class="value">+91-9634100100, +91-8860569579</div>
+        </div>
+    </div>
+
+    <div class="info-row">
+        <div class="icon">✉</div>
+        <div>
+            <div class="label">Email</div>
+            <div class="value">akcpdn1@gmail.com</div>
+        </div>
+    </div>
+
+    <div class="info-row">
+        <div class="icon">📍</div>
+        <div>
+            <div class="label">Address</div>
+            <div class="value">Sahabganj North, Padrauna Dist-Kushinagar</div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/919634100100" class="whatsapp-btn">
+        <div class="whatsapp-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+            <div class="whatsapp-text">Chat Directly on WhatsApp</div>
+        </div>
+    </a>
+
+</div>
+
+</body>
+</html>
