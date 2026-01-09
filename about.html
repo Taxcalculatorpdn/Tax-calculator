@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container Animation */
+        .content-container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            max-width: 800px;
+            margin: auto;
+            animation: fadeSlideUp 0.9s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tagline Animation */
+        .tagline {
+            color: #1a73e8;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            animation: fadeIn 1.2s ease forwards;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+
+        p {
+            font-size: 15px;
+            margin-top: 0;
+            color: #444;
+            text-align: justify;
+            animation: fadeIn 1.3s ease forwards;
+            opacity: 0;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #e3f2fd;
+            margin: 20px 0;
+            animation: growLine 1s ease forwards;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        @keyframes growLine {
+            to { transform: scaleX(1); }
+        }
+
+        /* Section Title Animation */
+        .section-title {
+            font-size: 17px;
+            color: #1a73e8;
+            font-weight: bold;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e3f2fd;
+            padding-bottom: 5px;
+            animation: slideLeft 0.8s ease forwards;
+            opacity: 0;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes slideLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Services Staggered Animation */
+        .service {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #444;
+            opacity: 0;
+            animation: slideRight 0.8s ease forwards;
+        }
+
+        .service:nth-child(6) { animation-delay: 0.7s; }
+        .service:nth-child(7) { animation-delay: 0.85s; }
+        .service:nth-child(8) { animation-delay: 1s; }
+
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .service b {
+            color: #2c3e50;
+        }
+
+        /* Highlight Box Pulse */
+        .highlight-box {
+            background-color: #f8fbff;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #1a73e8;
+            font-size: 14px;
+            color: #444;
+            margin-top: 10px;
+            animation: softPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes softPulse {
+            0% { box-shadow: 0 0 0 rgba(26,115,232,0); }
+            50% { box-shadow: 0 0 12px rgba(26,115,232,0.15); }
+            100% { box-shadow: 0 0 0 rgba(26,115,232,0); }
+        }
+
+        /* Footer Quote */
+        .footer-quote {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+            animation-delay: 1.2s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-container">
+
+    <div class="tagline">
+        Serving Excellence Since 2017
+    </div>
+
+    <p>
+        Welcome to our professional consultancy firm. With over <b>9 years</b> of dedicated experience, we specialize in expert Tax Consultancy, Legal Advisory, and all types of Government & Business Form services.
+    </p>
+
+    <hr>
+
+    <div class="section-title">Our Expertise</div>
+
+    <div class="service">
+        <b>• Tax Consultancy:</b> Expert guidance on income tax and financial planning.
+    </div>
+    <div class="service">
+        <b>• Legal Advisory:</b> Professional support for legal documentation and compliance.
+    </div>
+    <div class="service" style="margin-bottom:20px;">
+        <b>• Form Services:</b> Accurate and timely processing of all business and government forms.
+    </div>
+
+    <div class="highlight-box">
+        <b>Why Choose Us?</b><br>
+        Since our establishment in 2017, our priority has always been <b>accuracy, transparency, and client satisfaction</b>. We ensure a seamless experience for every client.
+    </div>
+
+    <div class="footer-quote">
+        "Your trust is our greatest achievement."
+    </div>
+
+</div>
+
+</body>
+</html>
