@@ -1,153 +1,229 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-    body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background-color: #f4f7f9;
-        margin: 0;
-        padding: 15px;
-        color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Support - Anurag Karundia & Co.</title>
+    <style>
+        :root {
+            --primary: #0A1E3F;
+            --primary-mid: #0D47A1;
+            --primary-light: #1565C0;
+            --text-main: #1E293B;
+            --text-sub: #475569;
+            --bg: #F4F7F9;
+        }
 
-    /* Top Header */
-    .header {
-        background: #1a73e8;
-        color: #fff;
-        padding: 14px;
-        text-align: center;
-        font-size: 16px;
-        font-weight: bold;
-        border-radius: 12px 12px 0 0;
-        animation: slideDown 0.8s ease;
-        letter-spacing: 0.5px;
-    }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 14px;
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+        }
 
-    .container {
-        background: #ffffff;
-        padding: 25px;
-        border-radius: 0 0 15px 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        border: 1px solid #e0e0e0;
-        max-width: 800px;
-        margin: auto;
-    }
+        .main-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #E1E8ED;
+            max-width: 520px;
+            width: 100%;
+            overflow: hidden;
+            animation: cardEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-    .info-row {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 18px;
-        font-size: 14px;
-    }
+        @keyframes cardEnter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .icon {
-        width: 36px;
-        height: 36px;
-        background: #e8f0fe;
-        color: #1a73e8;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 16px;
-        margin-right: 12px;
-        flex-shrink: 0;
-    }
+        /* PREMIUM FINTECH ROYAL NAVY HEADER */
+        .brand-header {
+            background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 50%, #1565C0 100%);
+            color: #ffffff;
+            padding: 22px 20px;
+            text-align: center;
+        }
 
-    .label {
-        font-weight: bold;
-        font-size: 15px;
-        margin-bottom: 4px;
-        color: #2c3e50;
-    }
+        .brand-header h1 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
 
-    .value {
-        color: #444;
-    }
+        .brand-header p {
+            margin: 6px 0 0;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #90CAF9;
+        }
 
-    /* WhatsApp Button */
-    .whatsapp-btn {
-        margin-top: 30px;
-        text-decoration: none;
-        display: block;
-    }
+        .content {
+            padding: 22px 20px;
+        }
 
-    .whatsapp-box {
-        background: #25D366;
-        padding: 14px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+        .info-card {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
 
-    .whatsapp-box:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 18px rgba(37, 211, 102, 0.55);
-    }
+        .info-card:active {
+            transform: scale(0.98);
+            background: #EFF6FF;
+            border-color: #BFDBFE;
+        }
 
-    .whatsapp-box img {
-        width: 26px;
-        height: 26px;
-        margin-right: 10px;
-    }
+        .icon-circle {
+            width: 44px;
+            height: 44px;
+            background: #EFF6FF;
+            color: #0D47A1;
+            border: 1px solid #BFDBFE;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
 
-    .whatsapp-text {
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-        letter-spacing: 0.3px;
-    }
-</style>
+        .info-body {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #64748B;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #0A1E3F;
+            word-break: break-word;
+        }
+
+        /* WHATSAPP BUTTON */
+        .whatsapp-cta {
+            margin-top: 24px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .whatsapp-box {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            padding: 16px 20px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: #ffffff;
+        }
+
+        .whatsapp-box:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+        }
+
+        .whatsapp-text {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #94A3B8;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="header">
-    Contact & Support
-</div>
-
-<div class="container">
-
-    <div class="info-row">
-        <div class="icon">📞</div>
-        <div>
-            <div class="label">Phone</div>
-            <div class="value">+91-9634100100, +91-8860569579</div>
-        </div>
+<div class="main-card">
+    <div class="brand-header">
+        <h1>Anurag Karundia & Co.</h1>
+        <p>Contact & Client Support</p>
     </div>
 
-    <div class="info-row">
-        <div class="icon">✉</div>
-        <div>
-            <div class="label">Email</div>
-            <div class="value">akcpdn1@gmail.com</div>
+    <div class="content">
+        <!-- PHONE -->
+        <a href="tel:+919634100100" class="info-card">
+            <div class="icon-circle">📞</div>
+            <div class="info-body">
+                <div class="info-label">Direct Phone Numbers</div>
+                <div class="info-value">+91-9634100100</div>
+                <div class="info-value" style="font-size:13px; color:#475569; font-weight:600;">+91-8860569579</div>
+            </div>
+        </a>
+
+        <!-- EMAIL -->
+        <a href="mailto:akcpdn1@gmail.com" class="info-card">
+            <div class="icon-circle">✉️</div>
+            <div class="info-body">
+                <div class="info-label">Official Email Support</div>
+                <div class="info-value">akcpdn1@gmail.com</div>
+            </div>
+        </a>
+
+        <!-- OFFICE ADDRESS -->
+        <div class="info-card" style="cursor:default;">
+            <div class="icon-circle">📍</div>
+            <div class="info-body">
+                <div class="info-label">Office Address</div>
+                <div class="info-value" style="font-size:13.5px; font-weight:600;">Sahabganj North, Padrauna Dist-Kushinagar (U.P.)</div>
+            </div>
+        </div>
+
+        <!-- WHATSAPP CTA -->
+        <a href="https://wa.me/919634100100" class="whatsapp-cta" target="_blank">
+            <div class="whatsapp-box">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/>
+                </svg>
+                <span class="whatsapp-text">Chat Directly on WhatsApp</span>
+            </div>
+        </a>
+
+        <div class="footer-note">
+            Anurag Karundia & Co. • Professional Tax Consultancy
         </div>
     </div>
-
-    <div class="info-row">
-        <div class="icon">📍</div>
-        <div>
-            <div class="label">Address</div>
-            <div class="value">Sahabganj North, Padrauna Dist-Kushinagar</div>
-        </div>
-    </div>
-
-    <a href="https://wa.me/919634100100" class="whatsapp-btn">
-        <div class="whatsapp-box">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-            <div class="whatsapp-text">Chat Directly on WhatsApp</div>
-        </div>
-    </a>
-
 </div>
 
 </body>
