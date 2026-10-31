@@ -102,7 +102,7 @@
         .tax-card h1 { color: #d32f2f; margin: 10px 0; font-size: 32px; }
 
         #report { 
-            display: none; background: #fff; border: 1px solid #e1e8ed; 
+            background: #fff; border: 1px solid #e1e8ed; 
             padding: 15px; border-radius: 12px; font-size: 12px; 
         }
 
@@ -125,7 +125,7 @@
         }
 
         /* Popups */
-        #blueAlert, #unlockPop { 
+        #blueAlert { 
             display: none; position: fixed; top: 50%; left: 50%; 
             transform: translate(-50%, -50%); background: #fff; 
             padding: 25px; border-radius: 15px; 
@@ -154,15 +154,6 @@
 <div id="blueAlert">
     <div id="alertMsg" style="color: #333; font-size: 16px; margin-bottom: 10px;"></div>
     <button class="close-pop" onclick="closePopup()">OK</button>
-</div>
-
-<div id="unlockPop">
-    <div style="color: var(--primary-color); font-weight: bold; margin-bottom: 10px;">UNLOCK REPORT</div>
-    <p style="font-size: 14px; color: #555;">Enter last 3 digits of mobile to unlock report:</p>
-    <input type="text" id="unlockCodeInput" maxlength="3" style="text-align: center; margin-bottom: 15px; letter-spacing: 5px;">
-    <br>
-    <button class="close-pop" onclick="verifyUnlock()">UNLOCK</button>
-    <button onclick="closeUnlockPop()" style="background:none; border:none; color: #999; cursor:pointer; font-size: 12px; margin-left: 10px;">Cancel</button>
 </div>
 
 <div class="container">
@@ -210,9 +201,7 @@
             <div class="tax-card">
                 <div style="font-size: 13px; font-weight: bold; color: #555;">Final Net Tax Payable</div>
                 <h1 id="finalTaxVal">Rs. 0</h1>
-                <div id="lockLabel" style="font-size: 11px; color: #f57c00; font-weight: 800; letter-spacing: 1px;">DETAILS LOCKED &#128274;</div>            </div>
-            
-            <button id="waBtn" class="wa-btn" onclick="sendWA()">For computation details click here and come back</button>
+            </div>
             
             <div id="report">
                 <div style="text-align:center; font-weight: bold; margin-bottom: 10px; color: var(--primary-color);">TAX COMPUTATION</div>
@@ -255,7 +244,8 @@
               '------------------------------------\n' +
               'Anurag Karundia & Co.';
     window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
-">Share on WhatsApp</button>            </div>
+">Share on WhatsApp</button>
+            </div>
         </div>
     </div>
 </div>
@@ -268,10 +258,6 @@ function showBluePopup(msg) {
 }
 function closePopup() {
     document.getElementById('blueAlert').style.display = "none";
-    document.getElementById('overlay').style.display = "none";
-}
-function closeUnlockPop() {
-    document.getElementById('unlockPop').style.display = "none";
     document.getElementById('overlay').style.display = "none";
 }
 
@@ -343,30 +329,7 @@ function runCalculation() {
     document.getElementById('finalTaxVal').innerText = "Rs. " + final.toLocaleString('en-IN');
 
     document.getElementById('resDiv').style.display = "block";
-    document.getElementById('report').style.display = "none";
-    document.getElementById('waBtn').style.display = "block";
-    document.getElementById('lockLabel').style.display = "block";
-}
-
-function sendWA() {
-    window.open("https://wa.me/919634100100?text=Tax Report Requested", "_blank");
-    setTimeout(function() {
-        document.getElementById('unlockPop').style.display = "block";
-        document.getElementById('overlay').style.display = "block";
-    }, 1000);
-}
-
-function verifyUnlock() {
-    var m = document.getElementById('uMob').value;
-    var enteredCode = document.getElementById('unlockCodeInput').value;
-    if (enteredCode === m.slice(-3)) {
-        document.getElementById('waBtn').style.display = "none";
-        document.getElementById('lockLabel').style.display = "none";
-        document.getElementById('report').style.display = "block";
-        closeUnlockPop();
-    } else {
-        alert("Invalid digits! Please try again.");
-    }
+    document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
 }
 </script>
 </body>
