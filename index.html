@@ -333,6 +333,78 @@
             border-radius: 8px; cursor: pointer; font-weight: bold; 
         }
 
+        /* QUICK OFFICIAL PORTALS */
+        .portal-box {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        .portal-header {
+            font-size: 12px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+        }
+
+        .portal-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .portal-card {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .portal-card:active {
+            transform: scale(0.98);
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .portal-icon {
+            width: 36px;
+            height: 36px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #0d47a1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .portal-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #0d47a1;
+        }
+
+        .portal-desc {
+            font-size: 11.5px;
+            color: #64748b;
+        }
+
+        .portal-arrow {
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
         /* ======================================================== */
         /* EXACT OFFICIAL ANURAG KARUNDIA & CO. STATEMENT FOR PDF */
         /* ======================================================== */
@@ -367,14 +439,14 @@
                 top: 48%;
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-32deg);
-                font-size: 42px;
+                font-size: 44px;
                 font-weight: 900;
-                color: rgba(0, 0, 0, 0.15) !important;
+                color: rgba(0, 0, 0, 0.20) !important;
                 white-space: nowrap;
                 pointer-events: none;
                 z-index: 0;
                 text-transform: uppercase;
-                letter-spacing: 4px;
+                letter-spacing: 5px;
                 font-family: Arial, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -459,28 +531,35 @@
         <!-- 3. PERSONAL DETAILS -->
         <div class="section-title">Personal Details</div>
         <div class="input-group">
-            <label>Full Name</label>
+            <label>Full Name <span style="color:#d32f2f;">*</span></label>
             <input type="text" id="uName" placeholder="Enter Taxpayer Name">
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
-                <label>Date of Birth</label>
-                <input type="date" id="uDob">
+                <label>Date of Birth <span style="color:#d32f2f;">*</span></label>
+                <div style="position:relative;">
+                    <input type="text" inputmode="numeric" id="uDob" maxlength="10" placeholder="DD / MM / YYYY" oninput="formatDOB(this)" style="padding-left:36px; font-weight:700; letter-spacing:0.8px;">
+                    <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none;">📅</span>
+                </div>
             </div>
             <div class="input-group">
-                <label>District Name</label>
-                <input type="text" id="uDistrict" placeholder="e.g. Kushinagar">
+                <label>Mobile Number <span style="color:#d32f2f;">*</span></label>
+                <input type="text" id="uMob" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Enter 10-digit Mobile">
             </div>
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
-                <label>Mobile Number</label>
-                <input type="text" id="uMob" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Enter Mobile Number">
-            </div>
-            <div class="input-group">
-                <label>PAN Number</label>
+                <label>PAN Number <span style="color:#d32f2f;">*</span></label>
                 <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
             </div>
+            <div class="input-group">
+                <label>District Name <span style="font-size:11px; color:#64748b; font-weight:normal;">(Optional)</span></label>
+                <input type="text" id="uDistrict" placeholder="e.g. Kushinagar">
+            </div>
+        </div>
+        <div class="input-group">
+            <label>Organization / School Name <span style="font-size:11px; color:#64748b; font-weight:normal;">(Optional)</span></label>
+            <input type="text" id="uOrg" placeholder="e.g. Madarsa / School / Office">
         </div>
 
         <!-- 4. SALARY & SCHEDULE DETAILS -->
@@ -643,6 +722,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- QUICK OFFICIAL PORTALS (INCOME TAX & NPS REDIRECTS) -->
+        <div class="portal-box">
+            <div class="portal-header">
+                <span>🌐 Official Government Portals</span>
+            </div>
+            <div class="portal-links">
+                <a href="https://eportal.incometax.gov.in" target="_blank" class="portal-card">
+                    <div class="portal-icon">🏛️</div>
+                    <div style="flex:1;">
+                        <div class="portal-name">Income Tax Portal (Redirect)</div>
+                        <div class="portal-desc">e-Filing & Official Income Tax Website</div>
+                    </div>
+                    <div class="portal-arrow">↗</div>
+                </a>
+                <a href="https://enps.nsdl.com" target="_blank" class="portal-card">
+                    <div class="portal-icon">🏦</div>
+                    <div style="flex:1;">
+                        <div class="portal-name">NPS Portal (Redirect)</div>
+                        <div class="portal-desc">National Pension System CRA Portal</div>
+                    </div>
+                    <div class="portal-arrow">↗</div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -679,6 +783,10 @@
                     <td class="meta-val fw-bold" id="pPanCell">-</td>
                     <td class="meta-label">District Name</td>
                     <td class="meta-val fw-bold" id="pDistCell">-</td>
+                </tr>
+                <tr>
+                    <td class="meta-label">Organization</td>
+                    <td colspan="3" class="meta-val fw-bold text-left" id="pOrgCell">&nbsp;</td>
                 </tr>
             </table>
 
@@ -1010,6 +1118,17 @@ function selectRegime(regime) {
     updateHeader();
 }
 
+function formatDOB(el) {
+    var v = el.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length >= 5) {
+        el.value = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+    } else if (v.length >= 3) {
+        el.value = v.slice(0, 2) + '/' + v.slice(2);
+    } else {
+        el.value = v;
+    }
+}
+
 function showBluePopup(msg) {
     document.getElementById('alertMsg').innerText = msg;
     document.getElementById('blueAlert').style.display = "block";
@@ -1026,6 +1145,7 @@ function resetForm() {
     document.getElementById('uPan').value = '';
     if (document.getElementById('uDob')) document.getElementById('uDob').value = '';
     if (document.getElementById('uDistrict')) document.getElementById('uDistrict').value = '';
+    if (document.getElementById('uOrg')) document.getElementById('uOrg').value = '';
     document.getElementById('vSal').value = '0';
     document.getElementById('vBus').value = '0';
     document.getElementById('vSTCG').value = '0';
@@ -1045,12 +1165,28 @@ function runCalculation() {
     var pan = document.getElementById('uPan').value.trim().toUpperCase();
     var dob = document.getElementById('uDob') ? document.getElementById('uDob').value.trim() : '';
     var district = document.getElementById('uDistrict') ? document.getElementById('uDistrict').value.trim() : '';
+    var org = document.getElementById('uOrg') ? document.getElementById('uOrg').value.trim() : '';
 
     var junkRepeat = /(.)\1{2,}/; 
     var badNames = ["demo", "admin", "asdf", "qwerty", "test", "abcd"];
     if (name.length < 3 || junkRepeat.test(name) || badNames.includes(name.toLowerCase())) {
         showBluePopup("Enter Valid Taxpayer Name."); return;
     }
+
+    // MANDATORY DATE OF BIRTH VALIDATION
+    var dobMatch = dob.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!dobMatch) {
+        showBluePopup("Enter Valid Date of Birth (DD/MM/YYYY).");
+        return;
+    }
+    var day = parseInt(dobMatch[1], 10);
+    var month = parseInt(dobMatch[2], 10);
+    var year = parseInt(dobMatch[3], 10);
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1920 || year > 2026) {
+        showBluePopup("Enter Realistic Date of Birth (DD/MM/YYYY).");
+        return;
+    }
+
     var mobPattern = /^[6-9]\d{9}$/;
     var isDuplicateMob = /^(.)\1{9}$/.test(mob);
     if (!mobPattern.test(mob) || isDuplicateMob) { showBluePopup("Enter Valid Mobile Number."); return; }
@@ -1204,26 +1340,24 @@ function runCalculation() {
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
 
     // Populate Official Printable Sheet (Matching Photo with Full Slabs)
-    populateOfficialPrintSheet(name, mob, pan, dob, district, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
+    populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
 }
 
-function populateOfficialPrintSheet(name, mob, pan, dob, district, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
+function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
     document.getElementById('pSheetTitle').innerText = "Anurag Karundia & Co. (" + (regime === 'NEW' ? "New Scheme" : "Old Scheme") + ")";
     var startYr = parseInt(fy.split('-')[0]);
     var nextYr = startYr + 1;
     document.getElementById('pFYCell').innerText = fy + " (AY " + nextYr + "-" + String(nextYr + 1).slice(-2) + ")";
     document.getElementById('pMobCell').innerText = mob || "-";
     document.getElementById('pNameCell').innerText = name || "-";
-    
-    // Format DOB DD/MM/YYYY
-    var fDob = "-";
-    if (dob) {
-        var dp = dob.split('-');
-        fDob = dp.length === 3 ? (dp[2] + "/" + dp[1] + "/" + dp[0]) : dob;
-    }
-    document.getElementById('pDobCell').innerText = fDob;
+    document.getElementById('pDobCell').innerText = dob || "-";
     document.getElementById('pPanCell').innerText = pan || "-";
     document.getElementById('pDistCell').innerText = district || "-";
+    if (org) {
+        document.getElementById('pOrgCell').innerText = org;
+    } else {
+        document.getElementById('pOrgCell').innerHTML = '&nbsp;';
+    }
 
     var months = getMonthNames();
     var cycle = document.getElementById('selectedCycle').value;
