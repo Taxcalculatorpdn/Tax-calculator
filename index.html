@@ -33,11 +33,6 @@
             display: flex; justify-content: center; 
         }
 
-        @keyframes pageFadeSlide {
-            0% { opacity: 0; transform: translateY(8px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
         .container { 
             background: var(--card-bg); 
             width: 100%; max-width: 480px; 
@@ -45,7 +40,6 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
             border: 1px solid #e1e8ed;
-            animation: pageFadeSlide 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .header { 
@@ -89,13 +83,27 @@
             outline: none;
         }
 
-        input[type="date"] {
-            font-family: inherit;
+        .modern-date-input {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px;
+            border: 2px solid #bfdbfe;
+            border-radius: 10px;
             font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            padding: 8px 12px;
+            font-weight: 700;
+            color: #1e3a8a;
+            background: #eff6ff;
+            outline: none;
             cursor: pointer;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .modern-date-input:focus {
+            border-color: #1d4ed8;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
         }
 
         /* 1. CUSTOM IN-PAGE DROPDOWN FOR FINANCIAL YEAR (NO ANDROID RADIO POPUP) */
@@ -443,7 +451,7 @@
 <div class="container">
     <div class="header">
         <h2>Anurag Karundia & Co.</h2>
-        <p id="headerRegime">FY 2025-26 | New Tax Regime</p>
+        <p id="headerRegime">FY 2026-27 | New Tax Regime</p>
     </div>
 
     <div class="content-padding">
@@ -453,20 +461,20 @@
             <label>Financial Year</label>
             <div class="custom-dropdown" id="fyDropdownContainer">
                 <div class="dropdown-trigger" onclick="toggleFYDropdown()">
-                    <span id="selectedFYDisplay">FY 2025-26 (AY 2026-27)</span>
+                    <span id="selectedFYDisplay">FY 2026-27 (AY 2027-28)</span>
                     <span class="dropdown-arrow" id="dropdownArrow">▼</span>
                 </div>
                 <div class="dropdown-menu" id="fyDropdownMenu">
-                    <div class="dropdown-item selected" id="itemFY25" onclick="chooseFY('2025-26', 'FY 2025-26 (AY 2026-27)')">
-                        <span>FY 2025-26 (AY 2026-27)</span>
-                        <span class="check-icon" id="checkFY25">✓</span>
-                    </div>
-                    <div class="dropdown-item" id="itemFY26" onclick="chooseFY('2026-27', 'FY 2026-27 (AY 2027-28)')">
+                    <div class="dropdown-item selected" id="itemFY26" onclick="chooseFY('2026-27', 'FY 2026-27 (AY 2027-28)')">
                         <span>FY 2026-27 (AY 2027-28)</span>
-                        <span class="check-icon" id="checkFY26" style="visibility:hidden;">✓</span>
+                        <span class="check-icon" id="checkFY26">✓</span>
+                    </div>
+                    <div class="dropdown-item" id="itemFY25" onclick="chooseFY('2025-26', 'FY 2025-26 (AY 2026-27)')">
+                        <span>FY 2025-26 (AY 2026-27)</span>
+                        <span class="check-icon" id="checkFY25" style="visibility:hidden;">✓</span>
                     </div>
                 </div>
-                <input type="hidden" id="selectedFY" value="2025-26">
+                <input type="hidden" id="selectedFY" value="2026-27">
             </div>
         </div>
 
@@ -492,7 +500,7 @@
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
                 <label>Date of Birth <span style="color:#d32f2f;">*</span></label>
-                <input type="date" id="uDob">
+                <input type="date" id="uDob" value="1995-07-15" class="modern-date-input">
             </div>
             <div class="input-group">
                 <label>PAN Number <span style="color:#d32f2f;">*</span></label>
@@ -699,7 +707,7 @@
             <table class="sheet-table meta-grid" style="margin-top:6px;">
                 <tr>
                     <td class="meta-label">Financial Year</td>
-                    <td class="meta-val fw-bold" id="pFYCell">2025-26</td>
+                    <td class="meta-val fw-bold" id="pFYCell">2026-27 (AY 2027-28)</td>
                     <td class="meta-label">Mobile No.</td>
                     <td class="meta-val fw-bold" id="pMobCell">-</td>
                 </tr>
