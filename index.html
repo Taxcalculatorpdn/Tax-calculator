@@ -33,6 +33,11 @@
             display: flex; justify-content: center; 
         }
 
+        @keyframes gentleSlide {
+            from { opacity: 0.88; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .container { 
             background: var(--card-bg); 
             width: 100%; max-width: 480px; 
@@ -40,6 +45,7 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
             border: 1px solid #e1e8ed;
+            animation: gentleSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .header { 
@@ -83,27 +89,188 @@
             outline: none;
         }
 
-        .modern-date-input {
+        .date-input-wrap {
+            position: relative;
             width: 100%;
-            height: 44px;
-            padding: 0 12px;
-            border: 2px solid #bfdbfe;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #1e3a8a;
-            background: #eff6ff;
-            outline: none;
+        }
+        .date-input-wrap input {
+            padding-right: 36px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
-            font-family: inherit;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        .date-input-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1565C0;
+            font-size: 16px;
+            pointer-events: none;
         }
 
-        .modern-date-input:focus {
-            border-color: #1d4ed8;
+        /* ROYAL BLUE MATERIAL DATE PICKER MODAL (100% BLUE ON ALL PHONES) */
+        .date-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 30, 63, 0.65);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            backdrop-filter: blur(2px);
+        }
+        .date-picker-card {
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+            width: 100%;
+            max-width: 320px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            animation: dpZoomIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes dpZoomIn {
+            from { opacity: 0.7; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .date-picker-header {
+            background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 50%, #1565C0 100%);
+            color: #ffffff;
+            padding: 18px 20px;
+        }
+        .dp-header-year {
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0.85;
+            cursor: pointer;
+        }
+        .dp-header-year:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        .dp-header-date {
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+        .date-picker-body {
+            padding: 14px 16px 6px 16px;
+            min-height: 260px;
+        }
+        .dp-nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .dp-nav-btn {
+            background: #f1f5f9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e293b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dp-nav-btn:hover { background: #e2e8f0; }
+        .dp-month-year-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0F172A;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .dp-month-year-label:hover { background: #f1f5f9; }
+        .dp-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748B;
+            margin-bottom: 6px;
+        }
+        .dp-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+        }
+        .dp-day-cell {
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 50%;
+            color: #1e293b;
+            cursor: pointer;
+        }
+        .dp-day-cell:hover { background: #e0f2fe; }
+        .dp-day-cell.selected {
+            background: #1565C0 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+        }
+        .dp-day-cell.empty {
+            cursor: default;
+            background: transparent !important;
+        }
+        .dp-year-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+        .dp-year-item {
+            padding: 9px 4px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .dp-year-item:hover { background: #e2e8f0; }
+        .dp-year-item.selected {
+            background: #1565C0;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .date-picker-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 18px 12px 18px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .dp-action-btn {
+            background: none;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1565C0;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+        }
+        .dp-action-btn:hover { background: #f0f7ff; }
+        .dp-action-btn.dp-btn-primary {
+            color: #0D47A1;
         }
 
         /* 1. CUSTOM IN-PAGE DROPDOWN FOR FINANCIAL YEAR (NO ANDROID RADIO POPUP) */
@@ -445,6 +612,40 @@
     <button class="close-pop" onclick="closePopup()">OK</button>
 </div>
 
+<!-- ROYAL BLUE MATERIAL DATE PICKER MODAL (100% ROYAL BLUE ON EVERY PHONE) -->
+<div id="dateModalOverlay" class="date-modal-overlay" onclick="closeDatePicker()">
+    <div class="date-picker-card" onclick="event.stopPropagation()">
+        <div class="date-picker-header">
+            <div class="dp-header-year" id="dpHeaderYear" onclick="toggleYearView()">1995</div>
+            <div class="dp-header-date" id="dpHeaderDate">Sat, Jul 15</div>
+        </div>
+
+        <div class="date-picker-body">
+            <div id="dpYearGrid" class="dp-year-grid" style="display:none;"></div>
+
+            <div id="dpCalendarView">
+                <div class="dp-nav-bar">
+                    <button type="button" class="dp-nav-btn" onclick="navMonth(-1)">‹</button>
+                    <div class="dp-month-year-label" id="dpMonthYearLabel" onclick="toggleYearView()">July 1995</div>
+                    <button type="button" class="dp-nav-btn" onclick="navMonth(1)">›</button>
+                </div>
+                <div class="dp-weekdays">
+                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                </div>
+                <div class="dp-days-grid" id="dpDaysGrid"></div>
+            </div>
+        </div>
+
+        <div class="date-picker-footer">
+            <button type="button" class="dp-action-btn" onclick="clearDate()">CLEAR</button>
+            <div style="display:flex; gap:12px;">
+                <button type="button" class="dp-action-btn" onclick="closeDatePicker()">CANCEL</button>
+                <button type="button" class="dp-action-btn dp-btn-primary" onclick="confirmDate()">SET</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ========================================== -->
 <!-- MAIN APP UI -->
 <!-- ========================================== -->
@@ -500,7 +701,10 @@
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
                 <label>Date of Birth <span style="color:#d32f2f;">*</span></label>
-                <input type="date" id="uDob" value="1995-07-15" class="modern-date-input">
+                <div class="date-input-wrap">
+                    <input type="text" id="uDob" readonly placeholder="DD / MM / YYYY" onclick="openDatePicker()">
+                    <span class="date-input-icon">📅</span>
+                </div>
             </div>
             <div class="input-group">
                 <label>PAN Number <span style="color:#d32f2f;">*</span></label>
@@ -1057,6 +1261,128 @@ function selectRegime(regime) {
     updateHeader();
 }
 
+// ==========================================
+// ROYAL BLUE MATERIAL DATE PICKER LOGIC
+// ==========================================
+var dpCurrentYear = 1995;
+var dpCurrentMonth = 6;
+var dpSelectedDay = 15;
+var dpViewMode = 'calendar';
+
+var dpMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var dpDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function openDatePicker() {
+    var curVal = document.getElementById('uDob').value.trim();
+    if (curVal && curVal.includes('/')) {
+        var parts = curVal.split('/');
+        if (parts.length === 3) {
+            dpSelectedDay = parseInt(parts[0]) || 15;
+            dpCurrentMonth = (parseInt(parts[1]) - 1) || 6;
+            dpCurrentYear = parseInt(parts[2]) || 1995;
+        }
+    }
+    dpViewMode = 'calendar';
+    renderDatePicker();
+    document.getElementById('dateModalOverlay').style.display = 'flex';
+}
+
+function closeDatePicker() {
+    document.getElementById('dateModalOverlay').style.display = 'none';
+}
+
+function clearDate() {
+    document.getElementById('uDob').value = '';
+    closeDatePicker();
+}
+
+function confirmDate() {
+    var dd = dpSelectedDay < 10 ? '0' + dpSelectedDay : String(dpSelectedDay);
+    var mm = (dpCurrentMonth + 1) < 10 ? '0' + (dpCurrentMonth + 1) : String(dpCurrentMonth + 1);
+    document.getElementById('uDob').value = dd + '/' + mm + '/' + dpCurrentYear;
+    closeDatePicker();
+}
+
+function navMonth(dir) {
+    dpCurrentMonth += dir;
+    if (dpCurrentMonth < 0) {
+        dpCurrentMonth = 11;
+        dpCurrentYear--;
+    } else if (dpCurrentMonth > 11) {
+        dpCurrentMonth = 0;
+        dpCurrentYear++;
+    }
+    renderDatePicker();
+}
+
+function toggleYearView() {
+    dpViewMode = (dpViewMode === 'calendar') ? 'year' : 'calendar';
+    renderDatePicker();
+}
+
+function selectYear(y) {
+    dpCurrentYear = y;
+    dpViewMode = 'calendar';
+    renderDatePicker();
+}
+
+function selectDay(d) {
+    dpSelectedDay = d;
+    renderDatePicker();
+}
+
+function renderDatePicker() {
+    var dateObj = new Date(dpCurrentYear, dpCurrentMonth, dpSelectedDay);
+    var dayName = dpDayNames[dateObj.getDay()];
+    var monthShort = dpMonthNames[dpCurrentMonth].slice(0, 3);
+    document.getElementById('dpHeaderYear').innerText = dpCurrentYear;
+    document.getElementById('dpHeaderDate').innerText = dayName + ', ' + monthShort + ' ' + dpSelectedDay;
+    document.getElementById('dpMonthYearLabel').innerText = dpMonthNames[dpCurrentMonth] + ' ' + dpCurrentYear;
+
+    var calView = document.getElementById('dpCalendarView');
+    var yearGrid = document.getElementById('dpYearGrid');
+
+    if (dpViewMode === 'year') {
+        calView.style.display = 'none';
+        yearGrid.style.display = 'grid';
+        yearGrid.innerHTML = '';
+        for (var y = 2020; y >= 1950; y--) {
+            var yItem = document.createElement('div');
+            yItem.className = 'dp-year-item' + (y === dpCurrentYear ? ' selected' : '');
+            yItem.innerText = y;
+            yItem.setAttribute('onclick', 'selectYear(' + y + ')');
+            yearGrid.appendChild(yItem);
+        }
+        var selEl = yearGrid.querySelector('.dp-year-item.selected');
+        if (selEl) {
+            setTimeout(function() { selEl.scrollIntoView({ block: 'center' }); }, 50);
+        }
+    } else {
+        calView.style.display = 'block';
+        yearGrid.style.display = 'none';
+
+        var firstDayIdx = new Date(dpCurrentYear, dpCurrentMonth, 1).getDay();
+        var daysInMonth = new Date(dpCurrentYear, dpCurrentMonth + 1, 0).getDate();
+
+        var daysGrid = document.getElementById('dpDaysGrid');
+        daysGrid.innerHTML = '';
+
+        for (var i = 0; i < firstDayIdx; i++) {
+            var emptyCell = document.createElement('div');
+            emptyCell.className = 'dp-day-cell empty';
+            daysGrid.appendChild(emptyCell);
+        }
+
+        for (var d = 1; d <= daysInMonth; d++) {
+            var dayCell = document.createElement('div');
+            dayCell.className = 'dp-day-cell' + (d === dpSelectedDay ? ' selected' : '');
+            dayCell.innerText = d;
+            dayCell.setAttribute('onclick', 'selectDay(' + d + ')');
+            daysGrid.appendChild(dayCell);
+        }
+    }
+}
+
 function showBluePopup(msg) {
     document.getElementById('alertMsg').innerText = msg;
     document.getElementById('blueAlert').style.display = "block";
@@ -1102,12 +1428,11 @@ function runCalculation() {
 
     // MANDATORY DATE OF BIRTH VALIDATION
     var rawDob = document.getElementById('uDob') ? document.getElementById('uDob').value.trim() : '';
-    if (!rawDob) {
+    if (!rawDob || rawDob.length < 8) {
         showBluePopup("Please Select Date of Birth.");
         return;
     }
-    var dobParts = rawDob.split('-');
-    var dob = dobParts.length === 3 ? (dobParts[2] + "/" + dobParts[1] + "/" + dobParts[0]) : rawDob;
+    var dob = rawDob;
 
     var mobPattern = /^[6-9]\d{9}$/;
     var isDuplicateMob = /^(.)\1{9}$/.test(mob);
