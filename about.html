@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Anurag Karundia & Co.</title>
+    <title>About Us</title>
     <style>
         :root {
             --primary: #0A1E3F;
             --primary-mid: #0D47A1;
             --primary-light: #1565C0;
-            --accent: #1976D2;
             --text-main: #1E293B;
             --text-sub: #475569;
             --bg: #F4F7F9;
@@ -31,6 +30,18 @@
             justify-content: center;
         }
 
+        /* SMOOTH FLUID ENTRANCE ANIMATION (NO BLINK FLASH) */
+        @keyframes pageFadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(22px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .main-card {
             background: #ffffff;
             border-radius: 20px;
@@ -39,56 +50,26 @@
             max-width: 520px;
             width: 100%;
             overflow: hidden;
-            animation: cardEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: pageFadeSlide 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
         }
 
-        @keyframes cardEnter {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* PREMIUM FINTECH ROYAL NAVY HEADER */
+        /* ROYAL NAVY HEADER WITH NO FIRM NAME PER ICAI COMPLIANCE */
         .brand-header {
             background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 50%, #1565C0 100%);
             color: #ffffff;
-            padding: 22px 20px;
+            padding: 24px 20px;
             text-align: center;
         }
 
         .brand-header h1 {
             margin: 0;
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
 
-        .brand-header p {
-            margin: 6px 0 0;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #90CAF9;
-        }
-
         .content {
             padding: 22px 20px;
-        }
-
-        .tagline-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #EFF6FF;
-            color: #0D47A1;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid #BFDBFE;
-            margin-bottom: 14px;
         }
 
         p.intro-text {
@@ -96,16 +77,6 @@
             color: var(--text-sub);
             margin: 0 0 20px 0;
             line-height: 1.65;
-        }
-
-        p.intro-text b {
-            color: #0A1E3F;
-        }
-
-        .divider {
-            height: 1px;
-            background: #E2E8F0;
-            margin: 20px 0;
         }
 
         .section-title {
@@ -127,12 +98,12 @@
             background: #E2E8F0;
         }
 
-        /* EXPERTISE CARDS */
+        /* SERVICE CARDS */
         .services-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 22px;
+            margin-bottom: 16px;
         }
 
         .service-card {
@@ -143,11 +114,7 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .service-card:active {
-            transform: scale(0.99);
+            transition: transform 0.2s;
         }
 
         .service-icon {
@@ -178,17 +145,16 @@
             line-height: 1.45;
         }
 
-        /* HIGHLIGHT BOX */
         .highlight-box {
-            background: linear-gradient(135deg, #F0F7FF 0%, #E8F2FE 100%);
+            background: #F0F7FF;
             border-left: 4px solid #0D47A1;
             border-radius: 12px;
-            padding: 16px;
-            margin-top: 10px;
+            padding: 15px;
+            margin-top: 14px;
         }
 
         .highlight-box h4 {
-            margin: 0 0 6px 0;
+            margin: 0 0 5px 0;
             font-size: 13.5px;
             font-weight: 800;
             color: #0A1E3F;
@@ -200,85 +166,51 @@
             color: #334155;
             line-height: 1.5;
         }
-
-        .quote-box {
-            margin-top: 24px;
-            text-align: center;
-            padding: 14px;
-            border-top: 1px dashed #CBD5E1;
-        }
-
-        .quote-box p {
-            margin: 0;
-            font-size: 13.5px;
-            font-style: italic;
-            color: #64748B;
-            font-weight: 600;
-        }
-
-        .quote-box span {
-            display: block;
-            margin-top: 6px;
-            font-size: 11px;
-            color: #94A3B8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
     </style>
 </head>
 <body>
 
 <div class="main-card">
     <div class="brand-header">
-        <h1>Anurag Karundia & Co.</h1>
-        <p>About Us • Excellence Since 2017</p>
+        <h1>About Us</h1>
     </div>
 
     <div class="content">
-        <div class="tagline-pill">
-            ★ Serving Excellence Since 2017
-        </div>
-
         <p class="intro-text">
-            Welcome to <b>Anurag Karundia & Co.</b> With over <b>9 years</b> of dedicated professional experience, we deliver precision Tax Consultancy, Corporate Advisory, and seamless Government & Business Form processing.
+            Welcome to our professional consultancy services. We specialize in accurate Income Tax calculation, statutory compliance, and official documentation support.
         </p>
 
-        <div class="section-title">Our Expertise</div>
+        <div class="section-title">Areas of Practice</div>
 
         <div class="services-list">
             <div class="service-card">
                 <div class="service-icon">📊</div>
                 <div class="service-body">
                     <h3>Tax Consultancy</h3>
-                    <p>Income tax planning, calculation, return preparation, and full statutory compliance.</p>
+                    <p>Guidance on salary computation, income tax deduction, and compliance filing.</p>
                 </div>
             </div>
 
             <div class="service-card">
                 <div class="service-icon">⚖️</div>
                 <div class="service-body">
-                    <h3>Legal & Corporate Advisory</h3>
-                    <p>Expert support for regulatory documentations, statutory notices, and commercial law.</p>
+                    <h3>Legal & Regulatory Advisory</h3>
+                    <p>Assistance for statutory documentation, agreements, and compliance records.</p>
                 </div>
             </div>
 
             <div class="service-card">
                 <div class="service-icon">📝</div>
                 <div class="service-body">
-                    <h3>Form & Filing Services</h3>
-                    <p>Accurate and timely processing of all government, institutional, and commercial forms.</p>
+                    <h3>Form & Filing Assistance</h3>
+                    <p>Timely and structured processing of government, institutional, and commercial forms.</p>
                 </div>
             </div>
         </div>
 
         <div class="highlight-box">
-            <h4>Why Choose Us?</h4>
-            <p>Since our inception in 2017, our highest commitment has been <b>accuracy, transparency, and client satisfaction</b>. We ensure every assessment is performed with utmost diligence.</p>
-        </div>
-
-        <div class="quote-box">
-            <p>"Your trust is our greatest achievement."</p>
-            <span>Anurag Karundia & Co.</span>
+            <h4>Core Values</h4>
+            <p>Our priority is <b>accuracy, confidentiality, and reliability</b> for every calculation and assessment.</p>
         </div>
     </div>
 </div>
