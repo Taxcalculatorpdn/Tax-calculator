@@ -349,14 +349,39 @@
                 padding: 10px !important;
                 font-family: 'Times New Roman', serif !important;
                 box-sizing: border-box;
+                position: relative !important;
+                overflow: hidden !important;
             }
             .akc-border-box {
                 border: 2px solid #000;
                 padding: 4px;
+                position: relative;
             }
             .akc-inner-box {
                 border: 1px solid #000;
                 padding: 6px;
+                position: relative;
+            }
+            .sheet-watermark {
+                position: absolute;
+                top: 48%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-32deg);
+                font-size: 38px;
+                font-weight: bold;
+                color: rgba(0, 0, 0, 0.06) !important;
+                white-space: nowrap;
+                pointer-events: none;
+                z-index: 0;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                font-family: Arial, sans-serif !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .sheet-table, .sheet-header-box, .sig-box {
+                position: relative;
+                z-index: 1;
             }
             table.sheet-table {
                 width: 100%;
@@ -446,12 +471,12 @@
         <!-- 4. SALARY & SCHEDULE DETAILS -->
         <div class="section-title">Salary & Income Details</div>
 
-        <!-- SALARY CYCLE SELECTOR: STANDARD VS MINORITY/MADARSA -->
+        <!-- SALARY CYCLE SELECTOR: STANDARD VS MINORITY -->
         <div class="input-group">
             <label>Salary Schedule Format</label>
             <div class="pill-switch">
                 <button type="button" class="pill-btn active" id="btnCycleStd" onclick="selectCycle('STD')">Standard (Apr - Mar)</button>
-                <button type="button" class="pill-btn" id="btnCycleMin" onclick="selectCycle('MIN')">Minority / Madarsa (Mar - Feb)</button>
+                <button type="button" class="pill-btn" id="btnCycleMin" onclick="selectCycle('MIN')">Minority (Mar - Feb)</button>
             </div>
             <input type="hidden" id="selectedCycle" value="STD">
         </div>
@@ -553,11 +578,8 @@
             <div class="info-pill">✓ Exemption up to ₹1,25,000 auto-applied</div>
         </div>
 
-        <!-- ADVANCE TAX INPUT -->
-        <div class="input-group">
-            <label>Advance Tax / TDS Already Deducted</label>
-            <input type="number" id="vAdvTax" value="0" onclick="this.select()">
-        </div>
+        <!-- HIDDEN ADVANCE TAX INPUT (AUTO-SYNCED FROM SALARY SCHEDULE) -->
+        <input type="hidden" id="vAdvTax" value="0">
 
         <!-- ACTION BUTTONS -->
         <div class="btn-row">
@@ -615,9 +637,12 @@
 <div id="officialPrintSheet">
     <div class="akc-border-box">
         <div class="akc-inner-box">
-            <div style="text-align:center;">
+            <!-- Light Diagonal Watermark (Underneath Tables) -->
+            <div class="sheet-watermark">ANURAG KARUNDIA & CO.</div>
+
+            <div class="sheet-header-box" style="text-align:center;">
                 <h2 style="margin:0; font-size:16px;" id="pSheetTitle">Anurag Karundia & Co. (New Scheme)</h2>
-                <div style="font-size:13px; font-weight:bold; margin-top:2px;" id="pSheetSub">आयकर गणना पत्र / Tax Computation Sheet</div>
+                <div style="font-size:13px; font-weight:bold; margin-top:2px;" id="pSheetSub">Tax Computation Sheet / आयकर गणना पत्र</div>
             </div>
 
             <!-- Top Header Metadata Grid -->
@@ -731,7 +756,7 @@
             </table>
 
             <!-- Signatures at bottom (Matching Photo) -->
-            <div style="display:flex; justify-content:space-between; margin-top:35px; padding:0 20px; font-size:11px; font-weight:bold;">
+            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:35px; padding:0 20px; font-size:11px; font-weight:bold;">
                 <div>Sig. of Employee</div>
                 <div>Sig. of Principal / Employer</div>
             </div>
