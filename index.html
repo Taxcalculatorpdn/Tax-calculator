@@ -8,7 +8,6 @@
       gtag('js', new Date());
       gtag('config', 'G-YH2229N6RG');
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -483,23 +482,21 @@
         table.comp-table td { padding: 9px 0; border-bottom: 1px solid #f0f0f0; color: #334155; }
         
         .action-btns {
-            display: flex; gap: 10px; margin-top: 18px;
-        }
-
-        .wa-btn { 
-            flex: 1; height: 48px; background: #25D366; color: white; 
-            border-radius: 12px; font-weight: bold; cursor: pointer; 
-            border: none; font-size: 14px; transition: all 0.1s;
-            box-shadow: 0 4px #128C7E; outline: none;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+            margin-top: 18px;
         }
 
         .pdf-btn {
-            flex: 1; height: 48px; background: #0d47a1; color: white;
-            border-radius: 12px; font-weight: bold; cursor: pointer;
-            border: none; font-size: 14px; transition: all 0.1s;
+            width: 100%; height: 50px; background: #0d47a1; color: white;
+            border-radius: 12px; font-weight: 800; cursor: pointer;
+            border: none; font-size: 15px; transition: all 0.15s ease;
             box-shadow: 0 4px #08306b; outline: none;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .pdf-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px #08306b;
         }
 
         /* Popups */
@@ -885,11 +882,8 @@
                 </table>
 
                 <div class="action-btns">
-                    <button class="wa-btn" onclick="shareWhatsApp()">
-                        Share on WhatsApp
-                    </button>
                     <button class="pdf-btn" onclick="downloadOfficialPDF()">
-                        Download PDF Report
+                        📄 Download Official PDF Computation Sheet
                     </button>
                 </div>
             </div>
@@ -1059,7 +1053,7 @@
             <!-- Signatures at bottom (Matching Photo) -->
             <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:35px; padding:0 20px; font-size:11px; font-weight:bold;">
                 <div>Sig. of Employee</div>
-                <div>Sig. of Principal / Employer</div>
+                <div id="pSigEmployer">Sig. of Employer</div>
             </div>
         </div>
     </div>
@@ -1792,173 +1786,10 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pBalLabel').innerText = "Refund Due";
         document.getElementById('pCompBalTax').innerText = "₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00";
     }
-}
 
-function shareWhatsApp() {
-    var name = document.getElementById('uName').value.trim();
-    var pan = document.getElementById('uPan').value.trim().toUpperCase();
-    var mob = document.getElementById('uMob').value.trim();
-    var org = document.getElementById('uOrg') ? document.getElementById('uOrg').value.trim() : '';
-    var fy = document.getElementById('selectedFY').value;
-    var regime = document.getElementById('selectedRegime').value === 'NEW' ? 'New Tax Regime' : 'Old Tax Regime';
-    
-    var sal = parseFloat(document.getElementById('vSal').value) || 0;
-    var bus = parseFloat(document.getElementById('vBus').value) || 0;
-    var st = parseFloat(document.getElementById('vSTCG').value) || 0;
-    var lt = parseFloat(document.getElementById('vLTCG').value) || 0;
-    var adv = parseFloat(document.getElementById('vAdvTax').value) || 0;
-
-    var fileName = 'AKC_Tax_Computation_' + (pan || 'Report') + '.pdf';
-
-    // 1. Native Direct PDF Share to WhatsApp (when running in updated APK)
-    if (window.AndroidApp && window.AndroidApp.sharePDFBase64 && window.html2pdf) {
-        var sheet = document.getElementById('officialPrintSheet');
-        if (sheet) {
-            var btn = document.querySelector('.wa-btn');
-            var originalHTML = btn ? btn.innerHTML : '';
-            if (btn) {
-                btn.innerHTML = '⏳ Sharing PDF...';
-                btn.style.pointerEvents = 'none';
-            }
-
-            var origDisplay = sheet.style.display;
-            var origPosition = sheet.style.position;
-            var origTop = sheet.style.top;
-            var origLeft = sheet.style.left;
-            var origWidth = sheet.style.width;
-            var origZIndex = sheet.style.zIndex;
-            var origOpacity = sheet.style.opacity;
-
-            sheet.style.display = 'block';
-            sheet.style.position = 'fixed';
-            sheet.style.top = '0';
-            sheet.style.left = '0';
-            sheet.style.width = '700px';
-            sheet.style.zIndex = '-9999';
-            sheet.style.opacity = '0.01';
-
-            var hasHandled = false;
-            var safetyTimer = setTimeout(function() {
-                if (!hasHandled) {
-                    hasHandled = true;
-                    cleanupSheet();
-                    sendWhatsAppTextFallback();
-                }
-            }, 1800);
-
-            function cleanupSheet() {
-                sheet.style.display = origDisplay;
-                sheet.style.position = origPosition;
-                sheet.style.top = origTop;
-                sheet.style.left = origLeft;
-                sheet.style.width = origWidth;
-                sheet.style.zIndex = origZIndex;
-                sheet.style.opacity = origOpacity;
-                if (btn) {
-                    btn.innerHTML = originalHTML;
-                    btn.style.pointerEvents = 'auto';
-                }
-            }
-
-            try {
-                var opt = {
-                    margin: [4, 4, 4, 4],
-                    filename: fileName,
-                    image: { type: 'jpeg', quality: 0.95 },
-                    html2canvas: { scale: 1.5, useCORS: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                html2pdf().set(opt).from(sheet).output('blob').then(function(blob) {
-                    if (hasHandled) return;
-                    hasHandled = true;
-                    clearTimeout(safetyTimer);
-                    cleanupSheet();
-
-                    var reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = function() {
-                        var base64data = reader.result.split(',')[1];
-                        window.AndroidApp.sharePDFBase64(base64data, fileName);
-                    };
-                }).catch(function(err) {
-                    if (hasHandled) return;
-                    hasHandled = true;
-                    clearTimeout(safetyTimer);
-                    cleanupSheet();
-                    sendWhatsAppTextFallback();
-                });
-            } catch (err) {
-                if (hasHandled) return;
-                hasHandled = true;
-                clearTimeout(safetyTimer);
-                cleanupSheet();
-                sendWhatsAppTextFallback();
-            }
-            return;
-        }
-    }
-
-    sendWhatsAppTextFallback();
-
-    function sendWhatsAppTextFallback() {
-        var sd = document.getElementById('rSD') ? document.getElementById('rSD').innerText : '0';
-        var netInc = document.getElementById('rNetInc') ? document.getElementById('rNetInc').innerText : '0';
-        var totalTax = document.getElementById('rTotalTax') ? document.getElementById('rTotalTax').innerText : '0';
-        var finalVal = document.getElementById('finalTaxVal') ? document.getElementById('finalTaxVal').innerText : '0';
-        var isRefund = finalVal.indexOf('Refund') !== -1;
-
-        var msg = '📊 *TAX COMPUTATION STATEMENT*\n' +
-                  '🏛 *Anurag Karundia & Co.*\n' +
-                  '------------------------------------\n' +
-                  '👤 *Taxpayer:* ' + name + '\n' +
-                  '💳 *PAN:* ' + pan + '\n' +
-                  (org ? ('🏢 *Org:* ' + org + '\n') : '') +
-                  '📅 *FY:* ' + fy + ' (' + regime + ')\n' +
-                  '------------------------------------\n' +
-                  '• *Gross Salary:* ₹ ' + Math.round(sal).toLocaleString('en-IN') + '\n' +
-                  '• *Standard Deduction:* ₹ ' + sd.replace('-', '') + '\n';
-
-        if (bus > 0) {
-            msg += '• *Business Income:* ₹ ' + Math.round(bus).toLocaleString('en-IN') + '\n';
-        }
-        if (st > 0) {
-            msg += '• *STCG (20%):* ₹ ' + Math.round(st).toLocaleString('en-IN') + '\n';
-        }
-        if (lt > 0) {
-            var txLTCG = Math.max(0, lt - 125000);
-            if (txLTCG > 0) {
-                msg += '• *Taxable LTCG (12.5%):* ₹ ' + Math.round(txLTCG).toLocaleString('en-IN') + ' (Gross ₹' + Math.round(lt).toLocaleString('en-IN') + ' less ₹1.25L exempt)\n';
-            } else {
-                msg += '• *LTCG:* ₹ ' + Math.round(lt).toLocaleString('en-IN') + ' (100% Exempt up to ₹1.25L)\n';
-            }
-        }
-
-        msg += '------------------------------------\n' +
-               '💰 *Net Taxable Income:* ₹ ' + netInc + '\n' +
-               '💵 *Total Tax Payable:* ' + totalTax + '\n';
-
-        if (adv > 0) {
-            msg += '💳 *Advance Tax Paid:* ₹ ' + Math.round(adv).toLocaleString('en-IN') + '\n';
-        }
-
-        msg += '------------------------------------\n' +
-               (isRefund ? '🎉 *REFUND DUE:* ' : '🚨 *NET TAX PAYABLE:* ') + '*' + finalVal + '*\n' +
-               '------------------------------------\n' +
-               '📄 _Official Statement by AKC Tax Calculator_';
-
-        var wpUrl = 'whatsapp://send?text=' + encodeURIComponent(msg);
-        var webFallback = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
-
-        // Direct WhatsApp redirect with zero prompt/delay
-        try {
-            window.location.href = wpUrl;
-            setTimeout(function() {
-                window.location.href = webFallback;
-            }, 1200);
-        } catch (e) {
-            window.location.href = webFallback;
-        }
+    // Dynamic Signature: Standard -> Sig. of Employer | Special -> Sig. of Principal
+    if (document.getElementById('pSigEmployer')) {
+        document.getElementById('pSigEmployer').innerText = (cycle === 'MIN') ? "Sig. of Principal" : "Sig. of Employer";
     }
 }
 
