@@ -21,12 +21,16 @@
             --text-dark: #1e293b;
         }
 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body { 
-            font-family: 'Inter', -apple-system, sans-serif; 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             background-color: var(--bg-color); 
             margin: 0; padding: 14px; 
             display: flex; justify-content: center; 
-            -webkit-tap-highlight-color: transparent;
         }
 
         .container { 
@@ -54,7 +58,7 @@
 
         .section-title {
             font-size: 12px; font-weight: 800; color: var(--accent-color);
-            text-transform: uppercase; margin-bottom: 12px; margin-top: 16px;
+            text-transform: uppercase; margin-bottom: 12px; margin-top: 18px;
             display: flex; align-items: center; letter-spacing: 0.5px;
         }
 
@@ -62,119 +66,152 @@
             content: ""; flex: 1; height: 1px; background: #e2e8f0; margin-left: 10px;
         }
 
-        .input-group { margin-bottom: 14px; }
+        .input-group { margin-bottom: 15px; }
         
-        label { font-weight: 600; display: block; font-size: 13px; color: var(--text-dark); margin-bottom: 6px; }
+        label { font-weight: 600; display: block; font-size: 13px; color: var(--text-dark); margin-bottom: 7px; }
         
-        input, select { 
-            width: 100%; padding: 12px 14px; 
+        input { 
+            width: 100%; height: 44px; padding: 10px 14px; 
             border: 2px solid #edf2f7; border-radius: 10px; 
-            box-sizing: border-box; font-size: 15px; 
-            transition: all 0.25s ease; background: #fafbfc;
+            font-size: 15px; transition: all 0.25s ease; background: #fafbfc;
             outline: none; color: #1e293b;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        input:focus, select:focus { 
+        input:focus { 
             border-color: var(--accent-color); 
             background: #fff; box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12); 
             outline: none;
         }
 
-        /* 1. ELEGANT FINANCIAL YEAR SELECTOR (NO OLD BROWSER LOOK) */
-        .fy-select-wrapper {
+        /* 1. CUSTOM IN-PAGE DROPDOWN FOR FINANCIAL YEAR (NO ANDROID RADIO POPUP) */
+        .custom-dropdown {
             position: relative;
-            background: #f8fafc;
-            border-radius: 12px;
+            width: 100%;
         }
 
-        .fy-select {
-            width: 100%;
-            padding: 13px 40px 13px 16px;
-            border: 2px solid #dbeafe;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            color: #0d47a1;
+        .dropdown-trigger {
+            height: 46px;
+            padding: 0 16px;
             background: #f0f7ff;
-            appearance: none;
-            -webkit-appearance: none;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            color: #0d47a1;
             transition: all 0.2s;
         }
 
-        .fy-select:focus {
-            border-color: #1a73e8;
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.15);
+        .dropdown-trigger:active {
+            background: #e0f2fe;
         }
 
-        .fy-select-arrow {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
+        .dropdown-arrow {
+            font-size: 12px;
             color: #0d47a1;
-            font-size: 13px;
+            transition: transform 0.2s;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 52px;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(13, 71, 161, 0.18);
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 13px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:active {
+            background: #f0f7ff;
+        }
+
+        .dropdown-item.selected {
+            background: #eff6ff;
+            color: #0d47a1;
+        }
+
+        .dropdown-item .check-icon {
+            color: #0d47a1;
             font-weight: bold;
         }
 
-        /* 2. REGIME SELECTOR (CLEAN PILL - NO WEIRD BLUE OUTLINE) */
-        .regime-switch {
+        /* 2. REGIME & SALARY CYCLE PILL SWITCHERS */
+        .pill-switch {
             display: flex; gap: 6px; background: #e2e8f0;
             padding: 4px; border-radius: 14px;
-            user-select: none;
         }
 
-        .regime-btn {
-            flex: 1; padding: 12px 8px; border: none; border-radius: 10px;
+        .pill-btn {
+            flex: 1; padding: 12px 6px; border: none; border-radius: 10px;
             font-size: 13px; font-weight: 700; cursor: pointer;
             background: transparent; color: #64748b;
-            transition: all 0.25s ease;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
+            transition: all 0.25s ease; outline: none;
+            text-align: center;
         }
 
-        .regime-btn:focus, .regime-btn:active {
-            outline: none;
-        }
-
-        .regime-btn.active {
+        .pill-btn.active {
             background: #ffffff; color: #0d47a1;
-            box-shadow: 0 3px 12px rgba(13, 71, 161, 0.16);
+            box-shadow: 0 3px 12px rgba(13, 71, 161, 0.15);
         }
 
-        /* Info pill */
+        /* Badges */
         .info-pill {
             background: #e8f0fe; color: #1967d2; padding: 5px 9px;
             border-radius: 6px; font-size: 11px; font-weight: 600;
             display: inline-block; margin-top: 5px;
         }
 
-        /* 3. MONTHLY SALARY TABLE ACCORDION */
+        /* 3. MONTHLY SALARY TABLE & AUTO-FILL CARD */
         .monthly-card {
             background: #f8fafc; border: 1.5px solid #dbeafe;
             border-radius: 14px; padding: 14px; margin-bottom: 16px;
         }
 
         .autofill-box {
-            background: #ffffff; border: 1px solid #e2e8f0;
-            border-radius: 10px; padding: 10px; margin-bottom: 12px;
+            background: #ffffff; border: 1px solid #cbd5e1;
+            border-radius: 10px; padding: 12px; margin-bottom: 14px;
         }
 
         .autofill-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
-            margin-top: 6px; margin-bottom: 8px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            margin-top: 8px; margin-bottom: 10px;
         }
 
-        .autofill-grid label { font-size: 10px; margin-bottom: 2px; color: #475569; }
-        .autofill-grid input { padding: 6px; font-size: 12px; border-radius: 6px; }
+        .autofill-grid label { font-size: 11px; margin-bottom: 3px; color: #475569; font-weight: 700; }
+        .autofill-grid input { height: 38px; padding: 6px 8px; font-size: 13px; font-weight: 600; }
 
         .btn-autofill {
-            width: 100%; padding: 8px; background: #e0f2fe; color: #0369a1;
-            border: 1px solid #bae6fd; border-radius: 6px; font-size: 12px;
-            font-weight: 700; cursor: pointer;
+            width: 100%; height: 40px; background: #0d47a1; color: white;
+            border: none; border-radius: 8px; font-size: 13px;
+            font-weight: 700; cursor: pointer; transition: background 0.2s;
+        }
+
+        .btn-autofill:active {
+            background: #08306b;
         }
 
         .table-responsive {
@@ -183,23 +220,23 @@
         }
 
         .salary-table {
-            width: 100%; min-width: 580px; border-collapse: collapse; font-size: 11px;
+            width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12px;
         }
 
         .salary-table th {
-            background: #0d47a1; color: white; padding: 8px 4px;
-            text-align: center; font-size: 10px; font-weight: 700;
+            background: #0d47a1; color: white; padding: 9px 5px;
+            text-align: center; font-size: 11px; font-weight: 700;
             white-space: nowrap;
         }
 
         .salary-table td {
-            padding: 4px 3px; border-bottom: 1px solid #e2e8f0;
+            padding: 5px 4px; border-bottom: 1px solid #e2e8f0;
             text-align: center;
         }
 
         .salary-table input {
-            width: 100%; padding: 5px 3px; font-size: 11px; text-align: right;
-            border: 1px solid #cbd5e1; border-radius: 4px;
+            width: 100%; height: 36px; padding: 4px 6px; font-size: 13px; font-weight: 600; text-align: right;
+            border: 1.5px solid #cbd5e1; border-radius: 6px;
         }
 
         .salary-table input.calc-cell {
@@ -207,7 +244,7 @@
         }
 
         .salary-table tfoot td {
-            background: #f8fafc; font-weight: 800; color: #0d47a1; padding: 8px 4px;
+            background: #f8fafc; font-weight: 800; color: #0d47a1; padding: 10px 5px; font-size: 13px;
         }
 
         /* Buttons Row */
@@ -216,9 +253,9 @@
         }
 
         .btn-calc { 
-            flex: 2; padding: 15px; background: var(--primary-color); 
+            flex: 2; height: 50px; background: var(--primary-color); 
             color: white; border: none; border-radius: 12px; 
-            font-size: 15px; font-weight: 700; cursor: pointer; 
+            font-size: 16px; font-weight: 700; cursor: pointer; 
             box-shadow: 0 4px #08306b; outline: none;
         }
 
@@ -228,9 +265,9 @@
         }
 
         .btn-reset {
-            flex: 1; padding: 15px; background: #f1f5f9;
+            flex: 1; height: 50px; background: #f1f5f9;
             color: #475569; border: 2px solid #e2e8f0; border-radius: 12px;
-            font-size: 14px; font-weight: 700; cursor: pointer; outline: none;
+            font-size: 15px; font-weight: 700; cursor: pointer; outline: none;
         }
 
         .res-box { display: none; margin-top: 25px; animation: fadeIn 0.4s; }
@@ -244,32 +281,32 @@
             box-shadow: 0 4px 15px rgba(13, 71, 161, 0.05);
         }
 
-        .tax-card h1 { color: #d32f2f; margin: 8px 0; font-size: 30px; font-weight: 800; }
+        .tax-card h1 { color: #d32f2f; margin: 8px 0; font-size: 32px; font-weight: 800; }
 
         #report { 
             background: #fff; border: 1px solid #e1e8ed; 
-            padding: 16px; border-radius: 12px; font-size: 12px; 
+            padding: 16px; border-radius: 12px; font-size: 13px; 
         }
 
         table.comp-table { width: 100%; border-collapse: collapse; }
-        table.comp-table td { padding: 8px 0; border-bottom: 1px solid #f0f0f0; color: #444; }
+        table.comp-table td { padding: 9px 0; border-bottom: 1px solid #f0f0f0; color: #334155; }
         
         .action-btns {
-            display: flex; gap: 10px; margin-top: 16px;
+            display: flex; gap: 10px; margin-top: 18px;
         }
 
         .wa-btn { 
-            flex: 1; background: #25D366; color: white; padding: 13px; 
+            flex: 1; height: 48px; background: #25D366; color: white; 
             border-radius: 12px; font-weight: bold; cursor: pointer; 
-            border: none; font-size: 13px; transition: all 0.1s;
+            border: none; font-size: 14px; transition: all 0.1s;
             box-shadow: 0 4px #128C7E; outline: none;
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
         .pdf-btn {
-            flex: 1; background: #0d47a1; color: white; padding: 13px;
+            flex: 1; height: 48px; background: #0d47a1; color: white;
             border-radius: 12px; font-weight: bold; cursor: pointer;
-            border: none; font-size: 13px; transition: all 0.1s;
+            border: none; font-size: 14px; transition: all 0.1s;
             box-shadow: 0 4px #08306b; outline: none;
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
@@ -297,7 +334,7 @@
         }
 
         /* ======================================================== */
-        /* EXACT OFFICIAL AKC COMPUTATION SHEET FOR PDF (PRINT) */
+        /* EXACT OFFICIAL ANURAG KARUNDIA & CO. STATEMENT FOR PDF */
         /* ======================================================== */
         #officialPrintSheet {
             display: none;
@@ -334,13 +371,14 @@
             }
             .text-left { text-align: left !important; }
             .text-right { text-align: right !important; }
+            .text-center { text-align: center !important; }
             .fw-bold { font-weight: bold; }
         }
     </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay"></div>
+<div class="overlay" id="overlay" onclick="closeAllPopups()"></div>
 
 <div id="blueAlert">
     <div id="alertMsg" style="color: #333; font-size: 16px; margin-bottom: 10px;"></div>
@@ -357,25 +395,35 @@
     </div>
 
     <div class="content-padding">
-        <!-- 1. FINANCIAL YEAR SELECTOR (CUSTOM ELEGANT THEMED DROPDOWN) -->
+        <!-- 1. CUSTOM IN-PAGE FINANCIAL YEAR SELECTOR (NO ANDROID RADIO DIALOG) -->
         <div class="section-title">Assessment Year & Regime</div>
         <div class="input-group">
             <label>Financial Year</label>
-            <div class="fy-select-wrapper">
-                <select id="selectedFY" class="fy-select" onchange="updateHeader()">
-                    <option value="2025-26" selected>FY 2025-26 (AY 2026-27)</option>
-                    <option value="2026-27">FY 2026-27 (AY 2027-28)</option>
-                </select>
-                <div class="fy-select-arrow">▼</div>
+            <div class="custom-dropdown" id="fyDropdownContainer">
+                <div class="dropdown-trigger" onclick="toggleFYDropdown()">
+                    <span id="selectedFYDisplay">FY 2025-26 (AY 2026-27)</span>
+                    <span class="dropdown-arrow" id="dropdownArrow">▼</span>
+                </div>
+                <div class="dropdown-menu" id="fyDropdownMenu">
+                    <div class="dropdown-item selected" id="itemFY25" onclick="chooseFY('2025-26', 'FY 2025-26 (AY 2026-27)')">
+                        <span>FY 2025-26 (AY 2026-27)</span>
+                        <span class="check-icon" id="checkFY25">✓</span>
+                    </div>
+                    <div class="dropdown-item" id="itemFY26" onclick="chooseFY('2026-27', 'FY 2026-27 (AY 2027-28)')">
+                        <span>FY 2026-27 (AY 2027-28)</span>
+                        <span class="check-icon" id="checkFY26" style="visibility:hidden;">✓</span>
+                    </div>
+                </div>
+                <input type="hidden" id="selectedFY" value="2025-26">
             </div>
         </div>
 
-        <!-- 2. REGIME SELECTOR (CLEAN NO-GLITCH PILL SWITCH) -->
+        <!-- 2. REGIME SELECTOR (CLEAN PILL) -->
         <div class="input-group">
             <label>Tax Regime</label>
-            <div class="regime-switch">
-                <button type="button" class="regime-btn active" id="btnRegimeNew" onclick="selectRegime('NEW')">New Tax Regime</button>
-                <button type="button" class="regime-btn" id="btnRegimeOld" onclick="selectRegime('OLD')">Old Tax Regime</button>
+            <div class="pill-switch">
+                <button type="button" class="pill-btn active" id="btnRegimeNew" onclick="selectRegime('NEW')">New Tax Regime</button>
+                <button type="button" class="pill-btn" id="btnRegimeOld" onclick="selectRegime('OLD')">Old Tax Regime</button>
             </div>
             <input type="hidden" id="selectedRegime" value="NEW">
         </div>
@@ -395,14 +443,24 @@
             <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
         </div>
 
-        <!-- 4. SALARY INCOME WITH MONTH-WISE BIFURCATION (AKC OFFICIAL FORMAT) -->
+        <!-- 4. SALARY & SCHEDULE DETAILS -->
         <div class="section-title">Salary & Income Details</div>
+
+        <!-- SALARY CYCLE SELECTOR: STANDARD VS MINORITY/MADARSA -->
+        <div class="input-group">
+            <label>Salary Schedule Format</label>
+            <div class="pill-switch">
+                <button type="button" class="pill-btn active" id="btnCycleStd" onclick="selectCycle('STD')">Standard (Apr - Mar)</button>
+                <button type="button" class="pill-btn" id="btnCycleMin" onclick="selectCycle('MIN')">Minority / Madarsa (Mar - Feb)</button>
+            </div>
+            <input type="hidden" id="selectedCycle" value="STD">
+        </div>
         
         <div class="input-group">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
                 <label style="margin-bottom:0;">Annual Gross Salary</label>
                 <label style="font-size:12px; font-weight:700; color:#1a73e8; cursor:pointer; display:flex; align-items:center; gap:5px; margin-bottom:0;">
-                    <input type="checkbox" id="chkMonthly" onchange="toggleMonthlySheet()" style="width:16px; height:16px; margin:0; cursor:pointer;">
+                    <input type="checkbox" id="chkMonthly" onchange="toggleMonthlySheet()" style="width:17px; height:17px; margin:0; cursor:pointer;">
                     Month-wise Sheet (Basic, DA, HRA)
                 </label>
             </div>
@@ -412,13 +470,13 @@
 
         <!-- MONTH-WISE BIFURCATION CARD (MATCHES ANURAG KARUNDIA & CO. FORMAT) -->
         <div id="monthlySection" class="monthly-card" style="display:none;">
-            <div style="font-size:12px; font-weight:800; color:#0d47a1; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                <span>Monthly Salary Schedule (Mar 2025 - Feb 2026)</span>
+            <div style="font-size:12px; font-weight:800; color:#0d47a1; margin-bottom:10px;" id="monthlyScheduleTitle">
+                Monthly Salary Schedule (Apr 2025 - Mar 2026)
             </div>
 
-            <!-- Auto-Fill Helper -->
+            <!-- Professional Auto-Fill Box (No Childish Emojis) -->
             <div class="autofill-box">
-                <div style="font-size:11px; font-weight:700; color:#475569;">Quick Auto-Fill (Set Monthly & Apply to 12 Months)</div>
+                <div style="font-size:11px; font-weight:700; color:#475569;">Auto-Fill Regular Monthly Salary (Fills 12 Months)</div>
                 <div class="autofill-grid">
                     <div><label>Basic</label><input type="number" id="afBasic" value="0"></div>
                     <div><label>D.A.</label><input type="number" id="afDA" value="0"></div>
@@ -427,7 +485,7 @@
                     <div><label>N.P.S.</label><input type="number" id="afNPS" value="0"></div>
                     <div><label>Adv. Tax</label><input type="number" id="afTax" value="0"></div>
                 </div>
-                <button type="button" class="btn-autofill" onclick="applyAutoFill()">⚡ Auto-Fill All 12 Months</button>
+                <button type="button" class="btn-autofill" onclick="applyAutoFill()">Apply to All 12 Months</button>
             </div>
 
             <!-- 12-Month Table -->
@@ -462,8 +520,8 @@
                     </tfoot>
                 </table>
             </div>
-            <div style="margin-top:6px; font-size:11px; color:#64748b; text-align:right;">
-                * Gross Salary and Advance Tax automatically sync into computation!
+            <div style="margin-top:8px; font-size:11px; color:#64748b; text-align:right;">
+                * Gross Salary & Advance Tax automatically sync into computation!
             </div>
         </div>
 
@@ -512,7 +570,7 @@
             <div class="tax-card">
                 <div style="font-size: 13px; font-weight: bold; color: #555;">Final Net Tax Payable</div>
                 <h1 id="finalTaxVal">Rs. 0</h1>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 700;" id="resFYLabel">FY 2025-26 • New Tax Regime</div>
+                <div style="font-size: 12px; color: #16a34a; font-weight: 700;" id="resFYLabel">FY 2025-26 • New Tax Regime</div>
                 <div id="balTaxLine" style="font-size: 13px; font-weight: 800; color: #0d47a1; margin-top: 6px;"></div>
             </div>
             
@@ -540,10 +598,10 @@
 
                 <div class="action-btns">
                     <button class="wa-btn" onclick="shareWhatsApp()">
-                        <span>💬</span> Share WhatsApp
+                        Share on WhatsApp
                     </button>
                     <button class="pdf-btn" onclick="downloadOfficialPDF()">
-                        <span>📄</span> Download PDF
+                        Download PDF Report
                     </button>
                 </div>
             </div>
@@ -577,7 +635,7 @@
                 </tr>
             </table>
 
-            <!-- Monthly Salary Table (Matching Photo) -->
+            <!-- Monthly Salary Table (Matching Official Sheet Photo) -->
             <table class="sheet-table" style="margin-top:6px;">
                 <thead>
                     <tr style="background:#f0f0f0;">
@@ -608,50 +666,66 @@
                 </tfoot>
             </table>
 
-            <!-- Lower Tax Computation Section (Matching Photo) -->
+            <!-- Lower Tax Computation Section (WITH EVERY SLAB DETAILED AS IN PHOTO) -->
             <table class="sheet-table" style="margin-top:6px;">
                 <tr>
-                    <td class="text-left fw-bold">1- Gross Salary / Total Income</td>
+                    <td colspan="3" class="text-left fw-bold">1- Gross Salary / Total Income</td>
                     <td class="text-right fw-bold" id="pCompGross">₹ 0.00</td>
                 </tr>
                 <tr>
-                    <td class="text-left">Less: Standard Deduction</td>
+                    <td colspan="3" class="text-left">Less: Standard Deduction</td>
                     <td class="text-right" id="pCompSD">₹ 75,000.00</td>
                 </tr>
                 <tr id="pRowDed80C" style="display:none;">
-                    <td class="text-left">Less: Deductions u/s 80C</td>
+                    <td colspan="3" class="text-left">Less: Deductions u/s 80C</td>
                     <td class="text-right" id="pComp80C">₹ 0.00</td>
                 </tr>
                 <tr id="pRowDedOther" style="display:none;">
-                    <td class="text-left">Less: Other Deductions (80D/HRA)</td>
+                    <td colspan="3" class="text-left">Less: Other Deductions (80D/HRA)</td>
                     <td class="text-right" id="pCompOther">₹ 0.00</td>
                 </tr>
                 <tr class="fw-bold" style="background:#f9f9f9;">
-                    <td class="text-left">2- Net Taxable Income</td>
+                    <td colspan="3" class="text-left">2- Net Taxable Income</td>
                     <td class="text-right" id="pCompNet">₹ 0.00</td>
                 </tr>
+                
+                <!-- Detailed Slabs Table Heading (Matching Photo) -->
+                <tr style="background:#f0f0f0;" class="fw-bold">
+                    <td class="text-left">आयकर की गणना (Tax Computed on Slabs)</td>
+                    <td class="text-right" style="width:25%;">Taxable Amount</td>
+                    <td class="text-center" style="width:12%;">Rate</td>
+                    <td class="text-right" style="width:25%;">Tax (₹)</td>
+                </tr>
+                
+                <!-- Dynamic Slab Breakdown Rows -->
+                <tbody id="pSlabDetailRows"></tbody>
+
                 <tr>
-                    <td class="text-left">Tax Computed on Slabs</td>
+                    <td colspan="3" class="text-left">Total Tax on Slabs</td>
                     <td class="text-right" id="pCompSlabTax">₹ 0.00</td>
                 </tr>
                 <tr>
-                    <td class="text-left">Less: Rebate u/s 87A</td>
+                    <td colspan="3" class="text-left">Less: Rebate u/s 87A</td>
                     <td class="text-right" id="pCompRebate">₹ 0.00</td>
                 </tr>
+                <tr id="pRowMarginal">
+                    <td colspan="3" class="text-left">Less: Marginal Relief</td>
+                    <td class="text-right" id="pCompMarginal">₹ 0.00</td>
+                </tr>
                 <tr>
-                    <td class="text-left">Add: Health & Education Cess (4%)</td>
+                    <td colspan="3" class="text-left">Add: Health & Education Cess (4%)</td>
                     <td class="text-right" id="pCompCess">₹ 0.00</td>
                 </tr>
                 <tr class="fw-bold" style="background:#f0f0f0;">
-                    <td class="text-left">Total Tax Payable</td>
+                    <td colspan="3" class="text-left">Total Tax Payable</td>
                     <td class="text-right" id="pCompTotalTax">₹ 0.00</td>
                 </tr>
                 <tr>
-                    <td class="text-left">Less: Advance Income Tax Deducted</td>
+                    <td colspan="3" class="text-left">Less: Advance Income Tax Deducted</td>
                     <td class="text-right" id="pCompAdvTax">₹ 0.00</td>
                 </tr>
                 <tr class="fw-bold" style="background:#f0f0f0; font-size:11px;">
-                    <td class="text-left" id="pBalLabel">शेष आयकर (Balance Tax to be Paid from Feb Salary)</td>
+                    <td colspan="3" class="text-left" id="pBalLabel">शेष आयकर (Balance Tax to be Paid)</td>
                     <td class="text-right" id="pCompBalTax">₹ 0.00</td>
                 </tr>
             </table>
@@ -666,31 +740,139 @@
 </div>
 
 <script>
-var MONTH_NAMES = [
-    "March-25", "April-25", "May-25", "June-25",
-    "July-25", "August-25", "September-25", "October-25",
-    "November-25", "December-25", "January-26", "February-26"
-];
+// Dynamic Month Generation based on FY and Cycle (Standard vs Minority)
+function getMonthNames() {
+    var fy = document.getElementById('selectedFY').value; // '2025-26' or '2026-27'
+    var cycle = document.getElementById('selectedCycle').value; // 'STD' or 'MIN'
+    
+    var startYear = parseInt(fy.split('-')[0]); // 2025 or 2026
+    var nextYear = startYear + 1;
+    var syStr = String(startYear).slice(-2);
+    var nyStr = String(nextYear).slice(-2);
 
-// Initialize month table rows
-function initMonthTable() {
+    if (cycle === 'MIN') {
+        // Minority / Madarsa: March to February
+        return [
+            "March-" + syStr, "April-" + syStr, "May-" + syStr, "June-" + syStr,
+            "July-" + syStr, "August-" + syStr, "September-" + syStr, "October-" + syStr,
+            "November-" + syStr, "December-" + syStr, "January-" + nyStr, "February-" + nyStr
+        ];
+    } else {
+        // Standard: April to March
+        return [
+            "April-" + syStr, "May-" + syStr, "June-" + syStr, "July-" + syStr,
+            "August-" + syStr, "September-" + syStr, "October-" + syStr, "November-" + syStr,
+            "December-" + syStr, "January-" + nyStr, "February-" + nyStr, "March-" + nyStr
+        ];
+    }
+}
+
+// Custom Dropdown for Financial Year
+function toggleFYDropdown() {
+    var menu = document.getElementById('fyDropdownMenu');
+    var arrow = document.getElementById('dropdownArrow');
+    if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        menu.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+    }
+}
+
+function chooseFY(val, label) {
+    document.getElementById('selectedFY').value = val;
+    document.getElementById('selectedFYDisplay').innerText = label;
+    document.getElementById('fyDropdownMenu').style.display = 'none';
+    document.getElementById('dropdownArrow').style.transform = 'rotate(0deg)';
+    
+    if (val === '2025-26') {
+        document.getElementById('itemFY25').classList.add('selected');
+        document.getElementById('itemFY26').classList.remove('selected');
+        document.getElementById('checkFY25').style.visibility = 'visible';
+        document.getElementById('checkFY26').style.visibility = 'hidden';
+    } else {
+        document.getElementById('itemFY26').classList.add('selected');
+        document.getElementById('itemFY25').classList.remove('selected');
+        document.getElementById('checkFY26').style.visibility = 'visible';
+        document.getElementById('checkFY25').style.visibility = 'hidden';
+    }
+
+    updateHeader();
+    renderMonthTable();
+}
+
+function closeAllPopups() {
+    document.getElementById('fyDropdownMenu').style.display = 'none';
+    document.getElementById('dropdownArrow').style.transform = 'rotate(0deg)';
+    closePopup();
+}
+
+// Salary Cycle Switch (Standard vs Minority/Madarsa)
+function selectCycle(cycle) {
+    document.getElementById('selectedCycle').value = cycle;
+    if (cycle === 'STD') {
+        document.getElementById('btnCycleStd').classList.add('active');
+        document.getElementById('btnCycleMin').classList.remove('active');
+    } else {
+        document.getElementById('btnCycleMin').classList.add('active');
+        document.getElementById('btnCycleStd').classList.remove('active');
+    }
+    renderMonthTable();
+}
+
+// Render 12 Month Table dynamically
+function renderMonthTable() {
+    var months = getMonthNames();
+    var cycle = document.getElementById('selectedCycle').value;
+    var fy = document.getElementById('selectedFY').value;
+    var startYear = parseInt(fy.split('-')[0]);
+    var nextYear = startYear + 1;
+    
+    var titleText = cycle === 'MIN' 
+        ? "Monthly Salary Schedule (March " + startYear + " - February " + nextYear + ")" 
+        : "Monthly Salary Schedule (April " + startYear + " - March " + nextYear + ")";
+    document.getElementById('monthlyScheduleTitle').innerText = titleText;
+
     var tbody = document.getElementById('monthTbody');
+    // Preserve existing values if any
+    var prevBasic = [], prevDA = [], prevHRA = [], prevGPF = [], prevNPS = [], prevTax = [];
+    var basicInputs = document.querySelectorAll('.m-basic');
+    for (var j = 0; j < basicInputs.length; j++) {
+        prevBasic.push(document.querySelectorAll('.m-basic')[j].value);
+        prevDA.push(document.querySelectorAll('.m-da')[j].value);
+        prevHRA.push(document.querySelectorAll('.m-hra')[j].value);
+        prevGPF.push(document.querySelectorAll('.m-gpf')[j].value);
+        prevNPS.push(document.querySelectorAll('.m-nps')[j].value);
+        prevTax.push(document.querySelectorAll('.m-tax')[j].value);
+    }
+
     tbody.innerHTML = '';
     for (var i = 0; i < 12; i++) {
         var tr = document.createElement('tr');
+        var valB = prevBasic[i] !== undefined ? prevBasic[i] : '0';
+        var valD = prevDA[i] !== undefined ? prevDA[i] : '0';
+        var valH = prevHRA[i] !== undefined ? prevHRA[i] : '0';
+        var valGPF = prevGPF[i] !== undefined ? prevGPF[i] : '0';
+        var valNPS = prevNPS[i] !== undefined ? prevNPS[i] : '0';
+        var valTax = prevTax[i] !== undefined ? prevTax[i] : '0';
+        var gross = (parseFloat(valB)||0) + (parseFloat(valD)||0) + (parseFloat(valH)||0);
+
         tr.innerHTML = 
-            '<td style="font-weight:700; color:#334155;">' + MONTH_NAMES[i] + '</td>' +
-            '<td><input type="number" class="m-basic" value="0" oninput="calcMonthRow(' + i + ')"></td>' +
-            '<td><input type="number" class="m-da" value="0" oninput="calcMonthRow(' + i + ')"></td>' +
-            '<td><input type="number" class="m-hra" value="0" oninput="calcMonthRow(' + i + ')"></td>' +
-            '<td><input type="number" class="calc-cell m-gross" value="0" readonly></td>' +
-            '<td><input type="number" class="m-gpf" value="0" oninput="calcSheetTotals()"></td>' +
-            '<td><input type="number" class="m-nps" value="0" oninput="calcSheetTotals()"></td>' +
-            '<td><input type="number" class="m-tax" value="0" oninput="calcSheetTotals()"></td>';
+            '<td style="font-weight:700; color:#334155; white-space:nowrap;">' + months[i] + '</td>' +
+            '<td><input type="number" class="m-basic" value="' + valB + '" oninput="calcMonthRow(' + i + ')"></td>' +
+            '<td><input type="number" class="m-da" value="' + valD + '" oninput="calcMonthRow(' + i + ')"></td>' +
+            '<td><input type="number" class="m-hra" value="' + valH + '" oninput="calcMonthRow(' + i + ')"></td>' +
+            '<td><input type="number" class="calc-cell m-gross" value="' + Math.round(gross) + '" readonly></td>' +
+            '<td><input type="number" class="m-gpf" value="' + valGPF + '" oninput="calcSheetTotals()"></td>' +
+            '<td><input type="number" class="m-nps" value="' + valNPS + '" oninput="calcSheetTotals()"></td>' +
+            '<td><input type="number" class="m-tax" value="' + valTax + '" oninput="calcSheetTotals()"></td>';
         tbody.appendChild(tr);
     }
+    calcSheetTotals();
 }
-initMonthTable();
+
+renderMonthTable();
 
 function calcMonthRow(idx) {
     var b = parseFloat(document.querySelectorAll('.m-basic')[idx].value) || 0;
@@ -725,7 +907,6 @@ function calcSheetTotals() {
     document.getElementById('vSal').value = Math.round(totG);
     document.getElementById('vAdvTax').value = Math.round(totTax);
 
-    // If Old regime, GPF syncs to 80C
     if (document.getElementById('selectedRegime').value === 'OLD' && totGPF > 0) {
         document.getElementById('v80C').value = Math.min(150000, Math.round(totGPF));
     }
@@ -844,6 +1025,7 @@ function runCalculation() {
     var marginal = 0;
     var ded80C = 0;
     var dedOther = 0;
+    var detailedSlabs = [];
 
     if (regime === 'NEW') {
         // ==========================================
@@ -868,6 +1050,18 @@ function runCalculation() {
             var diff = normalIncome - 1200000;
             if (slabTax > diff) marginal = slabTax - diff;
         }
+
+        // Detailed slab breakdown for PDF report (Matching Photo)
+        var n = normalIncome;
+        detailedSlabs = [
+            { label: "(a) 0 से 4.00 लाख तक", amt: Math.min(n, 400000), rate: "0%", tax: 0 },
+            { label: "(b) 4.00 से 8.00 लाख तक", amt: Math.max(0, Math.min(n - 400000, 400000)), rate: "5%", tax: Math.max(0, Math.min(n - 400000, 400000)) * 0.05 },
+            { label: "(c) 8.00 से 12.00 लाख तक", amt: Math.max(0, Math.min(n - 800000, 400000)), rate: "10%", tax: Math.max(0, Math.min(n - 800000, 400000)) * 0.10 },
+            { label: "(d) 12.00 से 16.00 लाख तक", amt: Math.max(0, Math.min(n - 1200000, 400000)), rate: "15%", tax: Math.max(0, Math.min(n - 1200000, 400000)) * 0.15 },
+            { label: "(e) 16.00 से 20.00 लाख तक", amt: Math.max(0, Math.min(n - 1600000, 400000)), rate: "20%", tax: Math.max(0, Math.min(n - 1600000, 400000)) * 0.20 },
+            { label: "(f) 20.00 से 24.00 लाख तक", amt: Math.max(0, Math.min(n - 2000000, 400000)), rate: "25%", tax: Math.max(0, Math.min(n - 2000000, 400000)) * 0.25 },
+            { label: "(g) 24.00 लाख से अधिक", amt: Math.max(0, n - 2400000), rate: "30%", tax: Math.max(0, n - 2400000) * 0.30 }
+        ];
 
         document.getElementById('row80C').style.display = 'none';
         document.getElementById('rowOtherDed').style.display = 'none';
@@ -900,6 +1094,14 @@ function runCalculation() {
             rebate = Math.min(slabTax, 12500);
         }
         marginal = 0;
+
+        var nOld = normalIncome;
+        detailedSlabs = [
+            { label: "(a) 0 से 2.50 लाख तक", amt: Math.min(nOld, 250000), rate: "0%", tax: 0 },
+            { label: "(b) 2.50 से 5.00 लाख तक", amt: Math.max(0, Math.min(nOld - 250000, 250000)), rate: "5%", tax: Math.max(0, Math.min(nOld - 250000, 250000)) * 0.05 },
+            { label: "(c) 5.00 से 10.00 लाख तक", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
+            { label: "(d) 10.00 लाख से अधिक", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
+        ];
 
         document.getElementById('row80C').style.display = ded80C > 0 ? 'table-row' : 'none';
         document.getElementById('r80C').innerText = "-" + Math.round(ded80C).toLocaleString('en-IN');
@@ -950,17 +1152,23 @@ function runCalculation() {
     document.getElementById('resDiv').style.display = "block";
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
 
-    // Populate Printable Sheet
-    populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, cess, totalTaxPayable, advTax, balancePayable);
+    // Populate Official Printable Sheet (Matching Photo with Full Slabs)
+    populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
 }
 
-function populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, cess, totalTaxPayable, advTax, balancePayable) {
+function populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
     document.getElementById('pSheetTitle').innerText = "Anurag Karundia & Co. (" + (regime === 'NEW' ? "New Scheme" : "Old Scheme") + ")";
     document.getElementById('pFYCell').innerText = "वर्ष " + fy;
     document.getElementById('pNameCell').innerText = "Name: " + name;
     document.getElementById('pMobCell').innerText = "Mobile: " + mob;
     document.getElementById('pPanCell').innerText = pan;
     document.getElementById('pRegimeCell').innerText = regime === 'NEW' ? "New Tax Regime" : "Old Tax Regime";
+
+    var months = getMonthNames();
+    var cycle = document.getElementById('selectedCycle').value;
+    var startYear = parseInt(fy.split('-')[0]);
+    var nextYear = startYear + 1;
+    var lastMonthName = cycle === 'MIN' ? "February " + nextYear : "March " + nextYear;
 
     // Populate monthly rows in print sheet
     var pTbody = document.getElementById('pMonthRows');
@@ -978,7 +1186,7 @@ function populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C,
 
         var tr = document.createElement('tr');
         tr.innerHTML = 
-            '<td>' + MONTH_NAMES[i] + '</td>' +
+            '<td>' + months[i] + '</td>' +
             '<td>' + b.toFixed(2) + '</td>' +
             '<td>' + d.toFixed(2) + '</td>' +
             '<td>' + h.toFixed(2) + '</td>' +
@@ -1015,14 +1223,36 @@ function populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C,
     }
 
     document.getElementById('pCompNet').innerText = "₹ " + Math.round(netTaxableTotal).toLocaleString('en-IN') + ".00";
+
+    // Populate Detailed Slab Breakdown Table (Matching Photo)
+    var pSlabTbody = document.getElementById('pSlabDetailRows');
+    pSlabTbody.innerHTML = '';
+    detailedSlabs.forEach(function(s) {
+        var str = document.createElement('tr');
+        str.innerHTML = 
+            '<td class="text-left">' + s.label + '</td>' +
+            '<td class="text-right">₹ ' + Math.round(s.amt).toLocaleString('en-IN') + '.00</td>' +
+            '<td class="text-center">' + s.rate + '</td>' +
+            '<td class="text-right">₹ ' + Math.round(s.tax).toLocaleString('en-IN') + '.00</td>';
+        pSlabTbody.appendChild(str);
+    });
+
     document.getElementById('pCompSlabTax').innerText = "₹ " + Math.round(slabTax).toLocaleString('en-IN') + ".00";
     document.getElementById('pCompRebate').innerText = "₹ " + Math.round(rebate).toLocaleString('en-IN') + ".00";
+    
+    if (regime === 'NEW' && marginal > 0) {
+        document.getElementById('pRowMarginal').style.display = 'table-row';
+        document.getElementById('pCompMarginal').innerText = "₹ " + Math.round(marginal).toLocaleString('en-IN') + ".00";
+    } else {
+        document.getElementById('pRowMarginal').style.display = 'none';
+    }
+
     document.getElementById('pCompCess').innerText = "₹ " + Math.round(cess).toLocaleString('en-IN') + ".00";
     document.getElementById('pCompTotalTax').innerText = "₹ " + Math.round(totalTaxPayable).toLocaleString('en-IN') + ".00";
     document.getElementById('pCompAdvTax').innerText = "₹ " + Math.round(advTax).toLocaleString('en-IN') + ".00";
     
     if (balancePayable >= 0) {
-        document.getElementById('pBalLabel').innerText = "शेष आयकर (Balance Tax to be Paid from Feb 2026 Salary)";
+        document.getElementById('pBalLabel').innerText = "शेष आयकर (Balance Tax from " + lastMonthName + " Salary)";
         document.getElementById('pCompBalTax').innerText = "₹ " + Math.round(balancePayable).toLocaleString('en-IN') + ".00";
     } else {
         document.getElementById('pBalLabel').innerText = "वापसी राशि (Refund Due)";
