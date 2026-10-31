@@ -83,6 +83,20 @@
             outline: none;
         }
 
+        .dob-select { 
+            width: 100%; height: 44px; padding: 0 8px; 
+            border: 2px solid #edf2f7; border-radius: 10px; 
+            font-size: 14px; font-weight: 700; transition: all 0.25s ease; 
+            background: #fafbfc; outline: none; color: #1e293b;
+            cursor: pointer;
+        }
+
+        .dob-select:focus { 
+            border-color: var(--accent-color); 
+            background: #fff; box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12); 
+            outline: none;
+        }
+
         /* 1. CUSTOM IN-PAGE DROPDOWN FOR FINANCIAL YEAR (NO ANDROID RADIO POPUP) */
         .custom-dropdown {
             position: relative;
@@ -471,43 +485,66 @@
             <label>Full Name <span style="color:#d32f2f;">*</span></label>
             <input type="text" id="uName" placeholder="Enter Taxpayer Name">
         </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div class="input-group">
-                <label>Date of Birth <span style="color:#d32f2f;">*</span></label>
-                <div style="position:relative;">
-                    <input type="text" inputmode="numeric" id="uDob" maxlength="10" placeholder="DD / MM / YYYY" oninput="formatDOB(this)" style="padding-left:36px; font-weight:700; letter-spacing:0.8px;">
-                    <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none;">📅</span>
-                </div>
+
+        <!-- DATE OF BIRTH SELECTOR (DAY, MONTH, YEAR) -->
+        <div class="input-group">
+            <label>Date of Birth <span style="color:#d32f2f;">*</span></label>
+            <div style="display:flex; gap:8px;">
+                <select id="dobDay" class="dob-select" style="flex:1;">
+                    <option value="">Day</option>
+                </select>
+                <select id="dobMonth" class="dob-select" style="flex:1.3;">
+                    <option value="">Month</option>
+                    <option value="01">01 - Jan</option>
+                    <option value="02">02 - Feb</option>
+                    <option value="03">03 - Mar</option>
+                    <option value="04">04 - Apr</option>
+                    <option value="05">05 - May</option>
+                    <option value="06">06 - Jun</option>
+                    <option value="07">07 - Jul</option>
+                    <option value="08">08 - Aug</option>
+                    <option value="09">09 - Sep</option>
+                    <option value="10">10 - Oct</option>
+                    <option value="11">11 - Nov</option>
+                    <option value="12">12 - Dec</option>
+                </select>
+                <select id="dobYear" class="dob-select" style="flex:1.2;">
+                    <option value="">Year</option>
+                </select>
             </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
                 <label>Mobile Number <span style="color:#d32f2f;">*</span></label>
                 <input type="text" id="uMob" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Enter 10-digit Mobile">
             </div>
-        </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
                 <label>PAN Number <span style="color:#d32f2f;">*</span></label>
                 <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
             </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-group">
-                <label>District Name <span style="font-size:11px; color:#64748b; font-weight:normal;">(Optional)</span></label>
+                <label>District Name <span style="color:#d32f2f;">*</span></label>
                 <input type="text" id="uDistrict" placeholder="e.g. Kushinagar">
             </div>
-        </div>
-        <div class="input-group">
-            <label>Organization / School Name <span style="font-size:11px; color:#64748b; font-weight:normal;">(Optional)</span></label>
-            <input type="text" id="uOrg" placeholder="e.g. Madarsa / School / Office">
+            <div class="input-group">
+                <label>Organization Name <span style="color:#d32f2f;">*</span></label>
+                <input type="text" id="uOrg" placeholder="e.g. Madarsa / School / Office">
+            </div>
         </div>
 
         <!-- 4. SALARY & SCHEDULE DETAILS -->
         <div class="section-title">Salary & Income Details</div>
 
-        <!-- SALARY CYCLE SELECTOR: STANDARD VS MINORITY -->
+        <!-- SALARY CYCLE SELECTOR: STANDARD VS SPECIAL -->
         <div class="input-group">
             <label>Salary Schedule Format</label>
             <div class="pill-switch">
                 <button type="button" class="pill-btn active" id="btnCycleStd" onclick="selectCycle('STD')">Standard (Apr - Mar)</button>
-                <button type="button" class="pill-btn" id="btnCycleMin" onclick="selectCycle('MIN')">Minority (Mar - Feb)</button>
+                <button type="button" class="pill-btn" id="btnCycleMin" onclick="selectCycle('MIN')">Special (Mar - Feb)</button>
             </div>
             <input type="hidden" id="selectedCycle" value="STD">
         </div>
@@ -1030,16 +1067,29 @@ function selectRegime(regime) {
     updateHeader();
 }
 
-function formatDOB(el) {
-    var v = el.value.replace(/\D/g, '').slice(0, 8);
-    if (v.length >= 5) {
-        el.value = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
-    } else if (v.length >= 3) {
-        el.value = v.slice(0, 2) + '/' + v.slice(2);
-    } else {
-        el.value = v;
+function initDobSelectors() {
+    var daySelect = document.getElementById('dobDay');
+    var yearSelect = document.getElementById('dobYear');
+    if (!daySelect || !yearSelect) return;
+    
+    daySelect.innerHTML = '<option value="">Day</option>';
+    for (var d = 1; d <= 31; d++) {
+        var opt = document.createElement('option');
+        var val = d < 10 ? '0' + d : String(d);
+        opt.value = val;
+        opt.text = val;
+        daySelect.appendChild(opt);
+    }
+    
+    yearSelect.innerHTML = '<option value="">Year</option>';
+    for (var y = 2015; y >= 1950; y--) {
+        var yOpt = document.createElement('option');
+        yOpt.value = String(y);
+        yOpt.text = String(y);
+        yearSelect.appendChild(yOpt);
     }
 }
+initDobSelectors();
 
 function showBluePopup(msg) {
     document.getElementById('alertMsg').innerText = msg;
@@ -1055,7 +1105,9 @@ function resetForm() {
     document.getElementById('uName').value = '';
     document.getElementById('uMob').value = '';
     document.getElementById('uPan').value = '';
-    if (document.getElementById('uDob')) document.getElementById('uDob').value = '';
+    if (document.getElementById('dobDay')) document.getElementById('dobDay').value = '';
+    if (document.getElementById('dobMonth')) document.getElementById('dobMonth').value = '';
+    if (document.getElementById('dobYear')) document.getElementById('dobYear').value = '';
     if (document.getElementById('uDistrict')) document.getElementById('uDistrict').value = '';
     if (document.getElementById('uOrg')) document.getElementById('uOrg').value = '';
     document.getElementById('vSal').value = '0';
@@ -1075,9 +1127,12 @@ function runCalculation() {
     var name = document.getElementById('uName').value.trim();
     var mob = document.getElementById('uMob').value.trim();
     var pan = document.getElementById('uPan').value.trim().toUpperCase();
-    var dob = document.getElementById('uDob') ? document.getElementById('uDob').value.trim() : '';
     var district = document.getElementById('uDistrict') ? document.getElementById('uDistrict').value.trim() : '';
     var org = document.getElementById('uOrg') ? document.getElementById('uOrg').value.trim() : '';
+    
+    var bDay = document.getElementById('dobDay') ? document.getElementById('dobDay').value : '';
+    var bMonth = document.getElementById('dobMonth') ? document.getElementById('dobMonth').value : '';
+    var bYear = document.getElementById('dobYear') ? document.getElementById('dobYear').value : '';
 
     var junkRepeat = /(.)\1{2,}/; 
     var badNames = ["demo", "admin", "asdf", "qwerty", "test", "abcd"];
@@ -1085,19 +1140,12 @@ function runCalculation() {
         showBluePopup("Enter Valid Taxpayer Name."); return;
     }
 
-    // MANDATORY DATE OF BIRTH VALIDATION
-    var dobMatch = dob.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (!dobMatch) {
-        showBluePopup("Enter Valid Date of Birth (DD/MM/YYYY).");
+    // MANDATORY DATE OF BIRTH SELECTOR VALIDATION
+    if (!bDay || !bMonth || !bYear) {
+        showBluePopup("Please Select Date of Birth (Day, Month & Year).");
         return;
     }
-    var day = parseInt(dobMatch[1], 10);
-    var month = parseInt(dobMatch[2], 10);
-    var year = parseInt(dobMatch[3], 10);
-    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1920 || year > 2026) {
-        showBluePopup("Enter Realistic Date of Birth (DD/MM/YYYY).");
-        return;
-    }
+    var dob = bDay + "/" + bMonth + "/" + bYear;
 
     var mobPattern = /^[6-9]\d{9}$/;
     var isDuplicateMob = /^(.)\1{9}$/.test(mob);
@@ -1105,6 +1153,16 @@ function runCalculation() {
     
     var panPattern = /^[A-Z]{3}P[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
     if (!panPattern.test(pan)) { showBluePopup("Enter Valid PAN Number."); return; }
+
+    // MANDATORY DISTRICT & ORGANIZATION VALIDATION
+    if (!district || district.length < 2) {
+        showBluePopup("Enter Valid District Name.");
+        return;
+    }
+    if (!org || org.length < 2) {
+        showBluePopup("Enter Valid Organization Name.");
+        return;
+    }
 
     var fy = document.getElementById('selectedFY').value;
     var regime = document.getElementById('selectedRegime').value;
