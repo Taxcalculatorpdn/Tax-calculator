@@ -24,13 +24,13 @@
         body { 
             font-family: 'Inter', -apple-system, sans-serif; 
             background-color: var(--bg-color); 
-            margin: 0; padding: 20px; 
+            margin: 0; padding: 16px; 
             display: flex; justify-content: center; 
         }
 
         .container { 
             background: var(--card-bg); 
-            width: 100%; max-width: 420px; 
+            width: 100%; max-width: 440px; 
             border-radius: 20px; 
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
@@ -38,90 +38,133 @@
         }
 
         .header { 
-            background: var(--primary-color); 
-            color: white; padding: 25px 20px; text-align: center;
+            background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 50%, #1565C0 100%); 
+            color: white; padding: 22px 20px; text-align: center;
         }
 
-        .header h2 { margin: 0; font-size: 20px; letter-spacing: 0.5px; }
-        .header p { margin: 5px 0 0; font-size: 11px; opacity: 0.8; font-weight: bold; text-transform: uppercase; }
+        .header h2 { margin: 0; font-size: 19px; letter-spacing: 0.5px; font-weight: 800; }
+        .header p { 
+            margin: 6px 0 0; font-size: 11px; opacity: 0.9; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            color: #90CAF9;
+        }
 
         .content-padding { padding: 20px; }
 
         .section-title {
             font-size: 12px; font-weight: 800; color: var(--accent-color);
-            text-transform: uppercase; margin-bottom: 15px; margin-top: 10px;
-            display: flex; align-items: center;
+            text-transform: uppercase; margin-bottom: 12px; margin-top: 14px;
+            display: flex; align-items: center; letter-spacing: 0.5px;
         }
 
         .section-title::after {
-            content: ""; flex: 1; height: 1px; background: #eee; margin-left: 10px;
+            content: ""; flex: 1; height: 1px; background: #e2e8f0; margin-left: 10px;
         }
 
-        .input-group { margin-bottom: 15px; }
+        .input-group { margin-bottom: 14px; }
         
         label { font-weight: 600; display: block; font-size: 13px; color: var(--text-dark); margin-bottom: 6px; }
         
-        input { 
-            width: 100%; padding: 12px 15px; 
+        input, select { 
+            width: 100%; padding: 12px 14px; 
             border: 2px solid #edf2f7; border-radius: 10px; 
-            box-sizing: border-box; font-size: 16px; 
-            transition: all 0.3s ease; background: #fafbfc;
-            outline: none;
+            box-sizing: border-box; font-size: 15px; 
+            transition: all 0.25s ease; background: #fafbfc;
+            outline: none; color: #1e293b;
         }
 
-        input:focus { 
+        input:focus, select:focus { 
             border-color: var(--accent-color); 
             background: #fff; box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1); 
         }
 
+        /* Modern FY Segmented Switch */
+        .fy-switch {
+            display: flex; gap: 8px; background: #edf2f7;
+            padding: 4px; border-radius: 12px;
+        }
+
+        .fy-btn {
+            flex: 1; padding: 10px; border: none; border-radius: 8px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            background: transparent; color: #475569;
+            transition: all 0.2s ease;
+        }
+
+        .fy-btn.active {
+            background: #ffffff; color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* Info pill */
+        .info-pill {
+            background: #e8f0fe; color: #1967d2; padding: 6px 10px;
+            border-radius: 6px; font-size: 11px; font-weight: 600;
+            display: inline-block; margin-top: 4px; margin-bottom: 6px;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex; gap: 10px; margin-top: 14px;
+        }
+
         .btn-calc { 
-            width: 100%; padding: 16px; background: var(--primary-color); 
+            flex: 2; padding: 15px; background: var(--primary-color); 
             color: white; border: none; border-radius: 12px; 
-            font-size: 16px; font-weight: 700; cursor: pointer; 
-            margin-top: 10px; position: relative;
-            transition: all 0.1s;
-            box-shadow: 0 4px #08306b;
-            outline: none;
+            font-size: 15px; font-weight: 700; cursor: pointer; 
+            position: relative; transition: all 0.1s;
+            box-shadow: 0 4px #08306b; outline: none;
         }
 
         .btn-calc:active { 
-            transform: translateY(4px);
-            box-shadow: 0 0 #08306b;
+            transform: translateY(3px);
+            box-shadow: 0 1px #08306b;
         }
 
-        .res-box { display: none; margin-top: 25px; animation: fadeIn 0.5s; }
+        .btn-reset {
+            flex: 1; padding: 15px; background: #f1f5f9;
+            color: #475569; border: 2px solid #e2e8f0; border-radius: 12px;
+            font-size: 14px; font-weight: 700; cursor: pointer;
+            transition: all 0.1s; outline: none;
+        }
+
+        .btn-reset:active {
+            background: #e2e8f0;
+        }
+
+        .res-box { display: none; margin-top: 25px; animation: fadeIn 0.4s; }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .tax-card { 
             background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
             border: 2px solid #d1e3f8; padding: 20px; border-radius: 16px; 
-            text-align: center; margin-bottom: 20px;
+            text-align: center; margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.05);
         }
 
-        .tax-card h1 { color: #d32f2f; margin: 10px 0; font-size: 32px; }
+        .tax-card h1 { color: #d32f2f; margin: 8px 0; font-size: 30px; font-weight: 800; }
 
         #report { 
             background: #fff; border: 1px solid #e1e8ed; 
-            padding: 15px; border-radius: 12px; font-size: 12px; 
+            padding: 16px; border-radius: 12px; font-size: 12px; 
         }
 
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #444; }
+        td { padding: 9px 0; border-bottom: 1px solid #f0f0f0; color: #444; }
         
         .wa-btn { 
-            background: #25D366; color: white; padding: 15px; 
+            background: #25D366; color: white; padding: 14px; 
             border-radius: 12px; font-weight: bold; cursor: pointer; 
-            border: none; width: 100%; font-size: 13px; margin-bottom: 10px;
+            border: none; width: 100%; font-size: 13px; margin-top: 16px;
             transition: all 0.1s;
             box-shadow: 0 4px #128C7E;
-            position: relative;
             outline: none;
         }
 
         .wa-btn:active { 
-            transform: translateY(4px);
-            box-shadow: 0 0 #128C7E;
+            transform: translateY(3px);
+            box-shadow: 0 1px #128C7E;
         }
 
         /* Popups */
@@ -159,10 +202,22 @@
 <div class="container">
     <div class="header">
         <h2>Anurag Karundia & Co.</h2>
-        <p>FY 2025-26 | New Tax Regime</p>
+        <p id="headerFY">FY 2025-26 | New Tax Regime</p>
     </div>
 
     <div class="content-padding">
+        <!-- 1. FINANCIAL YEAR SELECTOR (ONLY 25-26 AND 26-27) -->
+        <div class="section-title">Assessment Year & Regime</div>
+        <div class="input-group">
+            <label>Financial Year</label>
+            <div class="fy-switch">
+                <button type="button" class="fy-btn active" id="btnFY25" onclick="selectFY('2025-26')">FY 2025-26</button>
+                <button type="button" class="fy-btn" id="btnFY26" onclick="selectFY('2026-27')">FY 2026-27</button>
+            </div>
+            <input type="hidden" id="selectedFY" value="2025-26">
+        </div>
+
+        <!-- 2. PERSONAL DETAILS -->
         <div class="section-title">Personal Details</div>
         <div class="input-group">
             <label>Full Name</label>
@@ -177,30 +232,39 @@
             <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
         </div>
 
+        <!-- 3. INCOME SOURCES -->
         <div class="section-title">Income Sources</div>
         <div class="input-group">
             <label>Salary Income</label>
             <input type="number" id="vSal" value="0" onclick="this.select()">
+            <div class="info-pill">✓ Standard Deduction ₹75,000 auto-applied</div>
         </div>
         <div class="input-group">
-            <label>Business Income</label>
+            <label>Business / Professional Income</label>
             <input type="number" id="vBus" value="0" onclick="this.select()">
         </div>
         <div class="input-group">
-            <label>Short Term Cap. Gain (STCG)</label>
+            <label>Short Term Capital Gain (STCG @ 20%)</label>
             <input type="number" id="vSTCG" value="0" onclick="this.select()">
         </div>
         <div class="input-group">
-            <label>Long Term Cap. Gain (LTCG)</label>
+            <label>Long Term Capital Gain (LTCG @ 12.5%)</label>
             <input type="number" id="vLTCG" value="0" onclick="this.select()">
+            <div class="info-pill">✓ Exemption up to ₹1,25,000 auto-applied</div>
         </div>
 
-        <button class="btn-calc" onclick="runCalculation()">Calculate Tax</button>
+        <!-- BUTTONS ROW -->
+        <div class="btn-row">
+            <button class="btn-calc" onclick="runCalculation()">Calculate Tax</button>
+            <button class="btn-reset" onclick="resetForm()">Reset</button>
+        </div>
 
+        <!-- RESULTS DISPLAY -->
         <div id="resDiv" class="res-box">
             <div class="tax-card">
                 <div style="font-size: 13px; font-weight: bold; color: #555;">Final Net Tax Payable</div>
                 <h1 id="finalTaxVal">Rs. 0</h1>
+                <div style="font-size: 11px; color: #16a34a; font-weight: 700;" id="resFYLabel">FY 2025-26 (New Regime)</div>
             </div>
             
             <div id="report">
@@ -217,40 +281,25 @@
                     <tr><td>Cess (4%)</td><td id="rCess" align="right">0</td></tr>
                     <tr style="border-top: 2px solid #333; font-weight:900; font-size:14px;"><td>NET TAX PAYABLE</td><td id="rFinalTotal" align="right" style="color:#d32f2f;">0</td></tr>
                 </table>
-                <button class="wa-btn" style="margin-top: 20px;" onclick="
-    var n = document.getElementById('uName').value;
-    var g = document.getElementById('rGross').innerText;
-    var ni = document.getElementById('rNetInc').innerText;
-    var st = document.getElementById('rSTCGTax').innerText;
-    var lt = document.getElementById('rLTCGTax').innerText;
-    var rb = document.getElementById('rRebate').innerText;
-    var cs = document.getElementById('rCess').innerText;
-    var f = document.getElementById('finalTaxVal').innerText;
-    var sRows = document.getElementById('rSlabRows').innerText.replace(/\t/g, ': ').replace(/\n/g, ' | ').replace(/\+/g, '');
-    var msg = 'INCOME TAX REPORT (FY 2025-26)\n' +
-              '------------------------------------\n' +
-              'Name: ' + n + '\n' +
-              'Gross Income: Rs. ' + g + '\n' +
-              'Net Taxable: Rs. ' + ni + '\n' +
-              '------------------------------------\n' +
-              'TAX COMPUTATION:\n' +
-              'Normal Tax: Rs. ' + (sRows || '0') + '\n' +
-              'STCG Tax: Rs. ' + st + '\n' +
-              'LTCG Tax: Rs. ' + lt + '\n' +
-              'Less Rebate: Rs. ' + rb + '\n' +
-              'Add Cess (4%): Rs. ' + cs + '\n' +
-              '------------------------------------\n' +
-              'NET TAX PAYABLE: ' + f + '\n' +
-              '------------------------------------\n' +
-              'Anurag Karundia & Co.';
-    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
-">Share on WhatsApp</button>
+                <button class="wa-btn" onclick="shareWhatsApp()">Share on WhatsApp</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+function selectFY(fy) {
+    document.getElementById('selectedFY').value = fy;
+    document.getElementById('headerFY').innerText = 'FY ' + fy + ' | New Tax Regime';
+    if (fy === '2025-26') {
+        document.getElementById('btnFY25').classList.add('active');
+        document.getElementById('btnFY26').classList.remove('active');
+    } else {
+        document.getElementById('btnFY26').classList.add('active');
+        document.getElementById('btnFY25').classList.remove('active');
+    }
+}
+
 function showBluePopup(msg) {
     document.getElementById('alertMsg').innerText = msg;
     document.getElementById('blueAlert').style.display = "block";
@@ -259,6 +308,18 @@ function showBluePopup(msg) {
 function closePopup() {
     document.getElementById('blueAlert').style.display = "none";
     document.getElementById('overlay').style.display = "none";
+}
+
+function resetForm() {
+    document.getElementById('uName').value = '';
+    document.getElementById('uMob').value = '';
+    document.getElementById('uPan').value = '';
+    document.getElementById('vSal').value = '0';
+    document.getElementById('vBus').value = '0';
+    document.getElementById('vSTCG').value = '0';
+    document.getElementById('vLTCG').value = '0';
+    document.getElementById('resDiv').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function runCalculation() {
@@ -278,7 +339,8 @@ function runCalculation() {
     var panPattern = /^[A-Z]{3}P[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
     if (!panPattern.test(pan)) { showBluePopup("Enter Valid PAN Number."); return; }
 
-    gtag('event', 'tax_calculated', {'user_name': name, 'user_mob': mob, 'user_pan': pan});
+    var fy = document.getElementById('selectedFY').value;
+    gtag('event', 'tax_calculated', {'user_name': name, 'user_mob': mob, 'user_pan': pan, 'financial_year': fy});
 
     var sal = parseFloat(document.getElementById('vSal').value) || 0;
     var bus = parseFloat(document.getElementById('vBus').value) || 0;
@@ -327,9 +389,40 @@ function runCalculation() {
     
     document.getElementById('rFinalTotal').innerText = "Rs. " + final.toLocaleString('en-IN');
     document.getElementById('finalTaxVal').innerText = "Rs. " + final.toLocaleString('en-IN');
+    document.getElementById('resFYLabel').innerText = "FY " + fy + " (New Regime)";
 
     document.getElementById('resDiv').style.display = "block";
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
+}
+
+function shareWhatsApp() {
+    var n = document.getElementById('uName').value;
+    var fy = document.getElementById('selectedFY').value;
+    var g = document.getElementById('rGross').innerText;
+    var ni = document.getElementById('rNetInc').innerText;
+    var st = document.getElementById('rSTCGTax').innerText;
+    var lt = document.getElementById('rLTCGTax').innerText;
+    var rb = document.getElementById('rRebate').innerText;
+    var cs = document.getElementById('rCess').innerText;
+    var f = document.getElementById('finalTaxVal').innerText;
+    var sRows = document.getElementById('rSlabRows').innerText.replace(/\t/g, ': ').replace(/\n/g, ' | ').replace(/\+/g, '');
+    var msg = 'INCOME TAX REPORT (FY ' + fy + ')\n' +
+              '------------------------------------\n' +
+              'Name: ' + n + '\n' +
+              'Gross Income: Rs. ' + g + '\n' +
+              'Net Taxable: Rs. ' + ni + '\n' +
+              '------------------------------------\n' +
+              'TAX COMPUTATION:\n' +
+              'Normal Tax: Rs. ' + (sRows || '0') + '\n' +
+              'STCG Tax: Rs. ' + st + '\n' +
+              'LTCG Tax: Rs. ' + lt + '\n' +
+              'Less Rebate: Rs. ' + rb + '\n' +
+              'Add Cess (4%): Rs. ' + cs + '\n' +
+              '------------------------------------\n' +
+              'NET TAX PAYABLE: ' + f + '\n' +
+              '------------------------------------\n' +
+              'Anurag Karundia & Co.';
+    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
 }
 </script>
 </body>
