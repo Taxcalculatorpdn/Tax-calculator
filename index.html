@@ -33,6 +33,11 @@
             display: flex; justify-content: center; 
         }
 
+        @keyframes pageFadeSlide {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .container { 
             background: var(--card-bg); 
             width: 100%; max-width: 480px; 
@@ -40,6 +45,7 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
             border: 1px solid #e1e8ed;
+            animation: pageFadeSlide 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .header { 
@@ -84,16 +90,25 @@
         }
 
         .dob-select { 
-            width: 100%; height: 44px; padding: 0 8px; 
-            border: 2px solid #edf2f7; border-radius: 10px; 
-            font-size: 14px; font-weight: 700; transition: all 0.25s ease; 
-            background: #fafbfc; outline: none; color: #1e293b;
+            width: 100%; height: 38px; padding: 0 24px 0 10px; 
+            border: 1.5px solid #cbd5e1; border-radius: 8px; 
+            font-size: 13px; font-weight: 600; transition: all 0.2s ease; 
+            background-color: #ffffff;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23475569%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 10px 10px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: none; color: #1e293b;
             cursor: pointer;
         }
 
         .dob-select:focus { 
-            border-color: var(--accent-color); 
-            background: #fff; box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12); 
+            border-color: #1a73e8; 
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.12); 
             outline: none;
         }
 
@@ -378,20 +393,25 @@
             }
             .sheet-watermark {
                 position: absolute;
-                top: 50%;
                 left: 50%;
-                transform: translate(-50%, -50%) rotate(-30deg);
-                font-size: 48px;
+                transform: translate(-50%, -50%) rotate(-28deg);
+                font-size: 38px;
                 font-weight: 900;
-                color: rgba(15, 23, 42, 0.15) !important;
+                color: rgba(51, 65, 85, 0.25) !important;
                 white-space: nowrap;
                 pointer-events: none;
                 z-index: 10 !important;
                 text-transform: uppercase;
-                letter-spacing: 6px;
-                font-family: 'Arial Black', Impact, 'Segoe UI Black', Arial, sans-serif !important;
+                letter-spacing: 5px;
+                font-family: 'Arial Black', Impact, Arial, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+            }
+            .sheet-watermark.wm-1 {
+                top: 32%;
+            }
+            .sheet-watermark.wm-2 {
+                top: 72%;
             }
             .sheet-table, .sheet-header-box, .sig-box {
                 position: relative;
@@ -525,15 +545,14 @@
             </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div class="input-group">
-                <label>District Name <span style="color:#d32f2f;">*</span></label>
-                <input type="text" id="uDistrict" placeholder="e.g. Kushinagar">
-            </div>
-            <div class="input-group">
-                <label>Organization Name <span style="color:#d32f2f;">*</span></label>
-                <input type="text" id="uOrg" placeholder="e.g. School / Madarsa / College / Office">
-            </div>
+        <div class="input-group">
+            <label>District Name <span style="color:#d32f2f;">*</span></label>
+            <input type="text" id="uDistrict" placeholder="e.g. Kushinagar">
+        </div>
+
+        <div class="input-group">
+            <label>Organization Name <span style="color:#d32f2f;">*</span></label>
+            <input type="text" id="uOrg" placeholder="e.g. School / Madarsa / College / Office">
         </div>
 
         <!-- 4. SALARY & SCHEDULE DETAILS -->
@@ -705,8 +724,9 @@
 <div id="officialPrintSheet">
     <div class="akc-border-box">
         <div class="akc-inner-box">
-            <!-- Light Diagonal Watermark (Underneath Tables) -->
-            <div class="sheet-watermark">ANURAG KARUNDIA & CO.</div>
+            <!-- Dual Diagonal Watermarks for Perfect Upper & Lower Coverage -->
+            <div class="sheet-watermark wm-1">ANURAG KARUNDIA & CO.</div>
+            <div class="sheet-watermark wm-2">ANURAG KARUNDIA & CO.</div>
 
             <div class="sheet-header-box" style="text-align:center;">
                 <h2 style="margin:0; font-size:16px;" id="pSheetTitle">Anurag Karundia & Co. (New Scheme)</h2>
