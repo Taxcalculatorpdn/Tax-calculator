@@ -381,15 +381,15 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-30deg);
-                font-size: 38px;
+                font-size: 48px;
                 font-weight: 900;
-                color: rgba(0, 0, 0, 0.16) !important;
+                color: rgba(15, 23, 42, 0.15) !important;
                 white-space: nowrap;
                 pointer-events: none;
-                z-index: 5 !important;
+                z-index: 10 !important;
                 text-transform: uppercase;
-                letter-spacing: 4px;
-                font-family: Arial, Helvetica, sans-serif !important;
+                letter-spacing: 6px;
+                font-family: 'Arial Black', Impact, 'Segoe UI Black', Arial, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -532,7 +532,7 @@
             </div>
             <div class="input-group">
                 <label>Organization Name <span style="color:#d32f2f;">*</span></label>
-                <input type="text" id="uOrg" placeholder="e.g. Madarsa / School / Office">
+                <input type="text" id="uOrg" placeholder="e.g. School / Madarsa / College / Office">
             </div>
         </div>
 
@@ -681,7 +681,7 @@
                     <tr style="border-top: 1.5px solid #333; font-weight:700;"><td>Total Tax Payable</td><td id="rTotalTax" align="right">0</td></tr>
                     <tr><td>Less: Advance Tax / TDS Paid</td><td id="rAdvTax" align="right" style="color:green;">0</td></tr>
                     <tr style="border-top: 2px solid #333; font-weight:900; font-size:14px; background:#f0fdf4;">
-                        <td id="lblBalanceTax">BALANCE TAX PAYABLE (शेष आयकर)</td>
+                        <td id="lblBalanceTax">BALANCE TAX PAYABLE</td>
                         <td id="rFinalTotal" align="right" style="color:#d32f2f;">0</td>
                     </tr>
                 </table>
@@ -710,7 +710,7 @@
 
             <div class="sheet-header-box" style="text-align:center;">
                 <h2 style="margin:0; font-size:16px;" id="pSheetTitle">Anurag Karundia & Co. (New Scheme)</h2>
-                <div style="font-size:13px; font-weight:bold; margin-top:2px;" id="pSheetSub">Tax Computation Sheet / आयकर गणना पत्र</div>
+                <div style="font-size:13px; font-weight:bold; margin-top:2px;" id="pSheetSub">Tax Computation Sheet</div>
             </div>
 
             <!-- Top Header Metadata Grid (Perfect 4-Column Balanced Grid) -->
@@ -773,7 +773,7 @@
             <!-- Lower Tax Computation Section (WITH EVERY SLAB DETAILED AS IN PHOTO) -->
             <table class="sheet-table" style="margin-top:6px;">
                 <tr>
-                    <td colspan="3" class="text-left fw-bold">1- Gross Salary / Total Income</td>
+                    <td colspan="3" class="text-left fw-bold">1- Gross Salary & Total Income</td>
                     <td class="text-right fw-bold" id="pCompGross">₹ 0.00</td>
                 </tr>
                 <tr>
@@ -795,7 +795,7 @@
                 
                 <!-- Detailed Slabs Table Heading (Matching Photo) -->
                 <tr class="fw-bold">
-                    <td class="text-left">आयकर की गणना (Tax Computed on Slabs)</td>
+                    <td class="text-left">Tax Computed on Slabs</td>
                     <td class="text-right" style="width:25%;">Taxable Amount</td>
                     <td class="text-center" style="width:12%;">Rate</td>
                     <td class="text-right" style="width:25%;">Tax (₹)</td>
@@ -829,7 +829,7 @@
                     <td class="text-right" id="pCompAdvTax">₹ 0.00</td>
                 </tr>
                 <tr class="fw-bold" style="font-size:11px;">
-                    <td colspan="3" class="text-left" id="pBalLabel">शेष आयकर (Balance Tax to be Paid)</td>
+                    <td colspan="3" class="text-left" id="pBalLabel">Balance Tax Payable</td>
                     <td class="text-right" id="pCompBalTax">₹ 0.00</td>
                 </tr>
             </table>
@@ -1208,16 +1208,16 @@ function runCalculation() {
             if (slabTax > diff) marginal = slabTax - diff;
         }
 
-        // Detailed slab breakdown for PDF report (Matching Photo)
+        // Detailed slab breakdown for PDF report (Clean English)
         var n = normalIncome;
         detailedSlabs = [
-            { label: "(a) 0 से 4.00 लाख तक", amt: Math.min(n, 400000), rate: "0%", tax: 0 },
-            { label: "(b) 4.00 से 8.00 लाख तक", amt: Math.max(0, Math.min(n - 400000, 400000)), rate: "5%", tax: Math.max(0, Math.min(n - 400000, 400000)) * 0.05 },
-            { label: "(c) 8.00 से 12.00 लाख तक", amt: Math.max(0, Math.min(n - 800000, 400000)), rate: "10%", tax: Math.max(0, Math.min(n - 800000, 400000)) * 0.10 },
-            { label: "(d) 12.00 से 16.00 लाख तक", amt: Math.max(0, Math.min(n - 1200000, 400000)), rate: "15%", tax: Math.max(0, Math.min(n - 1200000, 400000)) * 0.15 },
-            { label: "(e) 16.00 से 20.00 लाख तक", amt: Math.max(0, Math.min(n - 1600000, 400000)), rate: "20%", tax: Math.max(0, Math.min(n - 1600000, 400000)) * 0.20 },
-            { label: "(f) 20.00 से 24.00 लाख तक", amt: Math.max(0, Math.min(n - 2000000, 400000)), rate: "25%", tax: Math.max(0, Math.min(n - 2000000, 400000)) * 0.25 },
-            { label: "(g) 24.00 लाख से अधिक", amt: Math.max(0, n - 2400000), rate: "30%", tax: Math.max(0, n - 2400000) * 0.30 }
+            { label: "(a) Up to ₹ 4,00,000", amt: Math.min(n, 400000), rate: "0%", tax: 0 },
+            { label: "(b) ₹ 4,00,001 to ₹ 8,00,000", amt: Math.max(0, Math.min(n - 400000, 400000)), rate: "5%", tax: Math.max(0, Math.min(n - 400000, 400000)) * 0.05 },
+            { label: "(c) ₹ 8,00,001 to ₹ 12,00,000", amt: Math.max(0, Math.min(n - 800000, 400000)), rate: "10%", tax: Math.max(0, Math.min(n - 800000, 400000)) * 0.10 },
+            { label: "(d) ₹ 12,00,001 to ₹ 16,00,000", amt: Math.max(0, Math.min(n - 1200000, 400000)), rate: "15%", tax: Math.max(0, Math.min(n - 1200000, 400000)) * 0.15 },
+            { label: "(e) ₹ 16,00,001 to ₹ 20,00,000", amt: Math.max(0, Math.min(n - 1600000, 400000)), rate: "20%", tax: Math.max(0, Math.min(n - 1600000, 400000)) * 0.20 },
+            { label: "(f) ₹ 20,00,001 to ₹ 24,00,000", amt: Math.max(0, Math.min(n - 2000000, 400000)), rate: "25%", tax: Math.max(0, Math.min(n - 2000000, 400000)) * 0.25 },
+            { label: "(g) Above ₹ 24,00,000", amt: Math.max(0, n - 2400000), rate: "30%", tax: Math.max(0, n - 2400000) * 0.30 }
         ];
 
         document.getElementById('row80C').style.display = 'none';
@@ -1254,10 +1254,10 @@ function runCalculation() {
 
         var nOld = normalIncome;
         detailedSlabs = [
-            { label: "(a) 0 से 2.50 लाख तक", amt: Math.min(nOld, 250000), rate: "0%", tax: 0 },
-            { label: "(b) 2.50 से 5.00 लाख तक", amt: Math.max(0, Math.min(nOld - 250000, 250000)), rate: "5%", tax: Math.max(0, Math.min(nOld - 250000, 250000)) * 0.05 },
-            { label: "(c) 5.00 से 10.00 लाख तक", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
-            { label: "(d) 10.00 लाख से अधिक", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
+            { label: "(a) Up to ₹ 2,50,000", amt: Math.min(nOld, 250000), rate: "0%", tax: 0 },
+            { label: "(b) ₹ 2,50,001 to ₹ 5,00,000", amt: Math.max(0, Math.min(nOld - 250000, 250000)), rate: "5%", tax: Math.max(0, Math.min(nOld - 250000, 250000)) * 0.05 },
+            { label: "(c) ₹ 5,00,001 to ₹ 10,00,000", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
+            { label: "(d) Above ₹ 10,00,000", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
         ];
 
         document.getElementById('row80C').style.display = ded80C > 0 ? 'table-row' : 'none';
@@ -1291,13 +1291,13 @@ function runCalculation() {
     document.getElementById('rAdvTax').innerText = "-" + Math.round(advTax).toLocaleString('en-IN');
     
     if (balancePayable >= 0) {
-        document.getElementById('lblBalanceTax').innerText = "BALANCE TAX PAYABLE (शेष आयकर)";
+        document.getElementById('lblBalanceTax').innerText = "BALANCE TAX PAYABLE";
         document.getElementById('rFinalTotal').innerText = "Rs. " + balancePayable.toLocaleString('en-IN');
         document.getElementById('rFinalTotal').style.color = "#d32f2f";
         document.getElementById('finalTaxVal').innerText = "Rs. " + balancePayable.toLocaleString('en-IN');
         document.getElementById('balTaxLine').innerText = advTax > 0 ? "Advance Tax Paid: ₹" + Math.round(advTax).toLocaleString('en-IN') + " | Net Due: ₹" + Math.round(balancePayable).toLocaleString('en-IN') : "";
     } else {
-        document.getElementById('lblBalanceTax').innerText = "REFUND DUE (वापसी राशि)";
+        document.getElementById('lblBalanceTax').innerText = "REFUND DUE";
         document.getElementById('rFinalTotal').innerText = "Rs. " + Math.abs(balancePayable).toLocaleString('en-IN');
         document.getElementById('rFinalTotal').style.color = "#16a34a";
         document.getElementById('finalTaxVal').innerText = "Rs. 0 (Refund ₹" + Math.abs(balancePayable).toLocaleString('en-IN') + ")";
@@ -1417,10 +1417,10 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
     document.getElementById('pCompAdvTax').innerText = "₹ " + Math.round(advTax).toLocaleString('en-IN') + ".00";
     
     if (balancePayable >= 0) {
-        document.getElementById('pBalLabel').innerText = "शेष आयकर (Balance Tax from " + lastMonthName + " Salary)";
+        document.getElementById('pBalLabel').innerText = "Balance Tax Payable (from " + lastMonthName + " Salary)";
         document.getElementById('pCompBalTax').innerText = "₹ " + Math.round(balancePayable).toLocaleString('en-IN') + ".00";
     } else {
-        document.getElementById('pBalLabel').innerText = "वापसी राशि (Refund Due)";
+        document.getElementById('pBalLabel').innerText = "Refund Due";
         document.getElementById('pCompBalTax').innerText = "₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00";
     }
 }
