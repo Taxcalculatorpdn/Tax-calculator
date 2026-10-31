@@ -367,14 +367,14 @@
                 top: 48%;
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-32deg);
-                font-size: 38px;
-                font-weight: bold;
-                color: rgba(0, 0, 0, 0.06) !important;
+                font-size: 42px;
+                font-weight: 900;
+                color: rgba(0, 0, 0, 0.15) !important;
                 white-space: nowrap;
                 pointer-events: none;
                 z-index: 0;
                 text-transform: uppercase;
-                letter-spacing: 3px;
+                letter-spacing: 4px;
                 font-family: Arial, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -398,6 +398,9 @@
             .text-right { text-align: right !important; }
             .text-center { text-align: center !important; }
             .fw-bold { font-weight: bold; }
+            table.meta-grid td { padding: 4px 6px; font-size: 10px; }
+            .meta-label { width: 20%; background: #f5f5f5; font-weight: bold; text-align: left !important; }
+            .meta-val { width: 30%; text-align: left !important; }
         }
     </style>
 </head>
@@ -459,13 +462,25 @@
             <label>Full Name</label>
             <input type="text" id="uName" placeholder="Enter Taxpayer Name">
         </div>
-        <div class="input-group">
-            <label>Mobile Number</label>
-            <input type="text" id="uMob" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Enter Mobile Number">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-group">
+                <label>Date of Birth</label>
+                <input type="date" id="uDob">
+            </div>
+            <div class="input-group">
+                <label>District Name</label>
+                <input type="text" id="uDistrict" placeholder="e.g. Kushinagar">
+            </div>
         </div>
-        <div class="input-group">
-            <label>PAN Number</label>
-            <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-group">
+                <label>Mobile Number</label>
+                <input type="text" id="uMob" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Enter Mobile Number">
+            </div>
+            <div class="input-group">
+                <label>PAN Number</label>
+                <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
+            </div>
         </div>
 
         <!-- 4. SALARY & SCHEDULE DETAILS -->
@@ -645,18 +660,25 @@
                 <div style="font-size:13px; font-weight:bold; margin-top:2px;" id="pSheetSub">Tax Computation Sheet / आयकर गणना पत्र</div>
             </div>
 
-            <!-- Top Header Metadata Grid -->
-            <table class="sheet-table" style="margin-top:6px;">
+            <!-- Top Header Metadata Grid (Perfect 4-Column Balanced Grid) -->
+            <table class="sheet-table meta-grid" style="margin-top:6px;">
                 <tr>
-                    <td class="fw-bold" style="width:20%;" id="pFYCell">वर्ष 2025-26</td>
-                    <td colspan="2" class="fw-bold" id="pNameCell">Name: -</td>
-                    <td class="fw-bold" style="width:25%;" id="pMobCell">Mobile: -</td>
+                    <td class="meta-label">Financial Year</td>
+                    <td class="meta-val fw-bold" id="pFYCell">2025-26</td>
+                    <td class="meta-label">Mobile No.</td>
+                    <td class="meta-val fw-bold" id="pMobCell">-</td>
                 </tr>
                 <tr>
-                    <td class="fw-bold">PAN No.</td>
-                    <td class="fw-bold" id="pPanCell">-</td>
-                    <td class="fw-bold">Regime</td>
-                    <td class="fw-bold" id="pRegimeCell">New Tax Regime</td>
+                    <td class="meta-label">Taxpayer Name</td>
+                    <td class="meta-val fw-bold" id="pNameCell">-</td>
+                    <td class="meta-label">Date of Birth</td>
+                    <td class="meta-val fw-bold" id="pDobCell">-</td>
+                </tr>
+                <tr>
+                    <td class="meta-label">PAN Number</td>
+                    <td class="meta-val fw-bold" id="pPanCell">-</td>
+                    <td class="meta-label">District Name</td>
+                    <td class="meta-val fw-bold" id="pDistCell">-</td>
                 </tr>
             </table>
 
@@ -1002,6 +1024,8 @@ function resetForm() {
     document.getElementById('uName').value = '';
     document.getElementById('uMob').value = '';
     document.getElementById('uPan').value = '';
+    if (document.getElementById('uDob')) document.getElementById('uDob').value = '';
+    if (document.getElementById('uDistrict')) document.getElementById('uDistrict').value = '';
     document.getElementById('vSal').value = '0';
     document.getElementById('vBus').value = '0';
     document.getElementById('vSTCG').value = '0';
@@ -1019,6 +1043,8 @@ function runCalculation() {
     var name = document.getElementById('uName').value.trim();
     var mob = document.getElementById('uMob').value.trim();
     var pan = document.getElementById('uPan').value.trim().toUpperCase();
+    var dob = document.getElementById('uDob') ? document.getElementById('uDob').value.trim() : '';
+    var district = document.getElementById('uDistrict') ? document.getElementById('uDistrict').value.trim() : '';
 
     var junkRepeat = /(.)\1{2,}/; 
     var badNames = ["demo", "admin", "asdf", "qwerty", "test", "abcd"];
@@ -1178,16 +1204,26 @@ function runCalculation() {
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
 
     // Populate Official Printable Sheet (Matching Photo with Full Slabs)
-    populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
+    populateOfficialPrintSheet(name, mob, pan, dob, district, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
 }
 
-function populateOfficialPrintSheet(name, mob, pan, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
+function populateOfficialPrintSheet(name, mob, pan, dob, district, fy, regime, sal, sd, ded80C, dedOther, netTaxableTotal, slabTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
     document.getElementById('pSheetTitle').innerText = "Anurag Karundia & Co. (" + (regime === 'NEW' ? "New Scheme" : "Old Scheme") + ")";
-    document.getElementById('pFYCell').innerText = "वर्ष " + fy;
-    document.getElementById('pNameCell').innerText = "Name: " + name;
-    document.getElementById('pMobCell').innerText = "Mobile: " + mob;
-    document.getElementById('pPanCell').innerText = pan;
-    document.getElementById('pRegimeCell').innerText = regime === 'NEW' ? "New Tax Regime" : "Old Tax Regime";
+    var startYr = parseInt(fy.split('-')[0]);
+    var nextYr = startYr + 1;
+    document.getElementById('pFYCell').innerText = fy + " (AY " + nextYr + "-" + String(nextYr + 1).slice(-2) + ")";
+    document.getElementById('pMobCell').innerText = mob || "-";
+    document.getElementById('pNameCell').innerText = name || "-";
+    
+    // Format DOB DD/MM/YYYY
+    var fDob = "-";
+    if (dob) {
+        var dp = dob.split('-');
+        fDob = dp.length === 3 ? (dp[2] + "/" + dp[1] + "/" + dp[0]) : dob;
+    }
+    document.getElementById('pDobCell').innerText = fDob;
+    document.getElementById('pPanCell').innerText = pan || "-";
+    document.getElementById('pDistCell').innerText = district || "-";
 
     var months = getMonthNames();
     var cycle = document.getElementById('selectedCycle').value;
