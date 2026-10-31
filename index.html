@@ -24,7 +24,7 @@
         body { 
             font-family: 'Inter', -apple-system, sans-serif; 
             background-color: var(--bg-color); 
-            margin: 0; padding: 16px; 
+            margin: 0; padding: 14px; 
             display: flex; justify-content: center; 
         }
 
@@ -44,12 +44,12 @@
 
         .header h2 { margin: 0; font-size: 19px; letter-spacing: 0.5px; font-weight: 800; }
         .header p { 
-            margin: 6px 0 0; font-size: 11px; opacity: 0.9; 
-            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            margin: 6px 0 0; font-size: 12px; opacity: 0.95; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
             color: #90CAF9;
         }
 
-        .content-padding { padding: 20px; }
+        .content-padding { padding: 18px; }
 
         .section-title {
             font-size: 12px; font-weight: 800; color: var(--accent-color);
@@ -78,32 +78,46 @@
             background: #fff; box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1); 
         }
 
-        /* Modern FY Segmented Switch */
-        .fy-switch {
+        /* Modern Regime Segmented Switch */
+        .regime-switch {
             display: flex; gap: 8px; background: #edf2f7;
             padding: 4px; border-radius: 12px;
         }
 
-        .fy-btn {
-            flex: 1; padding: 10px; border: none; border-radius: 8px;
+        .regime-btn {
+            flex: 1; padding: 11px; border: none; border-radius: 9px;
             font-size: 13px; font-weight: 700; cursor: pointer;
             background: transparent; color: #475569;
             transition: all 0.2s ease;
         }
 
-        .fy-btn.active {
+        .regime-btn.active {
             background: #ffffff; color: var(--primary-color);
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        /* Info pill */
+        /* Info pills */
         .info-pill {
-            background: #e8f0fe; color: #1967d2; padding: 6px 10px;
+            background: #e8f0fe; color: #1967d2; padding: 5px 9px;
             border-radius: 6px; font-size: 11px; font-weight: 600;
-            display: inline-block; margin-top: 4px; margin-bottom: 6px;
+            display: inline-block; margin-top: 5px;
         }
 
-        /* Buttons */
+        /* Monthly Salary Grid */
+        .month-box {
+            background: #ffffff; border: 1px solid #e2e8f0;
+            border-radius: 8px; padding: 6px 8px; text-align: center;
+        }
+        .month-box label {
+            font-size: 10px; font-weight: 800; color: #64748b;
+            margin-bottom: 2px; text-transform: uppercase;
+        }
+        .month-box input {
+            padding: 6px 4px; font-size: 13px; text-align: center;
+            border: 1px solid #cbd5e1; border-radius: 6px;
+        }
+
+        /* Buttons Row */
         .btn-row {
             display: flex; gap: 10px; margin-top: 14px;
         }
@@ -153,18 +167,34 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: 9px 0; border-bottom: 1px solid #f0f0f0; color: #444; }
         
+        .action-btns {
+            display: flex; gap: 10px; margin-top: 16px;
+        }
+
         .wa-btn { 
-            background: #25D366; color: white; padding: 14px; 
+            flex: 1; background: #25D366; color: white; padding: 13px; 
             border-radius: 12px; font-weight: bold; cursor: pointer; 
-            border: none; width: 100%; font-size: 13px; margin-top: 16px;
-            transition: all 0.1s;
-            box-shadow: 0 4px #128C7E;
-            outline: none;
+            border: none; font-size: 13px; transition: all 0.1s;
+            box-shadow: 0 4px #128C7E; outline: none;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
         .wa-btn:active { 
             transform: translateY(3px);
             box-shadow: 0 1px #128C7E;
+        }
+
+        .pdf-btn {
+            flex: 1; background: #0d47a1; color: white; padding: 13px;
+            border-radius: 12px; font-weight: bold; cursor: pointer;
+            border: none; font-size: 13px; transition: all 0.1s;
+            box-shadow: 0 4px #08306b; outline: none;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+
+        .pdf-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px #08306b;
         }
 
         /* Popups */
@@ -188,6 +218,23 @@
             color: white; border: none; padding: 10px 25px; 
             border-radius: 8px; cursor: pointer; font-weight: bold; 
         }
+
+        /* Print Media Style for Clean Vector PDF */
+        @media print {
+            body { background: #fff !important; padding: 0 !important; }
+            .container { box-shadow: none !important; border: none !important; max-width: 100% !important; width: 100% !important; }
+            .content-padding > .section-title,
+            .content-padding > .input-group,
+            .content-padding > .btn-row,
+            #monthlyGrid,
+            #oldDeductionsSection,
+            .action-btns,
+            .overlay,
+            #blueAlert { display: none !important; }
+            #resDiv { display: block !important; margin-top: 0 !important; }
+            .tax-card { border: 2px solid #0d47a1 !important; }
+            #report { border: 1px solid #ddd !important; font-size: 13px !important; }
+        }
     </style>
 </head>
 <body>
@@ -202,22 +249,31 @@
 <div class="container">
     <div class="header">
         <h2>Anurag Karundia & Co.</h2>
-        <p id="headerFY">FY 2025-26 | New Tax Regime</p>
+        <p id="headerRegime">FY 2025-26 | New Tax Regime</p>
     </div>
 
     <div class="content-padding">
-        <!-- 1. FINANCIAL YEAR SELECTOR (ONLY 25-26 AND 26-27) -->
+        <!-- 1. FINANCIAL YEAR DROPDOWN (ONLY 25-26 & 26-27) -->
         <div class="section-title">Assessment Year & Regime</div>
         <div class="input-group">
             <label>Financial Year</label>
-            <div class="fy-switch">
-                <button type="button" class="fy-btn active" id="btnFY25" onclick="selectFY('2025-26')">FY 2025-26</button>
-                <button type="button" class="fy-btn" id="btnFY26" onclick="selectFY('2026-27')">FY 2026-27</button>
-            </div>
-            <input type="hidden" id="selectedFY" value="2025-26">
+            <select id="selectedFY" onchange="updateHeader()">
+                <option value="2025-26" selected>FY 2025-26 (AY 2026-27)</option>
+                <option value="2026-27">FY 2026-27 (AY 2027-28)</option>
+            </select>
         </div>
 
-        <!-- 2. PERSONAL DETAILS -->
+        <!-- 2. REGIME SELECTOR (PILL SWITCH) -->
+        <div class="input-group">
+            <label>Tax Regime</label>
+            <div class="regime-switch">
+                <button type="button" class="regime-btn active" id="btnRegimeNew" onclick="selectRegime('NEW')">New Tax Regime</button>
+                <button type="button" class="regime-btn" id="btnRegimeOld" onclick="selectRegime('OLD')">Old Tax Regime</button>
+            </div>
+            <input type="hidden" id="selectedRegime" value="NEW">
+        </div>
+
+        <!-- 3. PERSONAL DETAILS -->
         <div class="section-title">Personal Details</div>
         <div class="input-group">
             <label>Full Name</label>
@@ -232,17 +288,60 @@
             <input type="text" id="uPan" maxlength="10" oninput="this.value=this.value.toUpperCase();" placeholder="Enter PAN Number">
         </div>
 
-        <!-- 3. INCOME SOURCES -->
+        <!-- 4. INCOME SOURCES -->
         <div class="section-title">Income Sources</div>
+        
+        <!-- SALARY INCOME WITH MONTH-WISE OPTION -->
         <div class="input-group">
-            <label>Salary Income</label>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label style="margin-bottom:0;">Salary Income</label>
+                <label style="font-size:12px; font-weight:600; color:#1a73e8; cursor:pointer; display:flex; align-items:center; gap:5px; margin-bottom:0;">
+                    <input type="checkbox" id="chkMonthly" onchange="toggleMonthlySalary()" style="width:15px; height:15px; margin:0; cursor:pointer;">
+                    Month-wise (Apr-Mar)
+                </label>
+            </div>
             <input type="number" id="vSal" value="0" onclick="this.select()">
-            <div class="info-pill">✓ Standard Deduction ₹75,000 auto-applied</div>
+            <div id="sdBadge" class="info-pill">✓ Standard Deduction ₹75,000 auto-applied</div>
         </div>
+
+        <!-- MONTHLY BREAKDOWN GRID (APRIL TO MARCH) -->
+        <div id="monthlyGrid" style="display:none; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:14px;">
+            <div style="font-size:11px; font-weight:800; color:#475569; margin-bottom:8px; text-transform:uppercase;">Monthly Salary (Apr - Mar)</div>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+                <div class="month-box"><label>Apr</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>May</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Jun</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Jul</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Aug</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Sep</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Oct</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Nov</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Dec</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Jan</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Feb</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+                <div class="month-box"><label>Mar</label><input type="number" class="m-val" value="0" onclick="this.select()" oninput="calcMonthTotal()"></div>
+            </div>
+            <div style="margin-top:8px; font-size:12px; font-weight:800; color:#0d47a1; text-align:right;" id="monthSumLabel">Total Salary: ₹0</div>
+        </div>
+
         <div class="input-group">
             <label>Business / Professional Income</label>
             <input type="number" id="vBus" value="0" onclick="this.select()">
         </div>
+
+        <!-- OLD REGIME DEDUCTIONS (EXPANDS ONLY WHEN OLD REGIME SELECTED) -->
+        <div id="oldDeductionsSection" style="display:none;">
+            <div class="section-title">Old Regime Deductions (Chapter VI-A)</div>
+            <div class="input-group">
+                <label>Deductions u/s 80C (PPF, LIC, ELSS, EPF - Max ₹1.5L)</label>
+                <input type="number" id="v80C" value="0" onclick="this.select()">
+            </div>
+            <div class="input-group">
+                <label>Other Deductions (80D Mediclaim, 80CCD, HRA, etc.)</label>
+                <input type="number" id="vOtherDed" value="0" onclick="this.select()">
+            </div>
+        </div>
+
         <div class="input-group">
             <label>Short Term Capital Gain (STCG @ 20%)</label>
             <input type="number" id="vSTCG" value="0" onclick="this.select()">
@@ -253,7 +352,7 @@
             <div class="info-pill">✓ Exemption up to ₹1,25,000 auto-applied</div>
         </div>
 
-        <!-- BUTTONS ROW -->
+        <!-- ACTION BUTTONS -->
         <div class="btn-row">
             <button class="btn-calc" onclick="runCalculation()">Calculate Tax</button>
             <button class="btn-reset" onclick="resetForm()">Reset</button>
@@ -264,40 +363,82 @@
             <div class="tax-card">
                 <div style="font-size: 13px; font-weight: bold; color: #555;">Final Net Tax Payable</div>
                 <h1 id="finalTaxVal">Rs. 0</h1>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 700;" id="resFYLabel">FY 2025-26 (New Regime)</div>
+                <div style="font-size: 11px; color: #16a34a; font-weight: 700;" id="resFYLabel">FY 2025-26 • New Tax Regime</div>
             </div>
             
             <div id="report">
-                <div style="text-align:center; font-weight: bold; margin-bottom: 10px; color: var(--primary-color);">TAX COMPUTATION</div>
+                <div style="text-align:center; font-weight: 800; margin-bottom: 12px; color: var(--primary-color); font-size:13px; letter-spacing:0.5px;">TAX COMPUTATION STATEMENT</div>
                 <table>
                     <tr><td>Gross Total Income</td><td id="rGross" align="right" style="font-weight:600;">0</td></tr>
                     <tr><td>Standard Deduction</td><td id="rSD" align="right" style="color:red;">0</td></tr>
+                    <tr id="row80C" style="display:none;"><td>Deductions u/s 80C</td><td id="r80C" align="right" style="color:red;">0</td></tr>
+                    <tr id="rowOtherDed" style="display:none;"><td>Other Deductions (80D/HRA)</td><td id="rOtherDed" align="right" style="color:red;">0</td></tr>
                     <tr style="background:#f8f9fa; font-weight:bold;"><td>Net Taxable Income</td><td id="rNetInc" align="right">0</td></tr>
                     <tbody id="rSlabRows"></tbody>
                     <tr><td>Tax on STCG (20%)</td><td id="rSTCGTax" align="right">0</td></tr>
                     <tr><td>Tax on LTCG (12.5%)</td><td id="rLTCGTax" align="right">0</td></tr>
                     <tr><td>Rebate u/s 87A</td><td id="rRebate" align="right" style="color:green;">0</td></tr>
-                    <tr><td>Marginal Relief</td><td id="rMarginal" align="right" style="color:green;">0</td></tr>
-                    <tr><td>Cess (4%)</td><td id="rCess" align="right">0</td></tr>
+                    <tr id="rowMarginal"><td>Marginal Relief</td><td id="rMarginal" align="right" style="color:green;">0</td></tr>
+                    <tr><td>Health & Education Cess (4%)</td><td id="rCess" align="right">0</td></tr>
                     <tr style="border-top: 2px solid #333; font-weight:900; font-size:14px;"><td>NET TAX PAYABLE</td><td id="rFinalTotal" align="right" style="color:#d32f2f;">0</td></tr>
                 </table>
-                <button class="wa-btn" onclick="shareWhatsApp()">Share on WhatsApp</button>
+
+                <div class="action-btns">
+                    <button class="wa-btn" onclick="shareWhatsApp()">
+                        <span>💬</span> Share WhatsApp
+                    </button>
+                    <button class="pdf-btn" onclick="downloadPDF()">
+                        <span>📄</span> Download PDF
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-function selectFY(fy) {
-    document.getElementById('selectedFY').value = fy;
-    document.getElementById('headerFY').innerText = 'FY ' + fy + ' | New Tax Regime';
-    if (fy === '2025-26') {
-        document.getElementById('btnFY25').classList.add('active');
-        document.getElementById('btnFY26').classList.remove('active');
+function updateHeader() {
+    var fy = document.getElementById('selectedFY').value;
+    var regime = document.getElementById('selectedRegime').value;
+    var regimeName = regime === 'NEW' ? 'New Tax Regime' : 'Old Tax Regime';
+    document.getElementById('headerRegime').innerText = 'FY ' + fy + ' | ' + regimeName;
+}
+
+function selectRegime(regime) {
+    document.getElementById('selectedRegime').value = regime;
+    if (regime === 'NEW') {
+        document.getElementById('btnRegimeNew').classList.add('active');
+        document.getElementById('btnRegimeOld').classList.remove('active');
+        document.getElementById('sdBadge').innerText = '✓ Standard Deduction ₹75,000 auto-applied';
+        document.getElementById('oldDeductionsSection').style.display = 'none';
     } else {
-        document.getElementById('btnFY26').classList.add('active');
-        document.getElementById('btnFY25').classList.remove('active');
+        document.getElementById('btnRegimeOld').classList.add('active');
+        document.getElementById('btnRegimeNew').classList.remove('active');
+        document.getElementById('sdBadge').innerText = '✓ Standard Deduction ₹50,000 auto-applied (Old Regime)';
+        document.getElementById('oldDeductionsSection').style.display = 'block';
     }
+    updateHeader();
+}
+
+function toggleMonthlySalary() {
+    var chk = document.getElementById('chkMonthly').checked;
+    var grid = document.getElementById('monthlyGrid');
+    if (chk) {
+        grid.style.display = 'block';
+        calcMonthTotal();
+    } else {
+        grid.style.display = 'none';
+    }
+}
+
+function calcMonthTotal() {
+    var inputs = document.querySelectorAll('.m-val');
+    var total = 0;
+    inputs.forEach(function(inp) {
+        total += parseFloat(inp.value) || 0;
+    });
+    document.getElementById('vSal').value = Math.round(total);
+    document.getElementById('monthSumLabel').innerText = 'Total Salary: ₹' + Math.round(total).toLocaleString('en-IN');
 }
 
 function showBluePopup(msg) {
@@ -318,6 +459,11 @@ function resetForm() {
     document.getElementById('vBus').value = '0';
     document.getElementById('vSTCG').value = '0';
     document.getElementById('vLTCG').value = '0';
+    if (document.getElementById('v80C')) document.getElementById('v80C').value = '0';
+    if (document.getElementById('vOtherDed')) document.getElementById('vOtherDed').value = '0';
+    document.querySelectorAll('.m-val').forEach(function(i) { i.value = '0'; });
+    document.getElementById('chkMonthly').checked = false;
+    document.getElementById('monthlyGrid').style.display = 'none';
     document.getElementById('resDiv').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -340,33 +486,85 @@ function runCalculation() {
     if (!panPattern.test(pan)) { showBluePopup("Enter Valid PAN Number."); return; }
 
     var fy = document.getElementById('selectedFY').value;
-    gtag('event', 'tax_calculated', {'user_name': name, 'user_mob': mob, 'user_pan': pan, 'financial_year': fy});
+    var regime = document.getElementById('selectedRegime').value;
+    gtag('event', 'tax_calculated', {'user_name': name, 'user_mob': mob, 'user_pan': pan, 'financial_year': fy, 'regime': regime});
 
     var sal = parseFloat(document.getElementById('vSal').value) || 0;
     var bus = parseFloat(document.getElementById('vBus').value) || 0;
     var st = parseFloat(document.getElementById('vSTCG').value) || 0;
     var lt = parseFloat(document.getElementById('vLTCG').value) || 0;
 
-    var sd = sal > 0 ? 75000 : 0;
-    var normalIncome = (sal - sd) + bus;
-    var netTaxableTotal = normalIncome + st + lt;
+    var sd = 0;
+    var normalIncome = 0;
+    var slabTax = 0;
+    var rows = "";
+    var rebate = 0;
+    var marginal = 0;
+    var ded80C = 0;
+    var dedOther = 0;
 
-    var slabTax = 0; var rows = ""; var tmp = normalIncome;
-    var slabs = [{l:2400000, r:0.3}, {l:2000000, r:0.25}, {l:1600000, r:0.2}, {l:1200000, r:0.15}, {l:800000, r:0.1}, {l:400000, r:0.05}];
-    slabs.forEach(function(s) {
-        if (tmp > s.l) {
-            var tx = (tmp - s.l) * s.r; slabTax += tx;
-            rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "%</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
-            tmp = s.l;
+    if (regime === 'NEW') {
+        // ==========================================
+        // NEW TAX REGIME (100% USER ORIGINAL FORMULA)
+        // ==========================================
+        sd = sal > 0 ? 75000 : 0;
+        normalIncome = (sal - sd) + bus;
+
+        var tmp = normalIncome;
+        var slabs = [{l:2400000, r:0.3}, {l:2000000, r:0.25}, {l:1600000, r:0.2}, {l:1200000, r:0.15}, {l:800000, r:0.1}, {l:400000, r:0.05}];
+        slabs.forEach(function(s) {
+            if (tmp > s.l) {
+                var tx = (tmp - s.l) * s.r; slabTax += tx;
+                rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "%</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
+                tmp = s.l;
+            }
+        });
+
+        if (normalIncome <= 1200000) {
+            rebate = slabTax;
+        } else if (normalIncome <= 1275000) {
+            var diff = normalIncome - 1200000;
+            if (slabTax > diff) marginal = slabTax - diff;
         }
-    });
 
-    var rebate = 0; var marginal = 0;
-    if (normalIncome <= 1200000) {
-        rebate = slabTax;
-    } else if (normalIncome <= 1275000) {
-        var diff = normalIncome - 1200000;
-        if (slabTax > diff) marginal = slabTax - diff;
+        document.getElementById('row80C').style.display = 'none';
+        document.getElementById('rowOtherDed').style.display = 'none';
+        document.getElementById('rowMarginal').style.display = 'table-row';
+
+    } else {
+        // ==========================================
+        // OLD TAX REGIME (ACCURATE IT ACT RULES)
+        // ==========================================
+        sd = sal > 0 ? 50000 : 0;
+        var input80C = parseFloat(document.getElementById('v80C').value) || 0;
+        ded80C = Math.min(150000, input80C);
+        dedOther = parseFloat(document.getElementById('vOtherDed').value) || 0;
+
+        var totalDeductions = sd + ded80C + dedOther;
+        var normalGross = sal + bus;
+        normalIncome = Math.max(0, normalGross - totalDeductions);
+
+        var tmpOld = normalIncome;
+        var oldSlabs = [{l:1000000, r:0.30}, {l:500000, r:0.20}, {l:250000, r:0.05}];
+        oldSlabs.forEach(function(s) {
+            if (tmpOld > s.l) {
+                var tx = (tmpOld - s.l) * s.r; slabTax += tx;
+                rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "%</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
+                tmpOld = s.l;
+            }
+        });
+
+        // Section 87A rebate (Old Regime max ₹12,500 if income <= 5L)
+        if (normalIncome <= 500000) {
+            rebate = Math.min(slabTax, 12500);
+        }
+        marginal = 0;
+
+        document.getElementById('row80C').style.display = ded80C > 0 ? 'table-row' : 'none';
+        document.getElementById('r80C').innerText = "-" + Math.round(ded80C).toLocaleString('en-IN');
+        document.getElementById('rowOtherDed').style.display = dedOther > 0 ? 'table-row' : 'none';
+        document.getElementById('rOtherDed').innerText = "-" + Math.round(dedOther).toLocaleString('en-IN');
+        document.getElementById('rowMarginal').style.display = 'none';
     }
 
     var normalTaxAfterRelief = Math.max(0, slabTax - rebate - marginal);
@@ -377,7 +575,9 @@ function runCalculation() {
     var cess = totalTaxPreCess * 0.04;
     var final = Math.round((totalTaxPreCess + cess) / 10) * 10;
 
-    document.getElementById('rGross').innerText = Math.round(sal+bus+st+lt).toLocaleString('en-IN');
+    var netTaxableTotal = normalIncome + st + lt;
+
+    document.getElementById('rGross').innerText = Math.round(sal + bus + st + lt).toLocaleString('en-IN');
     document.getElementById('rSD').innerText = "-" + sd.toLocaleString('en-IN');
     document.getElementById('rNetInc').innerText = Math.round(netTaxableTotal).toLocaleString('en-IN');
     document.getElementById('rSlabRows').innerHTML = rows;
@@ -389,7 +589,7 @@ function runCalculation() {
     
     document.getElementById('rFinalTotal').innerText = "Rs. " + final.toLocaleString('en-IN');
     document.getElementById('finalTaxVal').innerText = "Rs. " + final.toLocaleString('en-IN');
-    document.getElementById('resFYLabel').innerText = "FY " + fy + " (New Regime)";
+    document.getElementById('resFYLabel').innerText = "FY " + fy + " • " + (regime === 'NEW' ? 'New Tax Regime' : 'Old Tax Regime');
 
     document.getElementById('resDiv').style.display = "block";
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
@@ -398,6 +598,7 @@ function runCalculation() {
 function shareWhatsApp() {
     var n = document.getElementById('uName').value;
     var fy = document.getElementById('selectedFY').value;
+    var regime = document.getElementById('selectedRegime').value === 'NEW' ? 'New Regime' : 'Old Regime';
     var g = document.getElementById('rGross').innerText;
     var ni = document.getElementById('rNetInc').innerText;
     var st = document.getElementById('rSTCGTax').innerText;
@@ -406,7 +607,7 @@ function shareWhatsApp() {
     var cs = document.getElementById('rCess').innerText;
     var f = document.getElementById('finalTaxVal').innerText;
     var sRows = document.getElementById('rSlabRows').innerText.replace(/\t/g, ': ').replace(/\n/g, ' | ').replace(/\+/g, '');
-    var msg = 'INCOME TAX REPORT (FY ' + fy + ')\n' +
+    var msg = 'INCOME TAX REPORT (FY ' + fy + ' - ' + regime + ')\n' +
               '------------------------------------\n' +
               'Name: ' + n + '\n' +
               'Gross Income: Rs. ' + g + '\n' +
@@ -423,6 +624,14 @@ function shareWhatsApp() {
               '------------------------------------\n' +
               'Anurag Karundia & Co.';
     window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function downloadPDF() {
+    if (window.AndroidApp && window.AndroidApp.printPDF) {
+        window.AndroidApp.printPDF();
+    } else {
+        window.print();
+    }
 }
 </script>
 </body>
