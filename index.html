@@ -333,78 +333,6 @@
             border-radius: 8px; cursor: pointer; font-weight: bold; 
         }
 
-        /* QUICK OFFICIAL PORTALS */
-        .portal-box {
-            margin-top: 24px;
-            padding-top: 18px;
-            border-top: 1px dashed #cbd5e1;
-        }
-
-        .portal-header {
-            font-size: 12px;
-            font-weight: 800;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 10px;
-        }
-
-        .portal-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .portal-card {
-            display: flex;
-            align-items: center;
-            padding: 12px 14px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s ease;
-        }
-
-        .portal-card:active {
-            transform: scale(0.98);
-            background: #eff6ff;
-            border-color: #bfdbfe;
-        }
-
-        .portal-icon {
-            width: 36px;
-            height: 36px;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #0d47a1;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        .portal-name {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: #0d47a1;
-        }
-
-        .portal-desc {
-            font-size: 11.5px;
-            color: #64748b;
-        }
-
-        .portal-arrow {
-            font-size: 16px;
-            color: #94a3b8;
-            font-weight: bold;
-        }
-
         /* ======================================================== */
         /* EXACT OFFICIAL ANURAG KARUNDIA & CO. STATEMENT FOR PDF */
         /* ======================================================== */
@@ -436,18 +364,18 @@
             }
             .sheet-watermark {
                 position: absolute;
-                top: 48%;
+                top: 50%;
                 left: 50%;
-                transform: translate(-50%, -50%) rotate(-32deg);
-                font-size: 44px;
+                transform: translate(-50%, -50%) rotate(-30deg);
+                font-size: 38px;
                 font-weight: 900;
-                color: rgba(0, 0, 0, 0.20) !important;
+                color: rgba(0, 0, 0, 0.16) !important;
                 white-space: nowrap;
                 pointer-events: none;
-                z-index: 0;
+                z-index: 5 !important;
                 text-transform: uppercase;
-                letter-spacing: 5px;
-                font-family: Arial, sans-serif !important;
+                letter-spacing: 4px;
+                font-family: Arial, Helvetica, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -460,18 +388,27 @@
                 border-collapse: collapse;
                 font-size: 10px;
                 margin-top: 4px;
+                background: transparent !important;
             }
             table.sheet-table th, table.sheet-table td {
                 border: 1px solid #000;
                 padding: 3px 4px;
                 text-align: center;
+                background: transparent !important;
+            }
+            #officialPrintSheet table,
+            #officialPrintSheet tr,
+            #officialPrintSheet th,
+            #officialPrintSheet td {
+                background-color: transparent !important;
+                background: transparent !important;
             }
             .text-left { text-align: left !important; }
             .text-right { text-align: right !important; }
             .text-center { text-align: center !important; }
             .fw-bold { font-weight: bold; }
             table.meta-grid td { padding: 4px 6px; font-size: 10px; }
-            .meta-label { width: 20%; background: #f5f5f5; font-weight: bold; text-align: left !important; }
+            .meta-label { width: 20%; font-weight: bold; text-align: left !important; }
             .meta-val { width: 30%; text-align: left !important; }
         }
     </style>
@@ -722,31 +659,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- QUICK OFFICIAL PORTALS (INCOME TAX & NPS REDIRECTS) -->
-        <div class="portal-box">
-            <div class="portal-header">
-                <span>🌐 Official Government Portals</span>
-            </div>
-            <div class="portal-links">
-                <a href="https://eportal.incometax.gov.in" target="_blank" class="portal-card">
-                    <div class="portal-icon">🏛️</div>
-                    <div style="flex:1;">
-                        <div class="portal-name">Income Tax Portal (Redirect)</div>
-                        <div class="portal-desc">e-Filing & Official Income Tax Website</div>
-                    </div>
-                    <div class="portal-arrow">↗</div>
-                </a>
-                <a href="https://enps.nsdl.com" target="_blank" class="portal-card">
-                    <div class="portal-icon">🏦</div>
-                    <div style="flex:1;">
-                        <div class="portal-name">NPS Portal (Redirect)</div>
-                        <div class="portal-desc">National Pension System CRA Portal</div>
-                    </div>
-                    <div class="portal-arrow">↗</div>
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -793,7 +705,7 @@
             <!-- Monthly Salary Table (Matching Official Sheet Photo) -->
             <table class="sheet-table" style="margin-top:6px;">
                 <thead>
-                    <tr style="background:#f0f0f0;">
+                    <tr>
                         <th style="width:14%;">Months</th>
                         <th style="width:12%;">Basic</th>
                         <th style="width:12%;">D.A.</th>
@@ -808,7 +720,7 @@
                     <!-- Populated dynamically -->
                 </tbody>
                 <tfoot>
-                    <tr class="fw-bold" style="background:#f0f0f0;">
+                    <tr class="fw-bold">
                         <td>Total</td>
                         <td id="pTotBasic">0.00</td>
                         <td id="pTotDA">0.00</td>
@@ -839,13 +751,13 @@
                     <td colspan="3" class="text-left">Less: Other Deductions (80D/HRA)</td>
                     <td class="text-right" id="pCompOther">₹ 0.00</td>
                 </tr>
-                <tr class="fw-bold" style="background:#f9f9f9;">
+                <tr class="fw-bold">
                     <td colspan="3" class="text-left">2- Net Taxable Income</td>
                     <td class="text-right" id="pCompNet">₹ 0.00</td>
                 </tr>
                 
                 <!-- Detailed Slabs Table Heading (Matching Photo) -->
-                <tr style="background:#f0f0f0;" class="fw-bold">
+                <tr class="fw-bold">
                     <td class="text-left">आयकर की गणना (Tax Computed on Slabs)</td>
                     <td class="text-right" style="width:25%;">Taxable Amount</td>
                     <td class="text-center" style="width:12%;">Rate</td>
@@ -871,7 +783,7 @@
                     <td colspan="3" class="text-left">Add: Health & Education Cess (4%)</td>
                     <td class="text-right" id="pCompCess">₹ 0.00</td>
                 </tr>
-                <tr class="fw-bold" style="background:#f0f0f0;">
+                <tr class="fw-bold">
                     <td colspan="3" class="text-left">Total Tax Payable</td>
                     <td class="text-right" id="pCompTotalTax">₹ 0.00</td>
                 </tr>
@@ -879,7 +791,7 @@
                     <td colspan="3" class="text-left">Less: Advance Income Tax Deducted</td>
                     <td class="text-right" id="pCompAdvTax">₹ 0.00</td>
                 </tr>
-                <tr class="fw-bold" style="background:#f0f0f0; font-size:11px;">
+                <tr class="fw-bold" style="font-size:11px;">
                     <td colspan="3" class="text-left" id="pBalLabel">शेष आयकर (Balance Tax to be Paid)</td>
                     <td class="text-right" id="pCompBalTax">₹ 0.00</td>
                 </tr>
