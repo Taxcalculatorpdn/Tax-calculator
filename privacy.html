@@ -30,6 +30,11 @@
             justify-content: center;
         }
 
+        @keyframes gentleSlide {
+            from { opacity: 0.88; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .main-card {
             background: #ffffff;
             border-radius: 20px;
@@ -38,6 +43,7 @@
             max-width: 580px;
             width: 100%;
             overflow: hidden;
+            animation: gentleSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         /* ROYAL NAVY HEADER WITH NO FIRM NAME PER ICAI COMPLIANCE */
