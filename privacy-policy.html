@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Anurag Karundia & Co.</title>
+    <title>Privacy Policy</title>
     <style>
         :root {
             --primary: #0A1E3F;
@@ -30,6 +30,18 @@
             justify-content: center;
         }
 
+        /* SMOOTH FLUID ENTRANCE ANIMATION (NO BLINK FLASH) */
+        @keyframes pageFadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(22px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .main-card {
             background: #ffffff;
             border-radius: 20px;
@@ -38,36 +50,22 @@
             max-width: 580px;
             width: 100%;
             overflow: hidden;
-            animation: cardEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: pageFadeSlide 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
         }
 
-        @keyframes cardEnter {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* PREMIUM FINTECH ROYAL NAVY HEADER */
+        /* ROYAL NAVY HEADER WITH NO FIRM NAME PER ICAI COMPLIANCE */
         .brand-header {
             background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 50%, #1565C0 100%);
             color: #ffffff;
-            padding: 22px 20px;
+            padding: 24px 20px;
             text-align: center;
         }
 
         .brand-header h1 {
             margin: 0;
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 800;
             letter-spacing: 0.5px;
-        }
-
-        .brand-header p {
-            margin: 6px 0 0;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #90CAF9;
         }
 
         .content {
@@ -94,7 +92,7 @@
             color: #0D47A1;
             font-size: 15px;
             font-weight: 800;
-            margin: 22px 0 8px 0;
+            margin: 20px 0 8px 0;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -149,23 +147,13 @@
         .contact-mail:hover {
             text-decoration: underline;
         }
-
-        .footer-note {
-            margin-top: 24px;
-            text-align: center;
-            font-size: 12px;
-            color: #94A3B8;
-            border-top: 1px solid #E2E8F0;
-            padding-top: 14px;
-        }
     </style>
 </head>
 <body>
 
 <div class="main-card">
     <div class="brand-header">
-        <h1>Anurag Karundia & Co.</h1>
-        <p>Privacy Policy & Data Security</p>
+        <h1>Privacy Policy</h1>
     </div>
 
     <div class="content">
@@ -174,44 +162,36 @@
         </div>
 
         <p>
-            This Privacy Policy explains how <b>AKC Tax Calculator</b> (“the App”), owned and operated by <b>Anurag Karundia & Co.</b>, handles and protects user information.
+            This Privacy Policy explains how this Tax Calculator application handles and protects user information.
         </p>
 
         <div class="security-box">
-            <h4>Privacy Assurance</h4>
-            <p>Your financial inputs (salary, deductions, PAN) are processed 100% locally on your device. We do not store or transmit your sensitive tax data to any external server.</p>
+            <h4>Data Privacy Assurance</h4>
+            <p>All inputs (salary, deductions, PAN) are processed 100% locally on your device. No financial data is uploaded or stored on external servers.</p>
         </div>
 
-        <h2>1. Information Collection and Use</h2>
-        <p>To provide accurate tax calculations and generate official computation statements, users may voluntarily enter:</p>
+        <h2>1. Information Entered</h2>
+        <p>To compute tax liability and generate printable statements, users voluntarily input:</p>
         <ul>
-            <li>Full Name</li>
-            <li>Mobile Number</li>
-            <li>PAN Number</li>
-            <li>Salary & Investment Details</li>
+            <li>Taxpayer Name</li>
+            <li>Mobile Number & PAN Number</li>
+            <li>Date of Birth & District</li>
+            <li>Salary Schedule & Deduction Amounts</li>
         </ul>
-        <p>This information is used strictly in real-time within the App to calculate tax liabilities and prepare printable schedules. No account creation or password is required.</p>
+        <p>All values remain within your browser environment. No login credentials or remote accounts are created.</p>
 
         <h2>2. Data Storage & Sharing</h2>
-        <p>All calculations are performed locally in the user's browser runtime. <b>Anurag Karundia & Co.</b> does not store, sell, trade, or share your data with any third party.</p>
+        <p>Data entered is never sold, shared, or transferred to third-party databases or marketing organizations.</p>
 
-        <h2>3. Third-Party Services & Ads</h2>
-        <p>The App does not sell personal records to marketing agencies, does not display commercial banner advertisements, and does not sell user habits.</p>
+        <h2>3. Advertisements & Tracking</h2>
+        <p>The application is advertisement-free and does not track user behavioral activity across other platforms.</p>
 
-        <h2>4. Data Security</h2>
-        <p>Because no taxpayer records are uploaded to remote databases, the risk of data compromise or cloud breach is virtually eliminated.</p>
-
-        <h2>5. Policy Updates & Contact</h2>
-        <p>Any revisions to this policy will be reflected here. For any inquiries regarding our practices, please contact:</p>
+        <h2>4. Contact & Inquiries</h2>
+        <p>For any queries regarding this policy, reach us via:</p>
         <p>
-            <b>Anurag Karundia & Co.</b><br>
             Email: <a href="mailto:akcpdn1@gmail.com" class="contact-mail">akcpdn1@gmail.com</a><br>
             Phone: +91-9634100100
         </p>
-
-        <div class="footer-note">
-            Anurag Karundia & Co. • Serving Excellence Since 2017
-        </div>
     </div>
 </div>
 
