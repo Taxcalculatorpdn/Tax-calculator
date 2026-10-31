@@ -991,7 +991,7 @@
                     <td class="text-right" id="pCompSTCG">₹ 0.00</td>
                 </tr>
                 <tr id="pRowLTCG" style="display:none;">
-                    <td colspan="3" class="text-left">Add: Long Term Capital Gain (LTCG @ 12.5%)</td>
+                    <td colspan="3" class="text-left">Add: Taxable Long Term Capital Gain (LTCG above ₹1.25L Exemption)</td>
                     <td class="text-right" id="pCompLTCG">₹ 0.00</td>
                 </tr>
                 <tr id="pRowDed80C" style="display:none;">
@@ -1584,14 +1584,15 @@ function runCalculation() {
 
     var normalTaxAfterRelief = Math.max(0, slabTax - rebate - marginal);
     var stcgTax = st * 0.20; 
-    var ltcgTax = Math.max(0, lt - 125000) * 0.125;
+    var taxableLTCG = Math.max(0, lt - 125000);
+    var ltcgTax = taxableLTCG * 0.125;
 
     var totalTaxPreCess = normalTaxAfterRelief + stcgTax + ltcgTax;
     var cess = totalTaxPreCess * 0.04;
     var totalTaxPayable = Math.round((totalTaxPreCess + cess) / 10) * 10;
     var balancePayable = Math.round(totalTaxPayable - advTax);
 
-    var netTaxableTotal = normalIncome + st + lt;
+    var netTaxableTotal = normalIncome + st + taxableLTCG;
 
     document.getElementById('rGrossSal').innerText = Math.round(sal).toLocaleString('en-IN');
     document.getElementById('rSD').innerText = "-" + sd.toLocaleString('en-IN');
@@ -1605,7 +1606,7 @@ function runCalculation() {
     }
     if (document.getElementById('rowLTCG')) {
         document.getElementById('rowLTCG').style.display = lt > 0 ? 'table-row' : 'none';
-        document.getElementById('rLTCG').innerText = "+" + Math.round(lt).toLocaleString('en-IN');
+        document.getElementById('rLTCG').innerText = "+" + Math.round(taxableLTCG).toLocaleString('en-IN') + (taxableLTCG === 0 ? " (Exempt up to ₹1.25L)" : " (Above ₹1.25L Exempt)");
     }
     document.getElementById('rNetInc').innerText = Math.round(netTaxableTotal).toLocaleString('en-IN');
     document.getElementById('rSlabRows').innerHTML = rows;
@@ -1718,9 +1719,10 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pRowSTCG').style.display = 'none';
     }
 
+    var taxableLTCG = Math.max(0, lt - 125000);
     if (lt > 0) {
         document.getElementById('pRowLTCG').style.display = 'table-row';
-        document.getElementById('pCompLTCG').innerText = "₹ " + Math.round(lt).toLocaleString('en-IN') + ".00";
+        document.getElementById('pCompLTCG').innerText = "₹ " + Math.round(taxableLTCG).toLocaleString('en-IN') + ".00";
     } else {
         document.getElementById('pRowLTCG').style.display = 'none';
     }
@@ -1819,51 +1821,80 @@ function shareWhatsApp() {
                 btn.style.pointerEvents = 'none';
             }
 
-            var clone = sheet.cloneNode(true);
-            clone.id = 'tempShareSheet';
-            clone.style.display = 'block';
-            clone.style.position = 'fixed';
-            clone.style.top = '0';
-            clone.style.left = '-10000px';
-            clone.style.width = '750px';
-            clone.style.background = '#ffffff';
-            clone.style.padding = '12px';
-            clone.style.zIndex = '-9999';
-            document.body.appendChild(clone);
+            var origDisplay = sheet.style.display;
+            var origPosition = sheet.style.position;
+            var origTop = sheet.style.top;
+            var origLeft = sheet.style.left;
+            var origWidth = sheet.style.width;
+            var origZIndex = sheet.style.zIndex;
+            var origOpacity = sheet.style.opacity;
 
-            var opt = {
-                margin: [4, 4, 4, 4],
-                filename: fileName,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            sheet.style.display = 'block';
+            sheet.style.position = 'fixed';
+            sheet.style.top = '0';
+            sheet.style.left = '0';
+            sheet.style.width = '700px';
+            sheet.style.zIndex = '-9999';
+            sheet.style.opacity = '0.01';
 
-            html2pdf().set(opt).from(clone).outputPdf('blob').then(function(blob) {
-                if (document.getElementById('tempShareSheet')) {
-                    document.body.removeChild(clone);
+            var hasHandled = false;
+            var safetyTimer = setTimeout(function() {
+                if (!hasHandled) {
+                    hasHandled = true;
+                    cleanupSheet();
+                    sendWhatsAppTextFallback();
                 }
+            }, 1800);
+
+            function cleanupSheet() {
+                sheet.style.display = origDisplay;
+                sheet.style.position = origPosition;
+                sheet.style.top = origTop;
+                sheet.style.left = origLeft;
+                sheet.style.width = origWidth;
+                sheet.style.zIndex = origZIndex;
+                sheet.style.opacity = origOpacity;
                 if (btn) {
                     btn.innerHTML = originalHTML;
                     btn.style.pointerEvents = 'auto';
                 }
+            }
 
-                var reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function() {
-                    var base64data = reader.result.split(',')[1];
-                    window.AndroidApp.sharePDFBase64(base64data, fileName);
+            try {
+                var opt = {
+                    margin: [4, 4, 4, 4],
+                    filename: fileName,
+                    image: { type: 'jpeg', quality: 0.95 },
+                    html2canvas: { scale: 1.5, useCORS: true, logging: false },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
-            }).catch(function(err) {
-                if (document.getElementById('tempShareSheet')) {
-                    document.body.removeChild(clone);
-                }
-                if (btn) {
-                    btn.innerHTML = originalHTML;
-                    btn.style.pointerEvents = 'auto';
-                }
+
+                html2pdf().set(opt).from(sheet).output('blob').then(function(blob) {
+                    if (hasHandled) return;
+                    hasHandled = true;
+                    clearTimeout(safetyTimer);
+                    cleanupSheet();
+
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = function() {
+                        var base64data = reader.result.split(',')[1];
+                        window.AndroidApp.sharePDFBase64(base64data, fileName);
+                    };
+                }).catch(function(err) {
+                    if (hasHandled) return;
+                    hasHandled = true;
+                    clearTimeout(safetyTimer);
+                    cleanupSheet();
+                    sendWhatsAppTextFallback();
+                });
+            } catch (err) {
+                if (hasHandled) return;
+                hasHandled = true;
+                clearTimeout(safetyTimer);
+                cleanupSheet();
                 sendWhatsAppTextFallback();
-            });
+            }
             return;
         }
     }
@@ -1895,7 +1926,12 @@ function shareWhatsApp() {
             msg += '• *STCG (20%):* ₹ ' + Math.round(st).toLocaleString('en-IN') + '\n';
         }
         if (lt > 0) {
-            msg += '• *LTCG (12.5%):* ₹ ' + Math.round(lt).toLocaleString('en-IN') + '\n';
+            var txLTCG = Math.max(0, lt - 125000);
+            if (txLTCG > 0) {
+                msg += '• *Taxable LTCG (12.5%):* ₹ ' + Math.round(txLTCG).toLocaleString('en-IN') + ' (Gross ₹' + Math.round(lt).toLocaleString('en-IN') + ' less ₹1.25L exempt)\n';
+            } else {
+                msg += '• *LTCG:* ₹ ' + Math.round(lt).toLocaleString('en-IN') + ' (100% Exempt up to ₹1.25L)\n';
+            }
         }
 
         msg += '------------------------------------\n' +
