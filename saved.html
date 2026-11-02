@@ -207,14 +207,15 @@
         }
 
         .pan-pill {
-            background: #0F172A;
+            background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 100%);
             color: #FFFFFF;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            letter-spacing: 0.6px;
             white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(13, 71, 161, 0.25);
         }
 
         .card-meta-row {
@@ -265,11 +266,11 @@
         /* STATS PILL BOX */
         .stats-strip {
             display: grid;
-            grid-template-columns: 1fr 1fr 1.1fr;
-            gap: 6px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             background: #F1F5F9;
             border-radius: 10px;
-            padding: 8px;
+            padding: 10px 14px;
             margin-bottom: 12px;
             text-align: center;
         }
@@ -577,12 +578,7 @@ function renderRecords(records) {
         var mobText = rec.mob ? rec.mob : '-';
         var dobText = rec.dob ? rec.dob : '-';
 
-        var fyBadge = rec.fy ? 'FY ' + rec.fy : 'FY 2026-27';
-        var regimeBadge = rec.regime === 'OLD' ? 'Old Regime' : 'New Regime';
-        var cycleBadge = rec.cycle === 'MIN' ? 'Special (Mar-Feb)' : 'Standard (Apr-Mar)';
-
         var grossSal = rec.sal ? '₹ ' + Math.round(rec.sal).toLocaleString('en-IN') : '₹ 0';
-        var netInc = rec.netTaxable ? '₹ ' + Math.round(rec.netTaxable).toLocaleString('en-IN') : '₹ 0';
         var taxVal = rec.balancePayable ? rec.balancePayable : (rec.finalTax || '₹ 0');
 
         html += 
@@ -590,11 +586,6 @@ function renderRecords(records) {
                 '<div class="card-header">' +
                     '<div class="client-name">' + (rec.name || 'Unnamed Client') + '</div>' +
                     '<div class="pan-pill">' + (rec.pan || 'NO PAN') + '</div>' +
-                '</div>' +
-
-                '<div class="card-meta-row">' +
-                    '<span class="meta-tag regime">' + fyBadge + ' • ' + regimeBadge + '</span>' +
-                    '<span class="meta-tag cycle">' + cycleBadge + '</span>' +
                 '</div>' +
 
                 '<div class="client-info-grid">' +
@@ -608,10 +599,6 @@ function renderRecords(records) {
                     '<div class="stat-item">' +
                         '<span class="stat-label">Gross Salary</span>' +
                         '<span class="stat-val">' + grossSal + '</span>' +
-                    '</div>' +
-                    '<div class="stat-item">' +
-                        '<span class="stat-label">Net Taxable</span>' +
-                        '<span class="stat-val">' + netInc + '</span>' +
                     '</div>' +
                     '<div class="stat-item">' +
                         '<span class="stat-label">' + taxLabel + '</span>' +
