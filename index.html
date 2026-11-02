@@ -826,15 +826,8 @@
 <!-- ========================================== -->
 <div class="container">
     <div class="header">
-        <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <div>
-                <h2>Anurag Karundia & Co.</h2>
-                <p id="headerRegime">FY 2026-27 | New Tax Regime</p>
-            </div>
-            <a href="saved.html" class="header-saved-badge" title="View Saved Client Records">
-                📁 Saved (<span id="headerSavedCount">0</span>)
-            </a>
-        </div>
+        <h2>Anurag Karundia & Co.</h2>
+        <p id="headerRegime">FY 2026-27 | New Tax Regime</p>
     </div>
 
     <div class="content-padding">
@@ -2083,7 +2076,7 @@ function saveCalculationLocally() {
     var balancePayableText = document.getElementById('rFinalTotal') ? document.getElementById('rFinalTotal').innerText : 'Rs. 0';
     var netTaxableVal = document.getElementById('rNetInc') ? document.getElementById('rNetInc').innerText : '0';
 
-    var recordId = 'akc_' + Date.now();
+    var recordId = 'akc_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
     var nowStr = new Date().toLocaleString('en-IN', {
         day: '2-digit', month: 'short', year: 'numeric',
         hour: '2-digit', minute: '2-digit', hour12: true
@@ -2122,12 +2115,8 @@ function saveCalculationLocally() {
         if (!Array.isArray(existing)) existing = [];
     } catch(e) { existing = []; }
 
-    var existIdx = existing.findIndex(function(r) { return r.pan === pan && r.fy === fy; });
-    if (existIdx !== -1) {
-        existing[existIdx] = record;
-    } else {
-        existing.unshift(record);
-    }
+    // Every calculation is saved as a separate entry (never overwriting old ones)
+    existing.unshift(record);
 
     try {
         localStorage.setItem('akc_saved_computations', JSON.stringify(existing));
