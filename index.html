@@ -1687,7 +1687,7 @@ function runCalculation() {
 
     var fy = document.getElementById('selectedFY').value;
     var regime = document.getElementById('selectedRegime').value;
-    gtag('event', 'tax_calculated', {'user_name': name, 'user_mob': mob, 'user_pan': pan, 'financial_year': fy, 'regime': regime});
+    gtag('event', 'tax_calculated', {'financial_year': fy, 'regime': regime});
 
     var sal = parseFloat(document.getElementById('vSal').value) || 0;
     var bus = parseFloat(document.getElementById('vBus').value) || 0;
