@@ -486,17 +486,174 @@
         }
 
         .pdf-btn {
-            width: 100%; height: 50px; background: #0d47a1; color: white;
+            width: 100%; height: 48px; background: #0d47a1; color: white;
             border-radius: 12px; font-weight: 800; cursor: pointer;
-            border: none; font-size: 15px; transition: all 0.15s ease;
+            border: none; font-size: 13.5px; transition: all 0.15s ease;
             box-shadow: 0 4px #08306b; outline: none;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            letter-spacing: 0.3px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            letter-spacing: 0.2px;
         }
 
         .pdf-btn:active {
             transform: translateY(2px);
             box-shadow: 0 2px #08306b;
+        }
+
+        .save-btn {
+            width: 100%; height: 48px; background: #059669; color: white;
+            border-radius: 12px; font-weight: 800; cursor: pointer;
+            border: none; font-size: 13.5px; transition: all 0.15s ease;
+            box-shadow: 0 4px #047857; outline: none;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            letter-spacing: 0.2px;
+        }
+
+        .save-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px #047857;
+        }
+
+        .view-saved-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #0d47a1;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #eef4ff;
+            border: 1px solid #bfdbfe;
+            transition: all 0.15s;
+        }
+
+        .view-saved-link:active {
+            transform: scale(0.96);
+            background: #dbeafe;
+        }
+
+        .header-saved-badge {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s;
+        }
+
+        .header-saved-badge:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Save Modal Styles */
+        .save-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(10, 30, 63, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .save-modal-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 330px;
+            border-radius: 18px;
+            padding: 22px 18px;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            animation: dpZoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .save-modal-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .save-modal-icon {
+            font-size: 38px;
+            margin: 4px 0 8px 0;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .save-modal-card h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .save-modal-desc {
+            font-size: 12px;
+            color: #334155;
+            margin: 8px 0 10px 0;
+            line-height: 1.45;
+        }
+
+        .save-modal-tip {
+            font-size: 11px;
+            background: #f1f5f9;
+            color: #0369a1;
+            padding: 8px 10px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+            border: 1px solid #e0f2fe;
+            text-align: left;
+        }
+
+        .save-modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-save-modal-ok {
+            flex: 1;
+            height: 42px;
+            background: #f1f5f9;
+            color: #1e293b;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-save-modal-view {
+            flex: 1.3;
+            height: 42px;
+            background: #0d47a1;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px #08306b;
         }
 
         /* Popups */
@@ -610,6 +767,26 @@
     <button class="close-pop" onclick="closePopup()">OK</button>
 </div>
 
+<!-- DEDICATED PROFESSIONAL SAVE SUCCESS MODAL -->
+<div id="saveSuccessModal" class="save-modal-overlay" onclick="closeSaveModal()">
+    <div class="save-modal-card" onclick="event.stopPropagation()">
+        <div class="save-modal-badge">✓ RECORD SAVED LOCALLY</div>
+        <div class="save-modal-icon">💾</div>
+        <h3 id="saveModalClientName">Details Saved Successfully!</h3>
+        <p id="saveModalClientPan" style="font-weight:700; color:#0d47a1; font-size:12.5px; margin:4px 0 10px 0;"></p>
+        <div class="save-modal-desc">
+            All salary, income, and tax computation details have been <b>safely saved on your device</b>.
+        </div>
+        <div class="save-modal-tip">
+            📁 You can view, manage, or reload this computation anytime from <b>"Saved Records"</b> in the sidebar menu!
+        </div>
+        <div class="save-modal-actions">
+            <button type="button" class="btn-save-modal-ok" onclick="closeSaveModal()">Done</button>
+            <a href="saved.html" class="btn-save-modal-view">View Saved Records ›</a>
+        </div>
+    </div>
+</div>
+
 <!-- ROYAL BLUE MATERIAL DATE PICKER MODAL (100% ROYAL BLUE ON EVERY PHONE) -->
 <div id="dateModalOverlay" class="date-modal-overlay" onclick="closeDatePicker()">
     <div class="date-picker-card" onclick="event.stopPropagation()">
@@ -649,11 +826,26 @@
 <!-- ========================================== -->
 <div class="container">
     <div class="header">
-        <h2>Anurag Karundia & Co.</h2>
-        <p id="headerRegime">FY 2026-27 | New Tax Regime</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+            <div>
+                <h2>Anurag Karundia & Co.</h2>
+                <p id="headerRegime">FY 2026-27 | New Tax Regime</p>
+            </div>
+            <a href="saved.html" class="header-saved-badge" title="View Saved Client Records">
+                📁 Saved (<span id="headerSavedCount">0</span>)
+            </a>
+        </div>
     </div>
 
     <div class="content-padding">
+        <!-- TOP RESTORE TOAST BANNER -->
+        <div id="restoreToastBanner" style="display:none; background:linear-gradient(135deg, #059669 0%, #10B981 100%); color:white; padding:12px 14px; border-radius:12px; font-size:12px; font-weight:700; margin-bottom:14px; align-items:center; justify-content:space-between; box-shadow:0 4px 14px rgba(16,185,129,0.25);">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:16px;">✓</span>
+                <span id="restoreToastMsg">Loaded saved computation</span>
+            </div>
+            <button type="button" onclick="document.getElementById('restoreToastBanner').style.display='none'" style="background:none; border:none; color:white; font-size:18px; line-height:1; font-weight:bold; cursor:pointer;">×</button>
+        </div>
         <!-- 1. CUSTOM IN-PAGE FINANCIAL YEAR SELECTOR (NO ANDROID RADIO DIALOG) -->
         <div class="section-title">Assessment Year & Regime</div>
         <div class="input-group">
@@ -882,9 +1074,19 @@
                 </table>
 
                 <div class="action-btns">
-                    <button class="pdf-btn" onclick="downloadOfficialPDF()">
-                        📄 Download Official PDF Computation Sheet
-                    </button>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <button type="button" class="pdf-btn" onclick="downloadOfficialPDF()">
+                            📄 Download PDF
+                        </button>
+                        <button type="button" class="save-btn" onclick="saveCalculationLocally()">
+                            💾 Save Details
+                        </button>
+                    </div>
+                    <div style="margin-top:12px; text-align:center;">
+                        <a href="saved.html" class="view-saved-link">
+                            📁 View Saved Client Records (<span id="btnSavedCount">0</span>) ›
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1820,6 +2022,243 @@ function downloadOfficialPDF() {
         window.print();
     }
 }
+
+// ========================================================
+// SAVE & RESTORE CLIENT DETAILS (OFFLINE SECURE LOCALSTORAGE)
+// ========================================================
+function saveCalculationLocally() {
+    var name = document.getElementById('uName') ? document.getElementById('uName').value.trim() : '';
+    var pan = document.getElementById('uPan') ? document.getElementById('uPan').value.trim().toUpperCase() : '';
+    
+    if (!name || name.length < 2) {
+        showBluePopup("Please enter Taxpayer Full Name before saving.");
+        return;
+    }
+    if (!pan || pan.length < 5) {
+        showBluePopup("Please enter valid PAN Number before saving.");
+        return;
+    }
+
+    var dob = document.getElementById('uDob') ? document.getElementById('uDob').value.trim() : '';
+    var mob = document.getElementById('uMob') ? document.getElementById('uMob').value.trim() : '';
+    var district = document.getElementById('uDistrict') ? document.getElementById('uDistrict').value.trim() : '';
+    var org = document.getElementById('uOrg') ? document.getElementById('uOrg').value.trim() : '';
+    var fy = document.getElementById('selectedFY') ? document.getElementById('selectedFY').value : '2026-27';
+    var regime = document.getElementById('selectedRegime') ? document.getElementById('selectedRegime').value : 'NEW';
+    var cycle = document.getElementById('selectedCycle') ? document.getElementById('selectedCycle').value : 'STD';
+
+    var sal = parseFloat(document.getElementById('vSal').value) || 0;
+    var chkMonthly = document.getElementById('chkMonthly') ? document.getElementById('chkMonthly').checked : false;
+
+    // Collect 12 months data if filled
+    var monthsData = [];
+    var bInputs = document.querySelectorAll('.m-basic');
+    var dInputs = document.querySelectorAll('.m-da');
+    var hInputs = document.querySelectorAll('.m-hra');
+    var gInputs = document.querySelectorAll('.m-gross');
+    var gpfInputs = document.querySelectorAll('.m-gpf');
+    var npsInputs = document.querySelectorAll('.m-nps');
+    var taxInputs = document.querySelectorAll('.m-tax');
+
+    for (var i = 0; i < 12; i++) {
+        monthsData.push({
+            basic: bInputs[i] ? (parseFloat(bInputs[i].value) || 0) : 0,
+            da: dInputs[i] ? (parseFloat(dInputs[i].value) || 0) : 0,
+            hra: hInputs[i] ? (parseFloat(hInputs[i].value) || 0) : 0,
+            gross: gInputs[i] ? (parseFloat(gInputs[i].value) || 0) : 0,
+            gpf: gpfInputs[i] ? (parseFloat(gpfInputs[i].value) || 0) : 0,
+            nps: npsInputs[i] ? (parseFloat(npsInputs[i].value) || 0) : 0,
+            tax: (i === 11) ? 0 : (taxInputs[i] ? (parseFloat(taxInputs[i].value) || 0) : 0)
+        });
+    }
+
+    var bus = parseFloat(document.getElementById('vBus') ? document.getElementById('vBus').value : 0) || 0;
+    var ded80C = parseFloat(document.getElementById('v80C') ? document.getElementById('v80C').value : 0) || 0;
+    var dedOther = parseFloat(document.getElementById('vOtherDed') ? document.getElementById('vOtherDed').value : 0) || 0;
+    var st = parseFloat(document.getElementById('vSTCG') ? document.getElementById('vSTCG').value : 0) || 0;
+    var lt = parseFloat(document.getElementById('vLTCG') ? document.getElementById('vLTCG').value : 0) || 0;
+    var advTax = parseFloat(document.getElementById('vAdvTax') ? document.getElementById('vAdvTax').value : 0) || 0;
+
+    var finalTaxText = document.getElementById('finalTaxVal') ? document.getElementById('finalTaxVal').innerText : 'Rs. 0';
+    var balancePayableText = document.getElementById('rFinalTotal') ? document.getElementById('rFinalTotal').innerText : 'Rs. 0';
+    var netTaxableVal = document.getElementById('rNetInc') ? document.getElementById('rNetInc').innerText : '0';
+
+    var recordId = 'akc_' + Date.now();
+    var nowStr = new Date().toLocaleString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', hour12: true
+    });
+
+    var record = {
+        id: recordId,
+        savedAt: nowStr,
+        timestamp: Date.now(),
+        name: name,
+        dob: dob,
+        pan: pan,
+        mob: mob,
+        district: district,
+        org: org,
+        fy: fy,
+        regime: regime,
+        cycle: cycle,
+        sal: sal,
+        chkMonthly: chkMonthly,
+        months: monthsData,
+        bus: bus,
+        ded80C: ded80C,
+        dedOther: dedOther,
+        stcg: st,
+        ltcg: lt,
+        advTax: advTax,
+        netTaxable: netTaxableVal,
+        finalTax: finalTaxText,
+        balancePayable: balancePayableText
+    };
+
+    var existing = [];
+    try {
+        existing = JSON.parse(localStorage.getItem('akc_saved_computations') || '[]');
+        if (!Array.isArray(existing)) existing = [];
+    } catch(e) { existing = []; }
+
+    var existIdx = existing.findIndex(function(r) { return r.pan === pan && r.fy === fy; });
+    if (existIdx !== -1) {
+        existing[existIdx] = record;
+    } else {
+        existing.unshift(record);
+    }
+
+    try {
+        localStorage.setItem('akc_saved_computations', JSON.stringify(existing));
+    } catch(e) {
+        showBluePopup("Storage limit exceeded on device. Please clear old records from Saved Records.");
+        return;
+    }
+
+    updateSavedCount();
+
+    // Show stylish success popup
+    document.getElementById('saveModalClientName').innerText = name;
+    document.getElementById('saveModalClientPan').innerText = 'PAN: ' + pan + ' • FY ' + fy;
+    document.getElementById('saveSuccessModal').style.display = 'flex';
+}
+
+function closeSaveModal() {
+    document.getElementById('saveSuccessModal').style.display = 'none';
+}
+
+function updateSavedCount() {
+    try {
+        var raw = localStorage.getItem('akc_saved_computations');
+        var arr = raw ? JSON.parse(raw) : [];
+        var count = Array.isArray(arr) ? arr.length : 0;
+        if (document.getElementById('btnSavedCount')) {
+            document.getElementById('btnSavedCount').innerText = count;
+        }
+        if (document.getElementById('headerSavedCount')) {
+            document.getElementById('headerSavedCount').innerText = count;
+        }
+    } catch(e) {}
+}
+
+function checkAndRestoreSavedRecord() {
+    updateSavedCount();
+
+    var restoreId = localStorage.getItem('akc_restore_id');
+    if (!restoreId) return;
+
+    var existing = [];
+    try {
+        existing = JSON.parse(localStorage.getItem('akc_saved_computations') || '[]');
+        if (!Array.isArray(existing)) existing = [];
+    } catch(e) { return; }
+
+    var record = existing.find(function(r) { return r.id === restoreId; });
+    if (!record) {
+        localStorage.removeItem('akc_restore_id');
+        return;
+    }
+
+    // 1. Personal Details
+    if (document.getElementById('uName')) document.getElementById('uName').value = record.name || '';
+    if (document.getElementById('uDob')) document.getElementById('uDob').value = record.dob || '';
+    if (document.getElementById('uPan')) document.getElementById('uPan').value = record.pan || '';
+    if (document.getElementById('uMob')) document.getElementById('uMob').value = record.mob || '';
+    if (document.getElementById('uDistrict')) document.getElementById('uDistrict').value = record.district || '';
+    if (document.getElementById('uOrg')) document.getElementById('uOrg').value = record.org || '';
+
+    // 2. FY, Regime, Cycle
+    if (record.fy) {
+        var fyLabel = (record.fy === '2026-27') ? 'FY 2026-27 (AY 2027-28)' : 'FY 2025-26 (AY 2026-27)';
+        chooseFY(record.fy, fyLabel);
+    }
+    if (record.regime) selectRegime(record.regime);
+    if (record.cycle) selectCycle(record.cycle);
+
+    // 3. Gross Salary & Monthly Table
+    if (document.getElementById('vSal')) document.getElementById('vSal').value = record.sal || 0;
+    
+    var chk = document.getElementById('chkMonthly');
+    if (chk) {
+        chk.checked = !!record.chkMonthly;
+        document.getElementById('monthlySection').style.display = record.chkMonthly ? 'block' : 'none';
+    }
+
+    if (record.chkMonthly && record.months && record.months.length === 12) {
+        var bInputs = document.querySelectorAll('.m-basic');
+        var dInputs = document.querySelectorAll('.m-da');
+        var hInputs = document.querySelectorAll('.m-hra');
+        var gInputs = document.querySelectorAll('.m-gross');
+        var gpfInputs = document.querySelectorAll('.m-gpf');
+        var npsInputs = document.querySelectorAll('.m-nps');
+        var taxInputs = document.querySelectorAll('.m-tax');
+
+        for (var i = 0; i < 12; i++) {
+            var m = record.months[i] || {};
+            if (bInputs[i]) bInputs[i].value = m.basic || 0;
+            if (dInputs[i]) dInputs[i].value = m.da || 0;
+            if (hInputs[i]) hInputs[i].value = m.hra || 0;
+            if (gInputs[i]) gInputs[i].value = m.gross || 0;
+            if (gpfInputs[i]) gpfInputs[i].value = m.gpf || 0;
+            if (npsInputs[i]) npsInputs[i].value = m.nps || 0;
+            if (taxInputs[i]) taxInputs[i].value = (i === 11) ? 0 : (m.tax || 0);
+        }
+        calcSheetTotals();
+    }
+
+    // 4. Other Incomes & Deductions
+    if (document.getElementById('vBus')) document.getElementById('vBus').value = record.bus || 0;
+    if (document.getElementById('v80C')) document.getElementById('v80C').value = record.ded80C || 0;
+    if (document.getElementById('vOtherDed')) document.getElementById('vOtherDed').value = record.dedOther || 0;
+    if (document.getElementById('vSTCG')) document.getElementById('vSTCG').value = record.stcg || 0;
+    if (document.getElementById('vLTCG')) document.getElementById('vLTCG').value = record.ltcg || 0;
+    if (document.getElementById('vAdvTax')) document.getElementById('vAdvTax').value = record.advTax || 0;
+
+    // 5. Calculate and scroll
+    calculateTax();
+    localStorage.removeItem('akc_restore_id');
+    updateSavedCount();
+
+    // 6. Show restore toast banner
+    showRestoreBanner("Loaded saved computation for " + record.name + " (" + record.pan + ")");
+}
+
+function showRestoreBanner(msg) {
+    var banner = document.getElementById('restoreToastBanner');
+    var bannerMsg = document.getElementById('restoreToastMsg');
+    if (banner && bannerMsg) {
+        bannerMsg.innerText = msg;
+        banner.style.display = 'flex';
+        setTimeout(function() {
+            banner.style.display = 'none';
+        }, 5000);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    checkAndRestoreSavedRecord();
+});
 </script>
 </body>
 </html>
