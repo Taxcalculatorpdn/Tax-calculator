@@ -2115,8 +2115,20 @@ function saveCalculationLocally() {
         if (!Array.isArray(existing)) existing = [];
     } catch(e) { existing = []; }
 
-    // Every calculation is saved as a separate entry (never overwriting old ones)
-    existing.unshift(record);
+    // Same client (PAN & FY or Name & PAN) updates/overwrites existing record cleanly
+    var existIdx = existing.findIndex(function(r) { 
+        var panMatch = r.pan && pan && (r.pan.trim().toUpperCase() === pan.trim().toUpperCase());
+        var nameMatch = r.name && name && (r.name.trim().toLowerCase() === name.trim().toLowerCase());
+        var fyMatch = r.fy && fy && (r.fy === fy);
+        return (panMatch && fyMatch) || (panMatch && nameMatch);
+    });
+
+    if (existIdx !== -1) {
+        record.id = existing[existIdx].id;
+        existing[existIdx] = record;
+    } else {
+        existing.unshift(record);
+    }
 
     try {
         localStorage.setItem('akc_saved_computations', JSON.stringify(existing));
