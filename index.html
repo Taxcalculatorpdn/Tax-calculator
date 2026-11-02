@@ -770,7 +770,7 @@
 <!-- DEDICATED PROFESSIONAL SAVE SUCCESS MODAL -->
 <div id="saveSuccessModal" class="save-modal-overlay" onclick="closeSaveModal()">
     <div class="save-modal-card" onclick="event.stopPropagation()">
-        <div class="save-modal-badge">✓ RECORD SAVED</div>
+        <div class="save-modal-badge">✓ RECORD SAVED LOCALLY</div>
         <div class="save-modal-icon">💾</div>
         <h3 id="saveModalClientName">Details Saved Successfully!</h3>
         <p id="saveModalClientPan" style="font-weight:700; color:#0d47a1; font-size:12.5px; margin:4px 0 10px 0;"></p>
@@ -1616,22 +1616,35 @@ function closePopup() {
 }
 
 function resetForm() {
-    document.getElementById('uName').value = '';
-    document.getElementById('uMob').value = '';
-    document.getElementById('uPan').value = '';
+    if (document.getElementById('uName')) document.getElementById('uName').value = '';
+    if (document.getElementById('uMob')) document.getElementById('uMob').value = '';
+    if (document.getElementById('uPan')) document.getElementById('uPan').value = '';
     if (document.getElementById('uDob')) document.getElementById('uDob').value = '';
     if (document.getElementById('uDistrict')) document.getElementById('uDistrict').value = '';
     if (document.getElementById('uOrg')) document.getElementById('uOrg').value = '';
-    document.getElementById('vSal').value = '0';
-    document.getElementById('vBus').value = '0';
-    document.getElementById('vSTCG').value = '0';
-    document.getElementById('vLTCG').value = '0';
-    document.getElementById('vAdvTax').value = '0';
+    if (document.getElementById('vSal')) document.getElementById('vSal').value = '0';
+    if (document.getElementById('vBus')) document.getElementById('vBus').value = '0';
+    if (document.getElementById('vSTCG')) document.getElementById('vSTCG').value = '0';
+    if (document.getElementById('vLTCG')) document.getElementById('vLTCG').value = '0';
+    if (document.getElementById('vAdvTax')) document.getElementById('vAdvTax').value = '0';
     if (document.getElementById('v80C')) document.getElementById('v80C').value = '0';
     if (document.getElementById('vOtherDed')) document.getElementById('vOtherDed').value = '0';
-    document.getElementById('chkMonthly').checked = false;
-    document.getElementById('monthlySection').style.display = 'none';
-    document.getElementById('resDiv').style.display = 'none';
+    if (document.getElementById('chkMonthly')) {
+        document.getElementById('chkMonthly').checked = false;
+        document.getElementById('monthlySection').style.display = 'none';
+    }
+    var bInputs = document.querySelectorAll('.m-basic');
+    for (var i = 0; i < bInputs.length; i++) {
+        if (document.querySelectorAll('.m-basic')[i]) document.querySelectorAll('.m-basic')[i].value = '0';
+        if (document.querySelectorAll('.m-da')[i]) document.querySelectorAll('.m-da')[i].value = '0';
+        if (document.querySelectorAll('.m-hra')[i]) document.querySelectorAll('.m-hra')[i].value = '0';
+        if (document.querySelectorAll('.m-gross')[i]) document.querySelectorAll('.m-gross')[i].value = '0';
+        if (document.querySelectorAll('.m-gpf')[i]) document.querySelectorAll('.m-gpf')[i].value = '0';
+        if (document.querySelectorAll('.m-nps')[i]) document.querySelectorAll('.m-nps')[i].value = '0';
+        if (document.querySelectorAll('.m-tax')[i]) document.querySelectorAll('.m-tax')[i].value = '0';
+    }
+    if (typeof calcSheetTotals === 'function') calcSheetTotals();
+    if (document.getElementById('resDiv')) document.getElementById('resDiv').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2253,7 +2266,21 @@ function showRestoreBanner(msg) {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-    checkAndRestoreSavedRecord();
+    var restoreId = localStorage.getItem('akc_restore_id');
+    if (restoreId) {
+        checkAndRestoreSavedRecord();
+    } else {
+        resetForm();
+    }
+});
+
+window.addEventListener('pageshow', function(event) {
+    var restoreId = localStorage.getItem('akc_restore_id');
+    if (restoreId) {
+        checkAndRestoreSavedRecord();
+    } else if (event.persisted) {
+        resetForm();
+    }
 });
 </script>
 </body>
