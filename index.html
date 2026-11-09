@@ -679,65 +679,92 @@
         }
 
         /* ======================================================== */
-        /* EXACT OFFICIAL STATEMENTS FOR PDF PRINT */
+        /* EXACT OFFICIAL STATEMENTS FOR PDF PRINT (STRICT 1 PAGE) */
         /* ======================================================== */
         .official-print-sheet {
             display: none !important;
         }
 
         @media print {
-            body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
-            .container, .overlay, #blueAlert, .action-btns, .save-modal-overlay { display: none !important; }
+            @page {
+                size: A4 portrait;
+                margin: 4mm 5mm 4mm 5mm !important;
+            }
+            html, body {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #fff !important;
+                overflow: hidden !important;
+            }
+            * {
+                box-sizing: border-box !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            .container, .overlay, #blueAlert, .action-btns, .save-modal-overlay, .app-header, .drawer {
+                display: none !important;
+            }
+            .official-print-sheet {
+                display: none !important;
+            }
             .official-print-sheet.active-print {
                 display: block !important;
                 width: 100% !important;
-                padding: 6px 8px !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                padding: 1px !important;
                 font-family: 'Times New Roman', serif !important;
-                box-sizing: border-box;
+                box-sizing: border-box !important;
                 position: relative !important;
                 overflow: hidden !important;
                 background: #fff !important;
+                page-break-after: avoid !important;
+                page-break-before: avoid !important;
             }
             .akc-border-box {
-                border: 2px solid #000;
-                padding: 3px;
+                border: 1.5px solid #000;
+                padding: 2px;
                 position: relative;
+                box-sizing: border-box;
             }
             .akc-inner-box {
                 border: 1px solid #000;
-                padding: 5px;
+                padding: 3px;
                 position: relative;
+                box-sizing: border-box;
             }
             .sheet-watermark {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-30deg);
-                font-size: 54px;
+                font-size: 50px;
                 font-weight: 900;
-                color: rgba(30, 41, 59, 0.16) !important;
+                color: rgba(30, 41, 59, 0.14) !important;
                 white-space: nowrap;
                 pointer-events: none;
                 z-index: 10 !important;
                 text-transform: uppercase;
-                letter-spacing: 6px;
+                letter-spacing: 5px;
                 font-family: 'Arial Black', Impact, Arial, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
             .old-sheet-watermark {
                 position: absolute;
-                top: 38%;
+                top: 36%;
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-30deg);
-                font-size: 56px;
+                font-size: 52px;
                 font-weight: 900;
-                color: rgba(30, 41, 59, 0.12) !important;
+                color: rgba(30, 41, 59, 0.11) !important;
                 white-space: nowrap;
                 pointer-events: none;
                 z-index: 5 !important;
                 text-transform: uppercase;
-                letter-spacing: 8px;
+                letter-spacing: 7px;
                 font-family: 'Arial Black', Impact, sans-serif !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -749,13 +776,13 @@
             table.sheet-table {
                 width: 100%;
                 border-collapse: collapse;
-                font-size: 9.5px;
-                margin-top: 4px;
+                font-size: 8.5px;
+                margin-top: 3px;
                 background: transparent !important;
             }
             table.sheet-table th, table.sheet-table td {
                 border: 1px solid #000;
-                padding: 3px 4px;
+                padding: 2px 3px;
                 text-align: center;
                 background: transparent !important;
             }
@@ -765,24 +792,26 @@
             .official-print-sheet td {
                 background-color: transparent !important;
                 background: transparent !important;
+                color: #000 !important;
             }
             .text-left { text-align: left !important; }
             .text-right { text-align: right !important; }
             .text-center { text-align: center !important; }
             .fw-bold { font-weight: bold; }
-            table.meta-grid td { padding: 3px 5px; font-size: 9.5px; }
+            table.meta-grid td { padding: 2px 4px; font-size: 8.5px; }
             .meta-label { width: 20%; font-weight: bold; text-align: left !important; }
             .meta-val { width: 30%; text-align: left !important; }
             .old-pan-box {
                 display: inline-block;
                 width: 13px;
-                height: 15px;
-                line-height: 15px;
+                height: 14px;
+                line-height: 14px;
                 border-right: 1px solid #000;
                 text-align: center;
-                font-size: 10.5px;
+                font-size: 10px;
                 font-weight: bold;
                 font-family: Arial, sans-serif;
+                color: #000 !important;
             }
         }
     </style>
@@ -1268,7 +1297,7 @@
                 </tr>
             </table>
 
-            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:35px; padding:0 20px; font-size:11px; font-weight:bold;">
+            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:14px; padding:0 20px; font-size:10px; font-weight:bold;">
                 <div>Sig. of Employee</div>
                 <div id="pSigEmployer">Sig. of Employer</div>
             </div>
@@ -1276,27 +1305,27 @@
     </div>
 </div>
 
-<!-- 2. OLD TAX REGIME PRINT SHEET (EXACT OFFICIAL PHYSICAL PAPER FORMAT WITH STCG & LTCG) -->
+<!-- 2. OLD TAX REGIME PRINT SHEET (EXACT OFFICIAL FORMAT WITH STCG & LTCG - STRICT 1 PAGE) -->
 <div id="officialPrintSheetOld" class="official-print-sheet">
     <div class="akc-border-box">
         <div class="akc-inner-box">
-            <!-- Diagonal Confidential Watermark Matching Photo -->
+            <!-- Diagonal Confidential Watermark -->
             <div class="old-sheet-watermark">CONFIDENTIAL</div>
 
             <!-- Title Header -->
             <div style="text-align:center;">
-                <h2 style="margin:0; font-size:16px; font-weight:900; letter-spacing:0.5px; font-family:'Arial Rounded MT Bold', Arial, sans-serif;">Anurag Karundia &amp; Co. <span style="font-size:13px; font-weight:bold;">(Old Scheme)</span></h2>
+                <h2 style="margin:0; font-size:15px; font-weight:900; letter-spacing:0.5px; font-family:'Arial Rounded MT Bold', Arial, sans-serif;">Anurag Karundia &amp; Co. <span style="font-size:12px; font-weight:bold;">(Old Scheme)</span></h2>
             </div>
 
             <!-- Line 1: Year, Sub-box, Mobile -->
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:bold; margin-top:3px;">
-                <div style="width:28%;">वर्ष <span id="pOldFY">2025-2026</span></div>
-                <div style="border:1.5px solid #000; padding:1.5px 8px; font-size:11px; font-weight:bold;">[ आयकर गणना प्रपत्र ]</div>
-                <div style="width:38%; text-align:right;">मोबाईल नं० <span id="pOldMob" style="text-decoration:underline;">&nbsp;</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; font-weight:bold; margin-top:2px;">
+                <div style="width:28%;">Financial Year <span id="pOldFY">2025-2026</span></div>
+                <div style="border:1.2px solid #000; padding:1px 8px; font-size:10px; font-weight:bold;">[ INCOME TAX COMPUTATION STATEMENT ]</div>
+                <div style="width:38%; text-align:right;">Mobile No. <span id="pOldMob" style="text-decoration:underline;">&nbsp;</span></div>
             </div>
 
             <!-- Line 2: 10 Contiguous PAN Boxes + Date of Birth -->
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; margin-top:3px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; margin-top:2px;">
                 <div style="display:flex; align-items:center;">
                     <span style="font-weight:bold; margin-right:4px;">PAN</span>
                     <span style="display:inline-flex; border:1px solid #000; vertical-align:middle;">
@@ -1312,44 +1341,44 @@
                         <span class="old-pan-box" id="pOldPan9" style="border-right:none;"></span>
                     </span>
                 </div>
-                <div style="text-align:right; font-size:10px;">
+                <div style="text-align:right; font-size:9.5px;">
                     <span style="font-weight:bold;">Date of Birth</span> <span id="pOldDob" style="text-decoration:underline; font-weight:bold;">&nbsp;</span>
                 </div>
             </div>
 
             <!-- Line 3: Name, Sex, Post/Designation -->
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; margin-top:3px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; margin-top:2px;">
                 <div style="flex:1;">
                     <span style="font-weight:bold;">NAME</span> <span id="pOldName" style="text-decoration:underline; font-weight:bold; text-transform:uppercase; margin-left:4px;">&nbsp;</span>
                 </div>
-                <div style="text-align:right; font-size:10px;">
+                <div style="text-align:right; font-size:9.5px;">
                     <span style="font-weight:bold;">Sex</span> M [ &nbsp; ] F [ &nbsp; ] &nbsp;&nbsp; 
-                    <span style="font-weight:bold;">पद</span> [ <span id="pOldDesig" style="display:inline-block; min-width:40px; text-align:center;">&nbsp;</span> ]
+                    <span style="font-weight:bold;">Designation</span> [ <span id="pOldDesig" style="display:inline-block; min-width:40px; text-align:center;">&nbsp;</span> ]
                 </div>
             </div>
 
             <!-- Line 4: Father's Name -->
-            <div style="font-size:10px; margin-top:2px;">
+            <div style="font-size:9.5px; margin-top:2px;">
                 <span style="font-weight:bold;">FATHER'S NAME</span> ........................................................................................................................
             </div>
 
             <!-- Line 5: Madarasa / Org Name -->
-            <div style="font-size:10px; margin-top:2px;">
-                <span style="font-weight:bold;" id="pOldOrgLabel">Madarasa Name</span> <span id="pOldOrg" style="text-decoration:underline; font-weight:bold; margin-left:4px;">&nbsp;</span>
+            <div style="font-size:9.5px; margin-top:2px;">
+                <span style="font-weight:bold;" id="pOldOrgLabel">Organization / School Name</span> <span id="pOldOrg" style="text-decoration:underline; font-weight:bold; margin-left:4px;">&nbsp;</span>
             </div>
 
-            <!-- 8-Column Monthly Table Matching Photo -->
-            <table class="old-monthly-table" style="width:100%; border-collapse:collapse; font-size:9px; margin-top:4px; text-align:center;">
+            <!-- 8-Column Monthly Table -->
+            <table class="old-monthly-table" style="width:100%; border-collapse:collapse; font-size:8px; margin-top:3px; text-align:center;">
                 <thead>
                     <tr style="font-weight:bold; background:#fafafa;">
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:15%;">Months</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">Pay</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">D.A.</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">H.R.A.</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:14%;">Gross Salary</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">GPF</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">NPS</th>
-                        <th style="border:1px solid #000; padding:2.5px 2px; width:16%;">Advance Income<br>Tax Deduction</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:15%;">Months</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:11%;">Basic Pay</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:11%;">D.A.</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:11%;">H.R.A.</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:14%;">Gross Salary</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:11%;">GPF</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:11%;">NPS</th>
+                        <th style="border:1px solid #000; padding:1.5px 2px; width:16%;">Advance Income<br>Tax Deduction</th>
                     </tr>
                 </thead>
                 <tbody id="pOldMonthRows">
@@ -1357,223 +1386,223 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td style="border:1px solid #000; padding:2px; text-align:left; font-weight:bold;">Arrears</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px; font-weight:bold;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; text-align:left; font-weight:bold;">Arrears</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; font-weight:bold;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
                     </tr>
                     <tr>
-                        <td style="border:1px solid #000; padding:2px; text-align:left; font-weight:bold;">Others</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px; font-weight:bold;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; text-align:left; font-weight:bold;">Others</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; font-weight:bold;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr style="font-weight:bold; background:#fafafa;">
-                        <td style="border:1px solid #000; padding:2.5px 2px; text-align:left;">TOTAL</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotBasic">0.00</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotDA">0.00</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotHRA">0.00</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotGross">0.00</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotGPF">0.00</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotNPS">0.00</td>
-                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotAdvTax">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px; text-align:left;">TOTAL</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotBasic">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotDA">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotHRA">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotGross">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotGPF">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotNPS">0.00</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotAdvTax">0.00</td>
                     </tr>
                 </tfoot>
             </table>
 
             <!-- Two-Column Lower Split Section (Deductions vs Tax Computation) -->
-            <table style="width:100%; border-collapse:collapse; margin-top:4px; font-size:8.5px; vertical-align:top;">
+            <table style="width:100%; border-collapse:collapse; margin-top:3px; font-size:8px; vertical-align:top;">
                 <tr>
                     <!-- Left Column: Chapter VIA Deductions -->
-                    <td style="width:38%; vertical-align:top; border:1px solid #000; padding:3px 4px;">
-                        <div style="font-weight:bold; font-size:9.5px; border-bottom:1px solid #000; padding-bottom:2px; margin-bottom:3px; text-align:center;">
-                            Deduction under Chapter VIA<br>
-                            <span id="pOldChapDates" style="font-weight:normal; font-size:8px;">(01.04.2025 to 31.03.2026)</span>
+                    <td style="width:38%; vertical-align:top; border:1px solid #000; padding:2px 3px;">
+                        <div style="font-weight:bold; font-size:8.5px; border-bottom:1px solid #000; padding-bottom:1px; margin-bottom:2px; text-align:center;">
+                            Deduction under Chapter VI-A<br>
+                            <span id="pOldChapDates" style="font-weight:normal; font-size:7.5px;">(01.04.2025 to 31.03.2026)</span>
                         </div>
-                        <table style="width:100%; border-collapse:collapse; font-size:8.5px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:8px;">
                             <tr>
-                                <td style="padding:1.5px 0;">1. G.P.F.</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldGPF">0.00</span></td>
+                                <td style="padding:1px 0;">1. G.P.F.</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldGPF">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">2. N.P.S. (80CCD(1))</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldNPS">0.00</span></td>
+                                <td style="padding:1px 0;">2. N.P.S. (80CCD(1))</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldNPS">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">3. L.I.C.</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldLIC">0.00</span></td>
+                                <td style="padding:1px 0;">3. L.I.C.</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldLIC">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">4. N.S.C.</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldNSC">0.00</span></td>
+                                <td style="padding:1px 0;">4. N.S.C.</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldNSC">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">5. Tution Fee</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldTution">0.00</span></td>
+                                <td style="padding:1px 0;">5. Tuition Fee</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldTution">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">6. P.P.F.</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldPPF">0.00</span></td>
+                                <td style="padding:1px 0;">6. P.P.F.</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldPPF">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">7. H. Loan Principal</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldHLoan">0.00</span></td>
+                                <td style="padding:1px 0;">7. Home Loan Principal</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldHLoan">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1.5px 0;">8. Sukanya S.Y.</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldSukanya">0.00</span></td>
+                                <td style="padding:1px 0;">8. Sukanya Samriddhi</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldSukanya">0.00</span></td>
                             </tr>
                             <tr style="border-top:1px dashed #000; font-weight:bold;">
-                                <td style="padding:2.5px 0;">Grand Total</td>
-                                <td style="text-align:right; padding:2.5px 0;">₹ <span id="pOldGrandTotal">0.00</span></td>
+                                <td style="padding:2px 0;">Grand Total (u/s 80C)</td>
+                                <td style="text-align:right; padding:2px 0;">₹ <span id="pOldGrandTotal">0.00</span></td>
                             </tr>
                         </table>
                     </td>
 
                     <!-- Right Column: Income & Tax Computation -->
-                    <td style="width:62%; vertical-align:top; border:1px solid #000; padding:3px 4px;">
-                        <table style="width:100%; border-collapse:collapse; font-size:8.5px;">
+                    <td style="width:62%; vertical-align:top; border:1px solid #000; padding:2px 3px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:8px;">
                             <tr>
-                                <td style="padding:1px 0;">1. कुल आय (वेतन से) ₹ <span id="pOldGrossSalSub">0.00</span></td>
-                                <td style="text-align:right; padding:1px 0;">&nbsp;</td>
+                                <td style="padding:0.8px 0;">1. Gross Salary Income</td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldGrossSalSub">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 0; padding-left:10px;"><u>Less</u> : Standard Deduction ₹ 50,000.00</td>
-                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldNetSalSD">0.00</span></td>
+                                <td style="padding:0.8px 0; padding-left:8px;"><u>Less</u>: Standard Deduction (Sec 16(ia))</td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldNetSalSD">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 0;">2. ऋण ब्याज की छूट ₹ 0.00</td>
-                                <td style="text-align:right; padding:1px 0;">₹ 0.00</td>
+                                <td style="padding:0.8px 0;">2. Less: Interest on Housing Loan (Sec 24b)</td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ 0.00</td>
                             </tr>
                             <tr style="font-weight:bold;">
-                                <td style="padding:1px 0;">3. शेष आय (1-2)</td>
-                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldRemSal">0.00</span></td>
+                                <td style="padding:0.8px 0;">3. Net Salary Income (1-2)</td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldRemSal">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 0;">4. अन्य स्रोतों से आय</td>
-                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldBus">0.00</span></td>
+                                <td style="padding:0.8px 0;">4. Income from Other Sources</td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldBus">0.00</span></td>
                             </tr>
-                            <!-- Short Term Capital Gain Added as requested -->
+                            <!-- Short Term Capital Gain - Normal Black Text -->
                             <tr id="pOldRowSTCG" style="display:none;">
-                                <td style="padding:1px 0; color:#0d47a1; font-weight:bold;">Add : अल्पकालिक पूंजीगत लाभ (STCG @ 20%)</td>
-                                <td style="text-align:right; padding:1px 0; color:#0d47a1; font-weight:bold;">₹ <span id="pOldSTCG">0.00</span></td>
+                                <td style="padding:0.8px 0; color:#000; font-weight:bold;">Add: Short Term Capital Gain (STCG @ 20%)</td>
+                                <td style="text-align:right; padding:0.8px 0; color:#000; font-weight:bold;">₹ <span id="pOldSTCG">0.00</span></td>
                             </tr>
-                            <!-- Long Term Capital Gain Added as requested -->
+                            <!-- Long Term Capital Gain - Normal Black Text -->
                             <tr id="pOldRowLTCG" style="display:none;">
-                                <td style="padding:1px 0; color:#0d47a1; font-weight:bold;">Add : दीर्घकालिक पूंजीगत लाभ (LTCG @ 12.5%)</td>
-                                <td style="text-align:right; padding:1px 0; color:#0d47a1; font-weight:bold;">₹ <span id="pOldLTCG">0.00</span></td>
+                                <td style="padding:0.8px 0; color:#000; font-weight:bold;">Add: Long Term Capital Gain (LTCG @ 12.5%)</td>
+                                <td style="text-align:right; padding:0.8px 0; color:#000; font-weight:bold;">₹ <span id="pOldLTCG">0.00</span></td>
                             </tr>
                             <tr style="font-weight:bold;">
-                                <td style="padding:1.5px 0;">5. सकल आय (3+4+STCG+LTCG)</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldGross5">0.00</span></td>
+                                <td style="padding:1px 0;">5. Gross Total Income (3+4+STCG+LTCG)</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldGross5">0.00</span></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding:1px 0; font-weight:bold;">6. घटायें :-</td>
+                                <td colspan="2" style="padding:0.8px 0; font-weight:bold;">6. Less: Deductions under Chapter VI-A :-</td>
                             </tr>
                             <tr>
-                                <td style="padding:0.5px 0 0.5px 8px;">(a) धारा 80 (C) की छूट</td>
-                                <td style="text-align:right; padding:0.5px 0;">₹ <span id="pOldDed80CVal">0.00</span></td>
+                                <td style="padding:0.4px 0 0.4px 8px;">(a) Deduction u/s 80C</td>
+                                <td style="text-align:right; padding:0.4px 0;">₹ <span id="pOldDed80CVal">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:0.5px 0 0.5px 8px;">(b) धारा 80 (D) की छूट (Health Insurance)</td>
-                                <td style="text-align:right; padding:0.5px 0;">₹ <span id="pOldDed80DVal">0.00</span></td>
+                                <td style="padding:0.4px 0 0.4px 8px;">(b) Deduction u/s 80D (Health Insurance)</td>
+                                <td style="text-align:right; padding:0.4px 0;">₹ <span id="pOldDed80DVal">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:0.5px 0 0.5px 8px;">(c) धारा 80 (G) की छूट</td>
-                                <td style="text-align:right; padding:0.5px 0;">₹ 0.00</td>
+                                <td style="padding:0.4px 0 0.4px 8px;">(c) Deduction u/s 80G (Donations)</td>
+                                <td style="text-align:right; padding:0.4px 0;">₹ 0.00</td>
                             </tr>
                             <tr>
-                                <td style="padding:0.5px 0 0.5px 8px;">(d) धारा 80 (U) की छूट (Handicap)</td>
-                                <td style="text-align:right; padding:0.5px 0;">₹ 0.00</td>
+                                <td style="padding:0.4px 0 0.4px 8px;">(d) Deduction u/s 80U (Disability)</td>
+                                <td style="text-align:right; padding:0.4px 0;">₹ 0.00</td>
                             </tr>
                             <tr>
-                                <td style="padding:0.5px 0 0.5px 8px;">(e) धारा 80 (CCD) की छूट (NPS)</td>
-                                <td style="text-align:right; padding:0.5px 0;">₹ <span id="pOldDedCCDVal">0.00</span></td>
+                                <td style="padding:0.4px 0 0.4px 8px;">(e) Deduction u/s 80CCD(1B) (NPS)</td>
+                                <td style="text-align:right; padding:0.4px 0;">₹ <span id="pOldDedCCDVal">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:0.5px 0 0.5px 8px;">(f) अन्य कोई छूट (अगर कोई हो तो)</td>
-                                <td style="text-align:right; padding:0.5px 0;">₹ 0.00</td>
+                                <td style="padding:0.4px 0 0.4px 8px;">(f) Any Other Deductions</td>
+                                <td style="text-align:right; padding:0.4px 0;">₹ 0.00</td>
                             </tr>
                             <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold;">
-                                <td style="padding:1.5px 0;">7. कर योग्य आय (Taxable Income 5-6)</td>
-                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldNetTaxable">0.00</span></td>
+                                <td style="padding:1px 0;">7. Net Taxable Income (5-6)</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldNetTaxable">0.00</span></td>
                             </tr>
                         </table>
 
                         <!-- Tax Calculation Slabs Box -->
-                        <table style="width:100%; border-collapse:collapse; font-size:8px; margin-top:2px; border:1px solid #000;">
+                        <table style="width:100%; border-collapse:collapse; font-size:7.5px; margin-top:2px; border:1px solid #000;">
                             <tr style="font-weight:bold; border-bottom:1px solid #000; background:#f5f5f5;">
-                                <td colspan="3" style="padding:1.5px 3px;">आयकर की गणना :-</td>
+                                <td colspan="3" style="padding:1px 3px;">Computation of Income Tax :-</td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 3px; border-right:1px solid #000; width:65%;">(a) 2.50 लाख (वरिष्ठ नागरिक के लिए 3 लाख) तक</td>
-                                <td style="padding:1px 3px; border-right:1px solid #000; width:15%; text-align:center;">Nil</td>
-                                <td style="padding:1px 3px; width:20%; text-align:right;">₹ 0.00</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; width:65%;">(a) Up to ₹ 2,50,000</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; width:15%; text-align:center;">Nil</td>
+                                <td style="padding:0.8px 3px; width:20%; text-align:right;">₹ 0.00</td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 3px; border-right:1px solid #000;">(b) 2.50/3.00 से 5.00 लाख तक</td>
-                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center;">5 %</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldSlab1">0.00</span></td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000;">(b) ₹ 2,50,001 to ₹ 5,00,000 (5%)</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">5%</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldSlab1">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 3px; border-right:1px solid #000;">(c) 5.00 से 10.00 लाख तक</td>
-                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center;">20%</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldSlab2">0.00</span></td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000;">(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">20%</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldSlab2">0.00</span></td>
                             </tr>
                             <tr>
-                                <td style="padding:1px 3px; border-right:1px solid #000;">(d) 10.00 लाख से अधिक</td>
-                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center;">30%</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldSlab3">0.00</span></td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000;">(d) Above ₹ 10,00,000 (30%)</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">30%</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldSlab3">0.00</span></td>
                             </tr>
-                            <!-- STCG Tax Row -->
+                            <!-- STCG Tax Row - Normal Black Text -->
                             <tr id="pOldRowSTCGTax" style="display:none;">
-                                <td style="padding:1px 3px; border-right:1px solid #000; color:#0d47a1; font-weight:bold;">Add : STCG पर कर (20%)</td>
-                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center; color:#0d47a1; font-weight:bold;">20%</td>
-                                <td style="padding:1px 3px; text-align:right; color:#0d47a1; font-weight:bold;">₹ <span id="pOldSTCGTaxVal">0.00</span></td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; color:#000; font-weight:bold;">Add: Tax on STCG (20%)</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center; color:#000; font-weight:bold;">20%</td>
+                                <td style="padding:0.8px 3px; text-align:right; color:#000; font-weight:bold;">₹ <span id="pOldSTCGTaxVal">0.00</span></td>
                             </tr>
-                            <!-- LTCG Tax Row -->
+                            <!-- LTCG Tax Row - Normal Black Text -->
                             <tr id="pOldRowLTCGTax" style="display:none;">
-                                <td style="padding:1px 3px; border-right:1px solid #000; color:#0d47a1; font-weight:bold;">Add : LTCG पर कर (12.5%)</td>
-                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center; color:#0d47a1; font-weight:bold;">12.5%</td>
-                                <td style="padding:1px 3px; text-align:right; color:#0d47a1; font-weight:bold;">₹ <span id="pOldLTCGTaxVal">0.00</span></td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; color:#000; font-weight:bold;">Add: Tax on LTCG (12.5%)</td>
+                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center; color:#000; font-weight:bold;">12.5%</td>
+                                <td style="padding:0.8px 3px; text-align:right; color:#000; font-weight:bold;">₹ <span id="pOldLTCGTaxVal">0.00</span></td>
                             </tr>
                             <tr style="border-top:1px solid #000;">
-                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">सकल आयकर का योग</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldTotSlabTax">0.00</span></td>
+                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000;">Total Tax on Income</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldTotSlabTax">0.00</span></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000; font-size:7.5px;">Less : 87 ए के अन्तर्गत छूट 12500 रुपये की (यदि कर योग्य आय 5 लाख तक हो तो)</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldRebateVal">0.00</span></td>
+                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000; font-size:7px;">Less: Rebate u/s 87A (Up to ₹ 12,500 if income &le; 5 Lakh)</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldRebateVal">0.00</span></td>
                             </tr>
                             <tr style="border-top:1px solid #000;">
-                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">कुल योग</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldTaxAfterRebate">0.00</span></td>
+                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000;">Net Tax after Rebate</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldTaxAfterRebate">0.00</span></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">Add : शिक्षा अधिभार (4 प्रतिशत)</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldCessVal">0.00</span></td>
+                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000;">Add: Health &amp; Education Cess (4%)</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldCessVal">0.00</span></td>
                             </tr>
                             <tr style="border-top:1px solid #000; font-weight:bold;">
-                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">सम्पूर्ण आयकर की देनदारी</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldTotLiability">0.00</span></td>
+                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000;">Total Tax Payable</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldTotLiability">0.00</span></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">Less : अग्रिम आयकर कटौती (अगर कोई हो तो)</td>
-                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldAdvDeducted">0.00</span></td>
+                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000;">Less: Advance Tax Deducted</td>
+                                <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldAdvDeducted">0.00</span></td>
                             </tr>
-                            <tr style="border-top:1.5px solid #000; font-weight:bold;">
-                                <td colspan="2" style="padding:1.5px 3px; border-right:1px solid #000;">शेष आयकर की देनदारी (<span id="pOldSettleMonthName">फरवरी 2026</span> के वेतन से)</td>
-                                <td style="padding:1.5px 3px; text-align:right; font-size:9px;" id="pOldBalTaxVal">₹ 0.00</td>
+                            <tr style="border-top:1.2px solid #000; font-weight:bold;">
+                                <td colspan="2" style="padding:1.2px 3px; border-right:1px solid #000;">Balance Tax Payable (from <span id="pOldSettleMonthName">February 2026</span> Salary)</td>
+                                <td style="padding:1.2px 3px; text-align:right; font-size:8.5px;" id="pOldBalTaxVal">₹ 0.00</td>
                             </tr>
                         </table>
                     </td>
@@ -1581,7 +1610,7 @@
             </table>
 
             <!-- Signatures at bottom matching photo -->
-            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:22px; padding:0 20px; font-size:9.5px; font-weight:bold;">
+            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:10px; padding:0 20px; font-size:9px; font-weight:bold;">
                 <div>Sig. of Employee</div>
                 <div id="pOldSigEmployer">Sig. of Principal</div>
             </div>
@@ -2240,7 +2269,7 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pOldName').innerText = name ? name : "...................................................";
         document.getElementById('pOldOrg').innerText = org ? org : "...................................................";
         if (document.getElementById('pOldOrgLabel')) {
-            document.getElementById('pOldOrgLabel').innerText = (cycle === 'MIN') ? "Madarasa Name" : "Madarasa Name / Org Name";
+            document.getElementById('pOldOrgLabel').innerText = (cycle === 'MIN') ? "Madarasa / Institution Name" : "Organization / School Name";
         }
         if (document.getElementById('pOldDesig')) {
             document.getElementById('pOldDesig').innerText = district ? district : "               ";
@@ -2259,14 +2288,14 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         for (var m = 0; m < 12; m++) {
             var rowTr = document.createElement('tr');
             rowTr.innerHTML = 
-                '<td style="border:1px solid #000; padding:2px 3px; font-weight:600;">' + months[m] + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px;">' + bVals[m].toFixed(2) + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px;">' + dVals[m].toFixed(2) + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px;">' + hVals[m].toFixed(2) + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px; font-weight:bold;">' + gVals[m].toFixed(2) + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px;">' + gpfVals[m].toFixed(2) + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px;">' + npsVals[m].toFixed(2) + '</td>' +
-                '<td style="border:1px solid #000; padding:2px 3px;">' + taxVals[m].toFixed(2) + '</td>';
+                '<td style="border:1px solid #000; padding:1.5px 2px; font-weight:600;">' + months[m] + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px;">' + bVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px;">' + dVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px;">' + hVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px; font-weight:bold;">' + gVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px;">' + gpfVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px;">' + npsVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:1.5px 2px;">' + taxVals[m].toFixed(2) + '</td>';
             pOldTbody.appendChild(rowTr);
         }
 
@@ -2362,11 +2391,11 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pOldTotLiability').innerText = Math.round(totalTaxPayable).toLocaleString('en-IN') + ".00";
         document.getElementById('pOldAdvDeducted').innerText = Math.round(advTax).toLocaleString('en-IN') + ".00";
         
-        document.getElementById('pOldSettleMonthName').innerText = lastMonthNameHindi;
+        document.getElementById('pOldSettleMonthName').innerText = lastMonthName;
         if (balancePayable >= 0) {
             document.getElementById('pOldBalTaxVal').innerText = "₹ " + Math.round(balancePayable).toLocaleString('en-IN') + ".00";
         } else {
-            document.getElementById('pOldBalTaxVal').innerText = "₹ 0.00 (Refund ₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00)";
+            document.getElementById('pOldBalTaxVal').innerText = "₹ 0.00 (Refund Due: ₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00)";
         }
 
         // Signature for Old Scheme
