@@ -1309,63 +1309,53 @@
 <div id="officialPrintSheetOld" class="official-print-sheet">
     <div class="akc-border-box">
         <div class="akc-inner-box">
-            <!-- Diagonal Confidential Watermark -->
-            <div class="old-sheet-watermark">CONFIDENTIAL</div>
+            <!-- Diagonal Watermark Matching New Tax Regime -->
+            <div class="sheet-watermark">ANURAG KARUNDIA &amp; CO.</div>
 
-            <!-- Title Header -->
-            <div style="text-align:center;">
-                <h2 style="margin:0; font-size:15px; font-weight:900; letter-spacing:0.5px; font-family:'Arial Rounded MT Bold', Arial, sans-serif;">Anurag Karundia &amp; Co. <span style="font-size:12px; font-weight:bold;">(Old Scheme)</span></h2>
+            <!-- Title Header Matching New Tax Regime -->
+            <div class="sheet-header-box" style="text-align:center;">
+                <h2 style="margin:0; font-size:16px;" id="pOldSheetTitle">Anurag Karundia &amp; Co. (Old Scheme)</h2>
+                <div style="font-size:13px; font-weight:bold; margin-top:2px;">Tax Computation Sheet</div>
             </div>
 
-            <!-- Line 1: Year, Sub-box, Mobile -->
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; font-weight:bold; margin-top:2px;">
-                <div style="width:28%;">Financial Year <span id="pOldFY">2025-2026</span></div>
-                <div style="border:1.2px solid #000; padding:1px 8px; font-size:10px; font-weight:bold;">[ INCOME TAX COMPUTATION STATEMENT ]</div>
-                <div style="width:38%; text-align:right;">Mobile No. <span id="pOldMob" style="text-decoration:underline;">&nbsp;</span></div>
-            </div>
-
-            <!-- Line 2: 10 Contiguous PAN Boxes + Date of Birth -->
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; margin-top:2px;">
-                <div style="display:flex; align-items:center;">
-                    <span style="font-weight:bold; margin-right:4px;">PAN</span>
-                    <span style="display:inline-flex; border:1px solid #000; vertical-align:middle;">
-                        <span class="old-pan-box" id="pOldPan0"></span>
-                        <span class="old-pan-box" id="pOldPan1"></span>
-                        <span class="old-pan-box" id="pOldPan2"></span>
-                        <span class="old-pan-box" id="pOldPan3"></span>
-                        <span class="old-pan-box" id="pOldPan4"></span>
-                        <span class="old-pan-box" id="pOldPan5"></span>
-                        <span class="old-pan-box" id="pOldPan6"></span>
-                        <span class="old-pan-box" id="pOldPan7"></span>
-                        <span class="old-pan-box" id="pOldPan8"></span>
-                        <span class="old-pan-box" id="pOldPan9" style="border-right:none;"></span>
-                    </span>
-                </div>
-                <div style="text-align:right; font-size:9.5px;">
-                    <span style="font-weight:bold;">Date of Birth</span> <span id="pOldDob" style="text-decoration:underline; font-weight:bold;">&nbsp;</span>
-                </div>
-            </div>
-
-            <!-- Line 3: Name, Sex, Post/Designation -->
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; margin-top:2px;">
-                <div style="flex:1;">
-                    <span style="font-weight:bold;">NAME</span> <span id="pOldName" style="text-decoration:underline; font-weight:bold; text-transform:uppercase; margin-left:4px;">&nbsp;</span>
-                </div>
-                <div style="text-align:right; font-size:9.5px;">
-                    <span style="font-weight:bold;">Sex</span> M [ &nbsp; ] F [ &nbsp; ] &nbsp;&nbsp; 
-                    <span style="font-weight:bold;">Designation</span> [ <span id="pOldDesig" style="display:inline-block; min-width:40px; text-align:center;">&nbsp;</span> ]
-                </div>
-            </div>
-
-            <!-- Line 4: Father's Name -->
-            <div style="font-size:9.5px; margin-top:2px;">
-                <span style="font-weight:bold;">FATHER'S NAME</span> ........................................................................................................................
-            </div>
-
-            <!-- Line 5: Madarasa / Org Name -->
-            <div style="font-size:9.5px; margin-top:2px;">
-                <span style="font-weight:bold;" id="pOldOrgLabel">Organization / School Name</span> <span id="pOldOrg" style="text-decoration:underline; font-weight:bold; margin-left:4px;">&nbsp;</span>
-            </div>
+            <!-- Top Header Metadata Grid (Structured Clean Table / Bracket) -->
+            <table class="sheet-table meta-grid" style="margin-top:4px;">
+                <tr>
+                    <td class="meta-label">Financial Year</td>
+                    <td class="meta-val fw-bold" id="pOldFYCell">2025-26 (AY 2026-27)</td>
+                    <td class="meta-label">Mobile No.</td>
+                    <td class="meta-val fw-bold" id="pOldMobCell">-</td>
+                </tr>
+                <tr>
+                    <td class="meta-label">Taxpayer Name</td>
+                    <td class="meta-val fw-bold" id="pOldNameCell">-</td>
+                    <td class="meta-label">Date of Birth</td>
+                    <td class="meta-val fw-bold" id="pOldDobCell">-</td>
+                </tr>
+                <tr>
+                    <td class="meta-label">PAN Number</td>
+                    <td class="meta-val fw-bold" id="pOldPanCell">
+                        <span style="display:inline-flex; border:1px solid #000; vertical-align:middle;">
+                            <span class="old-pan-box" id="pOldPan0"></span>
+                            <span class="old-pan-box" id="pOldPan1"></span>
+                            <span class="old-pan-box" id="pOldPan2"></span>
+                            <span class="old-pan-box" id="pOldPan3"></span>
+                            <span class="old-pan-box" id="pOldPan4"></span>
+                            <span class="old-pan-box" id="pOldPan5"></span>
+                            <span class="old-pan-box" id="pOldPan6"></span>
+                            <span class="old-pan-box" id="pOldPan7"></span>
+                            <span class="old-pan-box" id="pOldPan8"></span>
+                            <span class="old-pan-box" id="pOldPan9" style="border-right:none;"></span>
+                        </span>
+                    </td>
+                    <td class="meta-label">District Name</td>
+                    <td class="meta-val fw-bold" id="pOldDistCell">-</td>
+                </tr>
+                <tr>
+                    <td class="meta-label">Organization Name</td>
+                    <td colspan="3" class="meta-val fw-bold text-left" id="pOldOrgCell">&nbsp;</td>
+                </tr>
+            </table>
 
             <!-- 8-Column Monthly Table -->
             <table class="old-monthly-table" style="width:100%; border-collapse:collapse; font-size:8px; margin-top:3px; text-align:center;">
@@ -1478,7 +1468,7 @@
                             </tr>
                             <tr>
                                 <td style="padding:0.8px 0; padding-left:8px;"><u>Less</u>: Standard Deduction (Sec 16(ia))</td>
-                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldNetSalSD">0.00</span></td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldSDVal">50,000.00</span></td>
                             </tr>
                             <tr>
                                 <td style="padding:0.8px 0;">2. Less: Interest on Housing Loan (Sec 24b)</td>
@@ -2262,18 +2252,15 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         if (sheetNew) sheetNew.classList.remove('active-print');
         if (sheetOld) sheetOld.classList.add('active-print');
 
-        // Populate Old Scheme Metadata
-        document.getElementById('pOldFY').innerText = startYear + "-" + nextYear;
-        document.getElementById('pOldMob').innerText = mob ? mob : "....................";
-        document.getElementById('pOldDob').innerText = dob ? dob : "....................";
-        document.getElementById('pOldName').innerText = name ? name : "...................................................";
-        document.getElementById('pOldOrg').innerText = org ? org : "...................................................";
-        if (document.getElementById('pOldOrgLabel')) {
-            document.getElementById('pOldOrgLabel').innerText = (cycle === 'MIN') ? "Madarasa / Institution Name" : "Organization / School Name";
-        }
-        if (document.getElementById('pOldDesig')) {
-            document.getElementById('pOldDesig').innerText = district ? district : "               ";
-        }
+        // Populate Old Scheme Metadata (Clean Grid Bracket Matching New Scheme)
+        var startYr = parseInt(fy.split('-')[0]);
+        var nextYr = startYr + 1;
+        document.getElementById('pOldFYCell').innerText = fy + " (AY " + nextYr + "-" + String(nextYr + 1).slice(-2) + ")";
+        document.getElementById('pOldMobCell').innerText = mob || "-";
+        document.getElementById('pOldNameCell').innerText = name || "-";
+        document.getElementById('pOldDobCell').innerText = dob || "-";
+        document.getElementById('pOldDistCell').innerText = district || "-";
+        document.getElementById('pOldOrgCell').innerText = org || "-";
 
         // 10 Contiguous PAN Boxes Character-by-Character
         var cleanPan = (pan || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
@@ -2327,7 +2314,7 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         // Right Column: Income & Tax Computation
         var netSalOld = Math.max(0, sal - 50000);
         document.getElementById('pOldGrossSalSub').innerText = Math.round(sal).toLocaleString('en-IN') + ".00";
-        document.getElementById('pOldNetSalSD').innerText = Math.round(netSalOld).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldSDVal').innerText = Math.round(sd).toLocaleString('en-IN') + ".00";
         document.getElementById('pOldRemSal').innerText = Math.round(netSalOld).toLocaleString('en-IN') + ".00";
         document.getElementById('pOldBus').innerText = Math.round(bus).toLocaleString('en-IN') + ".00";
 
