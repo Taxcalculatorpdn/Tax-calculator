@@ -1058,9 +1058,14 @@
             <input type="number" id="vBus" value="0" onclick="this.select()">
         </div>
 
-        <!-- OLD REGIME DEDUCTIONS (CHAPTER VI-A) -->
+        <!-- OLD REGIME DEDUCTIONS (CHAPTER VI-A & SEC 24B) -->
         <div id="oldDeductionsSection" style="display:none;">
-            <div class="section-title">Old Regime Deductions (Chapter VI-A)</div>
+            <div class="section-title">Old Regime Deductions (Sec 24b &amp; Chapter VI-A)</div>
+            <div class="input-group">
+                <label>Interest on Housing Loan u/s 24(b) (Max ₹2,00,000)</label>
+                <input type="number" id="vSec24b" value="0" onclick="this.select()">
+                <div class="info-pill">✓ Self-occupied home loan interest deduction up to ₹2 Lakh</div>
+            </div>
             <div class="input-group">
                 <label>Deductions u/s 80C (PPF, LIC, ELSS, EPF, GPF - Max ₹1.5L)</label>
                 <input type="number" id="v80C" value="0" onclick="this.select()">
@@ -1104,6 +1109,7 @@
                 <table class="comp-table">
                     <tr><td>Gross Salary Income</td><td id="rGrossSal" align="right" style="font-weight:600;">0</td></tr>
                     <tr><td>Less: Standard Deduction</td><td id="rSD" align="right" style="color:red;">0</td></tr>
+                    <tr id="rowSec24b" style="display:none;"><td>Less: Interest on Housing Loan (Sec 24b)</td><td id="rSec24b" align="right" style="color:red;">0</td></tr>
                     <tr id="rowBus" style="display:none;"><td>Add: Business / Professional Income</td><td id="rBus" align="right" style="color:#0d47a1;">0</td></tr>
                     <tr id="rowSTCG" style="display:none;"><td>Add: Short Term Capital Gain (STCG)</td><td id="rSTCG" align="right" style="color:#0d47a1;">0</td></tr>
                     <tr id="rowLTCG" style="display:none;"><td>Add: Long Term Capital Gain (LTCG)</td><td id="rLTCG" align="right" style="color:#0d47a1;">0</td></tr>
@@ -1297,9 +1303,15 @@
                 </tr>
             </table>
 
-            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:14px; padding:0 20px; font-size:10px; font-weight:bold;">
-                <div>Sig. of Employee</div>
-                <div id="pSigEmployer">Sig. of Employer</div>
+            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:16px; padding:0 25px; font-size:9.5px; font-weight:bold;">
+                <div style="text-align:center;">
+                    <div style="width:140px; border-bottom:1px dashed #000; margin-bottom:5px; height:24px;"></div>
+                    <div>Sig. of Employee</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="width:140px; border-bottom:1px dashed #000; margin-bottom:5px; height:24px;"></div>
+                    <div id="pSigEmployer">Sig. of Employer</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1334,20 +1346,7 @@
                 </tr>
                 <tr>
                     <td class="meta-label">PAN Number</td>
-                    <td class="meta-val fw-bold" id="pOldPanCell">
-                        <span style="display:inline-flex; border:1px solid #000; vertical-align:middle;">
-                            <span class="old-pan-box" id="pOldPan0"></span>
-                            <span class="old-pan-box" id="pOldPan1"></span>
-                            <span class="old-pan-box" id="pOldPan2"></span>
-                            <span class="old-pan-box" id="pOldPan3"></span>
-                            <span class="old-pan-box" id="pOldPan4"></span>
-                            <span class="old-pan-box" id="pOldPan5"></span>
-                            <span class="old-pan-box" id="pOldPan6"></span>
-                            <span class="old-pan-box" id="pOldPan7"></span>
-                            <span class="old-pan-box" id="pOldPan8"></span>
-                            <span class="old-pan-box" id="pOldPan9" style="border-right:none;"></span>
-                        </span>
-                    </td>
+                    <td class="meta-val fw-bold" id="pOldPanCell">-</td>
                     <td class="meta-label">District Name</td>
                     <td class="meta-val fw-bold" id="pOldDistCell">-</td>
                 </tr>
@@ -1472,7 +1471,7 @@
                             </tr>
                             <tr>
                                 <td style="padding:0.8px 0;">2. Less: Interest on Housing Loan (Sec 24b)</td>
-                                <td style="text-align:right; padding:0.8px 0;">₹ 0.00</td>
+                                <td style="text-align:right; padding:0.8px 0;">₹ <span id="pOldSec24bVal">0.00</span></td>
                             </tr>
                             <tr style="font-weight:bold;">
                                 <td style="padding:0.8px 0;">3. Net Salary Income (1-2)</td>
@@ -1599,10 +1598,16 @@
                 </tr>
             </table>
 
-            <!-- Signatures at bottom matching photo -->
-            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:10px; padding:0 20px; font-size:9px; font-weight:bold;">
-                <div>Sig. of Employee</div>
-                <div id="pOldSigEmployer">Sig. of Principal</div>
+            <!-- Signatures with clean signature space above labels -->
+            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:16px; padding:0 25px; font-size:9.5px; font-weight:bold;">
+                <div style="text-align:center;">
+                    <div style="width:140px; border-bottom:1px dashed #000; margin-bottom:5px; height:24px;"></div>
+                    <div>Sig. of Employee</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="width:140px; border-bottom:1px dashed #000; margin-bottom:5px; height:24px;"></div>
+                    <div id="pOldSigEmployer">Sig. of Employer</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1982,6 +1987,7 @@ function resetForm() {
     if (document.getElementById('uDistrict')) document.getElementById('uDistrict').value = '';
     if (document.getElementById('uOrg')) document.getElementById('uOrg').value = '';
     if (document.getElementById('vSal')) document.getElementById('vSal').value = '0';
+    if (document.getElementById('vSec24b')) document.getElementById('vSec24b').value = '0';
     if (document.getElementById('vBus')) document.getElementById('vBus').value = '0';
     if (document.getElementById('vSTCG')) document.getElementById('vSTCG').value = '0';
     if (document.getElementById('vLTCG')) document.getElementById('vLTCG').value = '0';
@@ -2050,6 +2056,7 @@ function runCalculation() {
     gtag('event', 'tax_calculated', {'financial_year': fy, 'regime': regime});
 
     var sal = parseFloat(document.getElementById('vSal').value) || 0;
+    var sec24b = (regime === 'OLD') ? Math.min(200000, parseFloat(document.getElementById('vSec24b') ? document.getElementById('vSec24b').value : 0) || 0) : 0;
     var bus = parseFloat(document.getElementById('vBus').value) || 0;
     var st = parseFloat(document.getElementById('vSTCG').value) || 0;
     var lt = parseFloat(document.getElementById('vLTCG').value) || 0;
@@ -2103,6 +2110,7 @@ function runCalculation() {
 
         document.getElementById('row80C').style.display = 'none';
         document.getElementById('rowOtherDed').style.display = 'none';
+        if (document.getElementById('rowSec24b')) document.getElementById('rowSec24b').style.display = 'none';
         document.getElementById('rowMarginal').style.display = 'table-row';
 
     } else {
@@ -2114,7 +2122,7 @@ function runCalculation() {
         ded80C = Math.min(150000, input80C);
         dedOther = parseFloat(document.getElementById('vOtherDed').value) || 0;
 
-        var totalDeductions = sd + ded80C + dedOther;
+        var totalDeductions = sd + sec24b + ded80C + dedOther;
         var normalGross = sal + bus;
         normalIncome = Math.max(0, normalGross - totalDeductions);
 
@@ -2141,6 +2149,10 @@ function runCalculation() {
             { label: "(d) Above ₹ 10,00,000", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
         ];
 
+        if (document.getElementById('rowSec24b')) {
+            document.getElementById('rowSec24b').style.display = sec24b > 0 ? 'table-row' : 'none';
+            document.getElementById('rSec24b').innerText = "-" + Math.round(sec24b).toLocaleString('en-IN');
+        }
         document.getElementById('row80C').style.display = ded80C > 0 ? 'table-row' : 'none';
         document.getElementById('r80C').innerText = "-" + Math.round(ded80C).toLocaleString('en-IN');
         document.getElementById('rowOtherDed').style.display = dedOther > 0 ? 'table-row' : 'none';
@@ -2204,11 +2216,11 @@ function runCalculation() {
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
 
     // Populate Official Printable Sheet (Matching Photo with Full Slabs)
-    populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, bus, st, lt, ded80C, dedOther, netTaxableTotal, slabTax, stcgTax, ltcgTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
+    populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, bus, st, lt, ded80C, dedOther, sec24b, netTaxableTotal, slabTax, stcgTax, ltcgTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
     return true;
 }
 
-function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, bus, st, lt, ded80C, dedOther, netTaxableTotal, slabTax, stcgTax, ltcgTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
+function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, bus, st, lt, ded80C, dedOther, sec24b, netTaxableTotal, slabTax, stcgTax, ltcgTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
     var sheetNew = document.getElementById('officialPrintSheetNew');
     var sheetOld = document.getElementById('officialPrintSheetOld');
 
@@ -2262,11 +2274,9 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pOldDistCell').innerText = district || "-";
         document.getElementById('pOldOrgCell').innerText = org || "-";
 
-        // 10 Contiguous PAN Boxes Character-by-Character
-        var cleanPan = (pan || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-        for (var p = 0; p < 10; p++) {
-            var elBox = document.getElementById('pOldPan' + p);
-            if (elBox) elBox.innerText = cleanPan[p] || '';
+        // Metadata: PAN Cell
+        if (document.getElementById('pOldPanCell')) {
+            document.getElementById('pOldPanCell').innerText = pan || "-";
         }
 
         // Populate 12 Monthly Rows in Old Sheet
@@ -2312,9 +2322,13 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pOldGrandTotal').innerText = total80CShown.toFixed(2);
 
         // Right Column: Income & Tax Computation
-        var netSalOld = Math.max(0, sal - 50000);
+        var salAfterSD = Math.max(0, sal - sd);
+        var netSalOld = Math.max(0, salAfterSD - sec24b);
         document.getElementById('pOldGrossSalSub').innerText = Math.round(sal).toLocaleString('en-IN') + ".00";
         document.getElementById('pOldSDVal').innerText = Math.round(sd).toLocaleString('en-IN') + ".00";
+        if (document.getElementById('pOldSec24bVal')) {
+            document.getElementById('pOldSec24bVal').innerText = Math.round(sec24b).toLocaleString('en-IN') + ".00";
+        }
         document.getElementById('pOldRemSal').innerText = Math.round(netSalOld).toLocaleString('en-IN') + ".00";
         document.getElementById('pOldBus').innerText = Math.round(bus).toLocaleString('en-IN') + ".00";
 
@@ -2343,7 +2357,7 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pOldNetTaxable').innerText = Math.round(netTaxableTotal).toLocaleString('en-IN') + ".00";
 
         // Old Regime Slabs
-        var normalInc = Math.max(0, sal - 50000 + bus - ded80C - dedOther);
+        var normalInc = Math.max(0, netSalOld + bus - ded80C - dedOther);
         var slab1Amt = Math.max(0, Math.min(normalInc - 250000, 250000));
         var slab1TaxVal = slab1Amt * 0.05;
         var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
@@ -2583,6 +2597,7 @@ function saveCalculationLocally() {
     }
 
     var bus = parseFloat(document.getElementById('vBus') ? document.getElementById('vBus').value : 0) || 0;
+    var sec24b = parseFloat(document.getElementById('vSec24b') ? document.getElementById('vSec24b').value : 0) || 0;
     var ded80C = parseFloat(document.getElementById('v80C') ? document.getElementById('v80C').value : 0) || 0;
     var dedOther = parseFloat(document.getElementById('vOtherDed') ? document.getElementById('vOtherDed').value : 0) || 0;
     var st = parseFloat(document.getElementById('vSTCG') ? document.getElementById('vSTCG').value : 0) || 0;
@@ -2616,6 +2631,7 @@ function saveCalculationLocally() {
         chkMonthly: chkMonthly,
         months: monthsData,
         bus: bus,
+        sec24b: sec24b,
         ded80C: ded80C,
         dedOther: dedOther,
         stcg: st,
@@ -2747,6 +2763,7 @@ function checkAndRestoreSavedRecord() {
 
     // 4. Other Incomes & Deductions
     if (document.getElementById('vBus')) document.getElementById('vBus').value = record.bus || 0;
+    if (document.getElementById('vSec24b')) document.getElementById('vSec24b').value = record.sec24b || 0;
     if (document.getElementById('v80C')) document.getElementById('v80C').value = record.ded80C || 0;
     if (document.getElementById('vOtherDed')) document.getElementById('vOtherDed').value = record.dedOther || 0;
     if (document.getElementById('vSTCG')) document.getElementById('vSTCG').value = record.stcg || 0;
@@ -2754,7 +2771,7 @@ function checkAndRestoreSavedRecord() {
     if (document.getElementById('vAdvTax')) document.getElementById('vAdvTax').value = record.advTax || 0;
 
     // 5. Calculate and scroll
-    calculateTax();
+    runCalculation();
     localStorage.removeItem('akc_restore_id');
     updateSavedCount();
 
