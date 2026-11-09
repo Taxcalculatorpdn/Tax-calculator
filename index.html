@@ -679,32 +679,33 @@
         }
 
         /* ======================================================== */
-        /* EXACT OFFICIAL ANURAG KARUNDIA & CO. STATEMENT FOR PDF */
+        /* EXACT OFFICIAL STATEMENTS FOR PDF PRINT */
         /* ======================================================== */
-        #officialPrintSheet {
-            display: none;
+        .official-print-sheet {
+            display: none !important;
         }
 
         @media print {
             body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
-            .container, .overlay, #blueAlert { display: none !important; }
-            #officialPrintSheet {
+            .container, .overlay, #blueAlert, .action-btns, .save-modal-overlay { display: none !important; }
+            .official-print-sheet.active-print {
                 display: block !important;
                 width: 100% !important;
-                padding: 10px !important;
+                padding: 6px 8px !important;
                 font-family: 'Times New Roman', serif !important;
                 box-sizing: border-box;
                 position: relative !important;
                 overflow: hidden !important;
+                background: #fff !important;
             }
             .akc-border-box {
                 border: 2px solid #000;
-                padding: 4px;
+                padding: 3px;
                 position: relative;
             }
             .akc-inner-box {
                 border: 1px solid #000;
-                padding: 6px;
+                padding: 5px;
                 position: relative;
             }
             .sheet-watermark {
@@ -724,14 +725,31 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            .sheet-table, .sheet-header-box, .sig-box {
+            .old-sheet-watermark {
+                position: absolute;
+                top: 38%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-30deg);
+                font-size: 56px;
+                font-weight: 900;
+                color: rgba(30, 41, 59, 0.12) !important;
+                white-space: nowrap;
+                pointer-events: none;
+                z-index: 5 !important;
+                text-transform: uppercase;
+                letter-spacing: 8px;
+                font-family: 'Arial Black', Impact, sans-serif !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .sheet-table, .sheet-header-box, .sig-box, .old-monthly-table {
                 position: relative;
-                z-index: 1;
+                z-index: 2;
             }
             table.sheet-table {
                 width: 100%;
                 border-collapse: collapse;
-                font-size: 10px;
+                font-size: 9.5px;
                 margin-top: 4px;
                 background: transparent !important;
             }
@@ -741,10 +759,10 @@
                 text-align: center;
                 background: transparent !important;
             }
-            #officialPrintSheet table,
-            #officialPrintSheet tr,
-            #officialPrintSheet th,
-            #officialPrintSheet td {
+            .official-print-sheet table,
+            .official-print-sheet tr,
+            .official-print-sheet th,
+            .official-print-sheet td {
                 background-color: transparent !important;
                 background: transparent !important;
             }
@@ -752,9 +770,20 @@
             .text-right { text-align: right !important; }
             .text-center { text-align: center !important; }
             .fw-bold { font-weight: bold; }
-            table.meta-grid td { padding: 4px 6px; font-size: 10px; }
+            table.meta-grid td { padding: 3px 5px; font-size: 9.5px; }
             .meta-label { width: 20%; font-weight: bold; text-align: left !important; }
             .meta-val { width: 30%; text-align: left !important; }
+            .old-pan-box {
+                display: inline-block;
+                width: 13px;
+                height: 15px;
+                line-height: 15px;
+                border-right: 1px solid #000;
+                text-align: center;
+                font-size: 10.5px;
+                font-weight: bold;
+                font-family: Arial, sans-serif;
+            }
         }
     </style>
 </head>
@@ -1082,12 +1111,13 @@
 </div>
 
 <!-- ======================================================== -->
-<!-- PRINTABLE OFFICIAL ANURAG KARUNDIA & CO. SHEET -->
+<!-- PRINTABLE OFFICIAL ANURAG KARUNDIA & CO. SHEETS -->
 <!-- ======================================================== -->
-<div id="officialPrintSheet">
+
+<!-- 1. NEW TAX REGIME PRINT SHEET (7-SLAB MODERN FORMAT) -->
+<div id="officialPrintSheetNew" class="official-print-sheet active-print">
     <div class="akc-border-box">
         <div class="akc-inner-box">
-            <!-- Single Bold High-Visibility Watermark Across Page -->
             <div class="sheet-watermark">ANURAG KARUNDIA & CO.</div>
 
             <div class="sheet-header-box" style="text-align:center;">
@@ -1095,7 +1125,7 @@
                 <div style="font-size:13px; font-weight:bold; margin-top:2px;" id="pSheetSub">Tax Computation Sheet</div>
             </div>
 
-            <!-- Top Header Metadata Grid (Perfect 4-Column Balanced Grid) -->
+            <!-- Top Header Metadata Grid -->
             <table class="sheet-table meta-grid" style="margin-top:6px;">
                 <tr>
                     <td class="meta-label">Financial Year</td>
@@ -1121,7 +1151,7 @@
                 </tr>
             </table>
 
-            <!-- Monthly Salary Table (Matching Official Sheet Photo) -->
+            <!-- Monthly Salary Table -->
             <table class="sheet-table" style="margin-top:6px;">
                 <thead>
                     <tr>
@@ -1152,7 +1182,7 @@
                 </tfoot>
             </table>
 
-            <!-- Lower Tax Computation Section (WITH EVERY SLAB DETAILED AS IN PHOTO) -->
+            <!-- Lower Tax Computation Section -->
             <table class="sheet-table" style="margin-top:6px;">
                 <tr>
                     <td colspan="3" class="text-left fw-bold">1- Gross Salary Income</td>
@@ -1191,7 +1221,6 @@
                     <td class="text-right" id="pCompNet">₹ 0.00</td>
                 </tr>
                 
-                <!-- Detailed Slabs Table Heading (Matching Photo) -->
                 <tr class="fw-bold">
                     <td class="text-left">Tax Computed on Slabs</td>
                     <td class="text-right" style="width:25%;">Taxable Amount</td>
@@ -1199,7 +1228,6 @@
                     <td class="text-right" style="width:25%;">Tax (₹)</td>
                 </tr>
                 
-                <!-- Dynamic Slab Breakdown Rows -->
                 <tbody id="pSlabDetailRows"></tbody>
 
                 <tr>
@@ -1240,10 +1268,322 @@
                 </tr>
             </table>
 
-            <!-- Signatures at bottom (Matching Photo) -->
             <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:35px; padding:0 20px; font-size:11px; font-weight:bold;">
                 <div>Sig. of Employee</div>
                 <div id="pSigEmployer">Sig. of Employer</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2. OLD TAX REGIME PRINT SHEET (EXACT OFFICIAL PHYSICAL PAPER FORMAT WITH STCG & LTCG) -->
+<div id="officialPrintSheetOld" class="official-print-sheet">
+    <div class="akc-border-box">
+        <div class="akc-inner-box">
+            <!-- Diagonal Confidential Watermark Matching Photo -->
+            <div class="old-sheet-watermark">CONFIDENTIAL</div>
+
+            <!-- Title Header -->
+            <div style="text-align:center;">
+                <h2 style="margin:0; font-size:16px; font-weight:900; letter-spacing:0.5px; font-family:'Arial Rounded MT Bold', Arial, sans-serif;">Anurag Karundia &amp; Co. <span style="font-size:13px; font-weight:bold;">(Old Scheme)</span></h2>
+            </div>
+
+            <!-- Line 1: Year, Sub-box, Mobile -->
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:bold; margin-top:3px;">
+                <div style="width:28%;">वर्ष <span id="pOldFY">2025-2026</span></div>
+                <div style="border:1.5px solid #000; padding:1.5px 8px; font-size:11px; font-weight:bold;">[ आयकर गणना प्रपत्र ]</div>
+                <div style="width:38%; text-align:right;">मोबाईल नं० <span id="pOldMob" style="text-decoration:underline;">&nbsp;</span></div>
+            </div>
+
+            <!-- Line 2: 10 Contiguous PAN Boxes + Date of Birth -->
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; margin-top:3px;">
+                <div style="display:flex; align-items:center;">
+                    <span style="font-weight:bold; margin-right:4px;">PAN</span>
+                    <span style="display:inline-flex; border:1px solid #000; vertical-align:middle;">
+                        <span class="old-pan-box" id="pOldPan0"></span>
+                        <span class="old-pan-box" id="pOldPan1"></span>
+                        <span class="old-pan-box" id="pOldPan2"></span>
+                        <span class="old-pan-box" id="pOldPan3"></span>
+                        <span class="old-pan-box" id="pOldPan4"></span>
+                        <span class="old-pan-box" id="pOldPan5"></span>
+                        <span class="old-pan-box" id="pOldPan6"></span>
+                        <span class="old-pan-box" id="pOldPan7"></span>
+                        <span class="old-pan-box" id="pOldPan8"></span>
+                        <span class="old-pan-box" id="pOldPan9" style="border-right:none;"></span>
+                    </span>
+                </div>
+                <div style="text-align:right; font-size:10px;">
+                    <span style="font-weight:bold;">Date of Birth</span> <span id="pOldDob" style="text-decoration:underline; font-weight:bold;">&nbsp;</span>
+                </div>
+            </div>
+
+            <!-- Line 3: Name, Sex, Post/Designation -->
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; margin-top:3px;">
+                <div style="flex:1;">
+                    <span style="font-weight:bold;">NAME</span> <span id="pOldName" style="text-decoration:underline; font-weight:bold; text-transform:uppercase; margin-left:4px;">&nbsp;</span>
+                </div>
+                <div style="text-align:right; font-size:10px;">
+                    <span style="font-weight:bold;">Sex</span> M [ &nbsp; ] F [ &nbsp; ] &nbsp;&nbsp; 
+                    <span style="font-weight:bold;">पद</span> [ <span id="pOldDesig" style="display:inline-block; min-width:40px; text-align:center;">&nbsp;</span> ]
+                </div>
+            </div>
+
+            <!-- Line 4: Father's Name -->
+            <div style="font-size:10px; margin-top:2px;">
+                <span style="font-weight:bold;">FATHER'S NAME</span> ........................................................................................................................
+            </div>
+
+            <!-- Line 5: Madarasa / Org Name -->
+            <div style="font-size:10px; margin-top:2px;">
+                <span style="font-weight:bold;" id="pOldOrgLabel">Madarasa Name</span> <span id="pOldOrg" style="text-decoration:underline; font-weight:bold; margin-left:4px;">&nbsp;</span>
+            </div>
+
+            <!-- 8-Column Monthly Table Matching Photo -->
+            <table class="old-monthly-table" style="width:100%; border-collapse:collapse; font-size:9px; margin-top:4px; text-align:center;">
+                <thead>
+                    <tr style="font-weight:bold; background:#fafafa;">
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:15%;">Months</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">Pay</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">D.A.</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">H.R.A.</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:14%;">Gross Salary</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">GPF</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:11%;">NPS</th>
+                        <th style="border:1px solid #000; padding:2.5px 2px; width:16%;">Advance Income<br>Tax Deduction</th>
+                    </tr>
+                </thead>
+                <tbody id="pOldMonthRows">
+                    <!-- 12 monthly rows populated dynamically -->
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #000; padding:2px; text-align:left; font-weight:bold;">Arrears</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px; font-weight:bold;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #000; padding:2px; text-align:left; font-weight:bold;">Others</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px; font-weight:bold;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:2px;">0.00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="font-weight:bold; background:#fafafa;">
+                        <td style="border:1px solid #000; padding:2.5px 2px; text-align:left;">TOTAL</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotBasic">0.00</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotDA">0.00</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotHRA">0.00</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotGross">0.00</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotGPF">0.00</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotNPS">0.00</td>
+                        <td style="border:1px solid #000; padding:2.5px 2px;" id="pOldTotAdvTax">0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Two-Column Lower Split Section (Deductions vs Tax Computation) -->
+            <table style="width:100%; border-collapse:collapse; margin-top:4px; font-size:8.5px; vertical-align:top;">
+                <tr>
+                    <!-- Left Column: Chapter VIA Deductions -->
+                    <td style="width:38%; vertical-align:top; border:1px solid #000; padding:3px 4px;">
+                        <div style="font-weight:bold; font-size:9.5px; border-bottom:1px solid #000; padding-bottom:2px; margin-bottom:3px; text-align:center;">
+                            Deduction under Chapter VIA<br>
+                            <span id="pOldChapDates" style="font-weight:normal; font-size:8px;">(01.04.2025 to 31.03.2026)</span>
+                        </div>
+                        <table style="width:100%; border-collapse:collapse; font-size:8.5px;">
+                            <tr>
+                                <td style="padding:1.5px 0;">1. G.P.F.</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldGPF">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">2. N.P.S. (80CCD(1))</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldNPS">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">3. L.I.C.</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldLIC">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">4. N.S.C.</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldNSC">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">5. Tution Fee</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldTution">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">6. P.P.F.</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldPPF">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">7. H. Loan Principal</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldHLoan">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1.5px 0;">8. Sukanya S.Y.</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldSukanya">0.00</span></td>
+                            </tr>
+                            <tr style="border-top:1px dashed #000; font-weight:bold;">
+                                <td style="padding:2.5px 0;">Grand Total</td>
+                                <td style="text-align:right; padding:2.5px 0;">₹ <span id="pOldGrandTotal">0.00</span></td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <!-- Right Column: Income & Tax Computation -->
+                    <td style="width:62%; vertical-align:top; border:1px solid #000; padding:3px 4px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:8.5px;">
+                            <tr>
+                                <td style="padding:1px 0;">1. कुल आय (वेतन से) ₹ <span id="pOldGrossSalSub">0.00</span></td>
+                                <td style="text-align:right; padding:1px 0;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 0; padding-left:10px;"><u>Less</u> : Standard Deduction ₹ 50,000.00</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldNetSalSD">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 0;">2. ऋण ब्याज की छूट ₹ 0.00</td>
+                                <td style="text-align:right; padding:1px 0;">₹ 0.00</td>
+                            </tr>
+                            <tr style="font-weight:bold;">
+                                <td style="padding:1px 0;">3. शेष आय (1-2)</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldRemSal">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 0;">4. अन्य स्रोतों से आय</td>
+                                <td style="text-align:right; padding:1px 0;">₹ <span id="pOldBus">0.00</span></td>
+                            </tr>
+                            <!-- Short Term Capital Gain Added as requested -->
+                            <tr id="pOldRowSTCG" style="display:none;">
+                                <td style="padding:1px 0; color:#0d47a1; font-weight:bold;">Add : अल्पकालिक पूंजीगत लाभ (STCG @ 20%)</td>
+                                <td style="text-align:right; padding:1px 0; color:#0d47a1; font-weight:bold;">₹ <span id="pOldSTCG">0.00</span></td>
+                            </tr>
+                            <!-- Long Term Capital Gain Added as requested -->
+                            <tr id="pOldRowLTCG" style="display:none;">
+                                <td style="padding:1px 0; color:#0d47a1; font-weight:bold;">Add : दीर्घकालिक पूंजीगत लाभ (LTCG @ 12.5%)</td>
+                                <td style="text-align:right; padding:1px 0; color:#0d47a1; font-weight:bold;">₹ <span id="pOldLTCG">0.00</span></td>
+                            </tr>
+                            <tr style="font-weight:bold;">
+                                <td style="padding:1.5px 0;">5. सकल आय (3+4+STCG+LTCG)</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldGross5">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:1px 0; font-weight:bold;">6. घटायें :-</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5px 0 0.5px 8px;">(a) धारा 80 (C) की छूट</td>
+                                <td style="text-align:right; padding:0.5px 0;">₹ <span id="pOldDed80CVal">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5px 0 0.5px 8px;">(b) धारा 80 (D) की छूट (Health Insurance)</td>
+                                <td style="text-align:right; padding:0.5px 0;">₹ <span id="pOldDed80DVal">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5px 0 0.5px 8px;">(c) धारा 80 (G) की छूट</td>
+                                <td style="text-align:right; padding:0.5px 0;">₹ 0.00</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5px 0 0.5px 8px;">(d) धारा 80 (U) की छूट (Handicap)</td>
+                                <td style="text-align:right; padding:0.5px 0;">₹ 0.00</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5px 0 0.5px 8px;">(e) धारा 80 (CCD) की छूट (NPS)</td>
+                                <td style="text-align:right; padding:0.5px 0;">₹ <span id="pOldDedCCDVal">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5px 0 0.5px 8px;">(f) अन्य कोई छूट (अगर कोई हो तो)</td>
+                                <td style="text-align:right; padding:0.5px 0;">₹ 0.00</td>
+                            </tr>
+                            <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold;">
+                                <td style="padding:1.5px 0;">7. कर योग्य आय (Taxable Income 5-6)</td>
+                                <td style="text-align:right; padding:1.5px 0;">₹ <span id="pOldNetTaxable">0.00</span></td>
+                            </tr>
+                        </table>
+
+                        <!-- Tax Calculation Slabs Box -->
+                        <table style="width:100%; border-collapse:collapse; font-size:8px; margin-top:2px; border:1px solid #000;">
+                            <tr style="font-weight:bold; border-bottom:1px solid #000; background:#f5f5f5;">
+                                <td colspan="3" style="padding:1.5px 3px;">आयकर की गणना :-</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 3px; border-right:1px solid #000; width:65%;">(a) 2.50 लाख (वरिष्ठ नागरिक के लिए 3 लाख) तक</td>
+                                <td style="padding:1px 3px; border-right:1px solid #000; width:15%; text-align:center;">Nil</td>
+                                <td style="padding:1px 3px; width:20%; text-align:right;">₹ 0.00</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 3px; border-right:1px solid #000;">(b) 2.50/3.00 से 5.00 लाख तक</td>
+                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center;">5 %</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldSlab1">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 3px; border-right:1px solid #000;">(c) 5.00 से 10.00 लाख तक</td>
+                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center;">20%</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldSlab2">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1px 3px; border-right:1px solid #000;">(d) 10.00 लाख से अधिक</td>
+                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center;">30%</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldSlab3">0.00</span></td>
+                            </tr>
+                            <!-- STCG Tax Row -->
+                            <tr id="pOldRowSTCGTax" style="display:none;">
+                                <td style="padding:1px 3px; border-right:1px solid #000; color:#0d47a1; font-weight:bold;">Add : STCG पर कर (20%)</td>
+                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center; color:#0d47a1; font-weight:bold;">20%</td>
+                                <td style="padding:1px 3px; text-align:right; color:#0d47a1; font-weight:bold;">₹ <span id="pOldSTCGTaxVal">0.00</span></td>
+                            </tr>
+                            <!-- LTCG Tax Row -->
+                            <tr id="pOldRowLTCGTax" style="display:none;">
+                                <td style="padding:1px 3px; border-right:1px solid #000; color:#0d47a1; font-weight:bold;">Add : LTCG पर कर (12.5%)</td>
+                                <td style="padding:1px 3px; border-right:1px solid #000; text-align:center; color:#0d47a1; font-weight:bold;">12.5%</td>
+                                <td style="padding:1px 3px; text-align:right; color:#0d47a1; font-weight:bold;">₹ <span id="pOldLTCGTaxVal">0.00</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid #000;">
+                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">सकल आयकर का योग</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldTotSlabTax">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000; font-size:7.5px;">Less : 87 ए के अन्तर्गत छूट 12500 रुपये की (यदि कर योग्य आय 5 लाख तक हो तो)</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldRebateVal">0.00</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid #000;">
+                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">कुल योग</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldTaxAfterRebate">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">Add : शिक्षा अधिभार (4 प्रतिशत)</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldCessVal">0.00</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid #000; font-weight:bold;">
+                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">सम्पूर्ण आयकर की देनदारी</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldTotLiability">0.00</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:1px 3px; border-right:1px solid #000;">Less : अग्रिम आयकर कटौती (अगर कोई हो तो)</td>
+                                <td style="padding:1px 3px; text-align:right;">₹ <span id="pOldAdvDeducted">0.00</span></td>
+                            </tr>
+                            <tr style="border-top:1.5px solid #000; font-weight:bold;">
+                                <td colspan="2" style="padding:1.5px 3px; border-right:1px solid #000;">शेष आयकर की देनदारी (<span id="pOldSettleMonthName">फरवरी 2026</span> के वेतन से)</td>
+                                <td style="padding:1.5px 3px; text-align:right; font-size:9px;" id="pOldBalTaxVal">₹ 0.00</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Signatures at bottom matching photo -->
+            <div class="sig-box" style="display:flex; justify-content:space-between; margin-top:22px; padding:0 20px; font-size:9.5px; font-weight:bold;">
+                <div>Sig. of Employee</div>
+                <div id="pOldSigEmployer">Sig. of Principal</div>
             </div>
         </div>
     </div>
@@ -1658,32 +1998,32 @@ function runCalculation() {
     var junkRepeat = /(.)\1{2,}/; 
     var badNames = ["demo", "admin", "asdf", "qwerty", "test", "abcd"];
     if (name.length < 3 || junkRepeat.test(name) || badNames.includes(name.toLowerCase())) {
-        showBluePopup("Enter Valid Taxpayer Name."); return;
+        showBluePopup("Enter Valid Taxpayer Name."); return false;
     }
 
     // MANDATORY DATE OF BIRTH VALIDATION
     var rawDob = document.getElementById('uDob') ? document.getElementById('uDob').value.trim() : '';
     if (!rawDob || rawDob.length < 8) {
         showBluePopup("Please Select Date of Birth.");
-        return;
+        return false;
     }
     var dob = rawDob;
 
     var mobPattern = /^[6-9]\d{9}$/;
     var isDuplicateMob = /^(.)\1{9}$/.test(mob);
-    if (!mobPattern.test(mob) || isDuplicateMob) { showBluePopup("Enter Valid Mobile Number."); return; }
+    if (!mobPattern.test(mob) || isDuplicateMob) { showBluePopup("Enter Valid Mobile Number."); return false; }
     
     var panPattern = /^[A-Z]{3}P[A-Z]{1}[0-9]{4}[A-Z]{1}$/;
-    if (!panPattern.test(pan)) { showBluePopup("Enter Valid PAN Number."); return; }
+    if (!panPattern.test(pan)) { showBluePopup("Enter Valid PAN Number."); return false; }
 
     // MANDATORY DISTRICT & ORGANIZATION VALIDATION
     if (!district || district.length < 2) {
         showBluePopup("Enter Valid District Name.");
-        return;
+        return false;
     }
     if (!org || org.length < 2) {
         showBluePopup("Enter Valid Organization Name.");
-        return;
+        return false;
     }
 
     var fy = document.getElementById('selectedFY').value;
@@ -1846,34 +2186,24 @@ function runCalculation() {
 
     // Populate Official Printable Sheet (Matching Photo with Full Slabs)
     populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, bus, st, lt, ded80C, dedOther, netTaxableTotal, slabTax, stcgTax, ltcgTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs);
+    return true;
 }
 
 function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regime, sal, sd, bus, st, lt, ded80C, dedOther, netTaxableTotal, slabTax, stcgTax, ltcgTax, rebate, marginal, cess, totalTaxPayable, advTax, balancePayable, detailedSlabs) {
-    document.getElementById('pSheetTitle').innerText = "Anurag Karundia & Co. (" + (regime === 'NEW' ? "New Scheme" : "Old Scheme") + ")";
-    var startYr = parseInt(fy.split('-')[0]);
-    var nextYr = startYr + 1;
-    document.getElementById('pFYCell').innerText = fy + " (AY " + nextYr + "-" + String(nextYr + 1).slice(-2) + ")";
-    document.getElementById('pMobCell').innerText = mob || "-";
-    document.getElementById('pNameCell').innerText = name || "-";
-    document.getElementById('pDobCell').innerText = dob || "-";
-    document.getElementById('pPanCell').innerText = pan || "-";
-    document.getElementById('pDistCell').innerText = district || "-";
-    if (org) {
-        document.getElementById('pOrgCell').innerText = org;
-    } else {
-        document.getElementById('pOrgCell').innerHTML = '&nbsp;';
-    }
+    var sheetNew = document.getElementById('officialPrintSheetNew');
+    var sheetOld = document.getElementById('officialPrintSheetOld');
 
     var months = getMonthNames();
     var cycle = document.getElementById('selectedCycle').value;
     var startYear = parseInt(fy.split('-')[0]);
     var nextYear = startYear + 1;
     var lastMonthName = cycle === 'MIN' ? "February " + nextYear : "March " + nextYear;
+    var lastMonthNameHindi = cycle === 'MIN' ? "फरवरी " + nextYear : "मार्च " + nextYear;
+    var hasMonthlyData = document.getElementById('chkMonthly') ? document.getElementById('chkMonthly').checked : false;
 
-    // Populate monthly rows in print sheet
-    var pTbody = document.getElementById('pMonthRows');
-    pTbody.innerHTML = '';
-    var hasMonthlyData = document.getElementById('chkMonthly').checked;
+    // Collect monthly values for both print sheets
+    var bVals = [], dVals = [], hVals = [], gVals = [], gpfVals = [], npsVals = [], taxVals = [];
+    var totB = 0, totD = 0, totH = 0, totG = 0, totGPF = 0, totNPS = 0, totAdv = 0;
 
     for (var i = 0; i < 12; i++) {
         var b = hasMonthlyData ? (parseFloat(document.querySelectorAll('.m-basic')[i].value) || 0) : Math.round(sal / 12);
@@ -1884,139 +2214,302 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         var nps = hasMonthlyData ? (parseFloat(document.querySelectorAll('.m-nps')[i].value) || 0) : 0;
         var tax = 0;
         if (i === 11) {
-            tax = 0; // Month 12 Advance Tax is strictly 0.00 (reserved for Balance Tax settlement)
+            tax = 0; // Month 12 Advance Tax strictly 0 (reserved for balance tax settlement)
         } else if (hasMonthlyData) {
             tax = parseFloat(document.querySelectorAll('.m-tax')[i].value) || 0;
         } else {
-            // Distribute advTax evenly across first 11 months
             var baseTax11 = Math.floor(advTax / 11);
             var remTax11 = Math.round(advTax % 11);
             tax = (i < remTax11) ? (baseTax11 + 1) : baseTax11;
         }
-
-        var tr = document.createElement('tr');
-        tr.innerHTML = 
-            '<td>' + months[i] + '</td>' +
-            '<td>' + b.toFixed(2) + '</td>' +
-            '<td>' + d.toFixed(2) + '</td>' +
-            '<td>' + h.toFixed(2) + '</td>' +
-            '<td class="fw-bold">' + g.toFixed(2) + '</td>' +
-            '<td>' + gpf.toFixed(2) + '</td>' +
-            '<td>' + nps.toFixed(2) + '</td>' +
-            '<td>' + tax.toFixed(2) + '</td>';
-        pTbody.appendChild(tr);
+        bVals.push(b); dVals.push(d); hVals.push(h); gVals.push(g);
+        gpfVals.push(gpf); npsVals.push(nps); taxVals.push(tax);
+        totB += b; totD += d; totH += h; totG += g;
+        totGPF += gpf; totNPS += nps; totAdv += tax;
     }
 
-    document.getElementById('pTotBasic').innerText = document.getElementById('tBasic').innerText + ".00";
-    document.getElementById('pTotDA').innerText = document.getElementById('tDA').innerText + ".00";
-    document.getElementById('pTotHRA').innerText = document.getElementById('tHRA').innerText + ".00";
-    document.getElementById('pTotGross').innerText = Math.round(sal).toFixed(2);
-    document.getElementById('pTotGPF').innerText = document.getElementById('tGPF').innerText + ".00";
-    document.getElementById('pTotNPS').innerText = document.getElementById('tNPS').innerText + ".00";
-    document.getElementById('pTotAdvTax').innerText = Math.round(advTax).toFixed(2);
+    if (regime === 'OLD') {
+        // ACTIVATE OLD REGIME SHEET ONLY
+        if (sheetNew) sheetNew.classList.remove('active-print');
+        if (sheetOld) sheetOld.classList.add('active-print');
 
-    var netSal = Math.max(0, sal - sd);
-    document.getElementById('pCompGross').innerText = "₹ " + Math.round(sal).toLocaleString('en-IN') + ".00";
-    document.getElementById('pCompSD').innerText = "₹ " + Math.round(sd).toLocaleString('en-IN') + ".00";
-    if (document.getElementById('pCompNetSal')) {
-        document.getElementById('pCompNetSal').innerText = "₹ " + Math.round(netSal).toLocaleString('en-IN') + ".00";
-    }
+        // Populate Old Scheme Metadata
+        document.getElementById('pOldFY').innerText = startYear + "-" + nextYear;
+        document.getElementById('pOldMob').innerText = mob ? mob : "....................";
+        document.getElementById('pOldDob').innerText = dob ? dob : "....................";
+        document.getElementById('pOldName').innerText = name ? name : "...................................................";
+        document.getElementById('pOldOrg').innerText = org ? org : "...................................................";
+        if (document.getElementById('pOldOrgLabel')) {
+            document.getElementById('pOldOrgLabel').innerText = (cycle === 'MIN') ? "Madarasa Name" : "Madarasa Name / Org Name";
+        }
+        if (document.getElementById('pOldDesig')) {
+            document.getElementById('pOldDesig').innerText = district ? district : "               ";
+        }
 
-    if (bus > 0) {
-        document.getElementById('pRowBus').style.display = 'table-row';
-        document.getElementById('pCompBus').innerText = "₹ " + Math.round(bus).toLocaleString('en-IN') + ".00";
+        // 10 Contiguous PAN Boxes Character-by-Character
+        var cleanPan = (pan || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+        for (var p = 0; p < 10; p++) {
+            var elBox = document.getElementById('pOldPan' + p);
+            if (elBox) elBox.innerText = cleanPan[p] || '';
+        }
+
+        // Populate 12 Monthly Rows in Old Sheet
+        var pOldTbody = document.getElementById('pOldMonthRows');
+        pOldTbody.innerHTML = '';
+        for (var m = 0; m < 12; m++) {
+            var rowTr = document.createElement('tr');
+            rowTr.innerHTML = 
+                '<td style="border:1px solid #000; padding:2px 3px; font-weight:600;">' + months[m] + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px;">' + bVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px;">' + dVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px;">' + hVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px; font-weight:bold;">' + gVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px;">' + gpfVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px;">' + npsVals[m].toFixed(2) + '</td>' +
+                '<td style="border:1px solid #000; padding:2px 3px;">' + taxVals[m].toFixed(2) + '</td>';
+            pOldTbody.appendChild(rowTr);
+        }
+
+        // Monthly Totals
+        document.getElementById('pOldTotBasic').innerText = totB.toFixed(2);
+        document.getElementById('pOldTotDA').innerText = totD.toFixed(2);
+        document.getElementById('pOldTotHRA').innerText = totH.toFixed(2);
+        document.getElementById('pOldTotGross').innerText = Math.round(sal).toFixed(2);
+        document.getElementById('pOldTotGPF').innerText = totGPF.toFixed(2);
+        document.getElementById('pOldTotNPS').innerText = totNPS.toFixed(2);
+        document.getElementById('pOldTotAdvTax').innerText = Math.round(advTax).toFixed(2);
+
+        // Chapter VIA Deductions Box
+        document.getElementById('pOldChapDates').innerText = "(01.04." + startYear + " to 31.03." + nextYear + ")";
+        document.getElementById('pOldGPF').innerText = totGPF > 0 ? totGPF.toFixed(2) : "0.00";
+        document.getElementById('pOldNPS').innerText = totNPS > 0 ? totNPS.toFixed(2) : "0.00";
+        
+        var input80C = parseFloat(document.getElementById('v80C').value) || 0;
+        var rem80C = Math.max(0, input80C - totGPF);
+        document.getElementById('pOldLIC').innerText = rem80C > 0 ? rem80C.toFixed(2) : "0.00";
+        document.getElementById('pOldNSC').innerText = "0.00";
+        document.getElementById('pOldTution').innerText = "0.00";
+        document.getElementById('pOldPPF').innerText = "0.00";
+        document.getElementById('pOldHLoan').innerText = "0.00";
+        document.getElementById('pOldSukanya').innerText = "0.00";
+        var total80CShown = Math.min(150000, input80C || totGPF);
+        document.getElementById('pOldGrandTotal').innerText = total80CShown.toFixed(2);
+
+        // Right Column: Income & Tax Computation
+        var netSalOld = Math.max(0, sal - 50000);
+        document.getElementById('pOldGrossSalSub').innerText = Math.round(sal).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldNetSalSD').innerText = Math.round(netSalOld).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldRemSal').innerText = Math.round(netSalOld).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldBus').innerText = Math.round(bus).toLocaleString('en-IN') + ".00";
+
+        // STCG & LTCG display in Old Scheme
+        if (st > 0) {
+            document.getElementById('pOldRowSTCG').style.display = 'table-row';
+            document.getElementById('pOldSTCG').innerText = Math.round(st).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pOldRowSTCG').style.display = 'none';
+        }
+
+        var taxableLTCG = Math.max(0, lt - 125000);
+        if (lt > 0) {
+            document.getElementById('pOldRowLTCG').style.display = 'table-row';
+            document.getElementById('pOldLTCG').innerText = Math.round(taxableLTCG).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pOldRowLTCG').style.display = 'none';
+        }
+
+        var grossInc5 = netSalOld + bus + st + taxableLTCG;
+        document.getElementById('pOldGross5').innerText = Math.round(grossInc5).toLocaleString('en-IN') + ".00";
+
+        document.getElementById('pOldDed80CVal').innerText = Math.round(ded80C).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldDed80DVal').innerText = Math.round(dedOther).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldDedCCDVal').innerText = totNPS > 0 ? Math.round(totNPS).toLocaleString('en-IN') + ".00" : "0.00";
+        document.getElementById('pOldNetTaxable').innerText = Math.round(netTaxableTotal).toLocaleString('en-IN') + ".00";
+
+        // Old Regime Slabs
+        var normalInc = Math.max(0, sal - 50000 + bus - ded80C - dedOther);
+        var slab1Amt = Math.max(0, Math.min(normalInc - 250000, 250000));
+        var slab1TaxVal = slab1Amt * 0.05;
+        var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
+        var slab2TaxVal = slab2Amt * 0.20;
+        var slab3Amt = Math.max(0, normalInc - 1000000);
+        var slab3TaxVal = slab3Amt * 0.30;
+
+        document.getElementById('pOldSlab1').innerText = Math.round(slab1TaxVal).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldSlab2').innerText = Math.round(slab2TaxVal).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldSlab3').innerText = Math.round(slab3TaxVal).toLocaleString('en-IN') + ".00";
+
+        if (stcgTax > 0) {
+            document.getElementById('pOldRowSTCGTax').style.display = 'table-row';
+            document.getElementById('pOldSTCGTaxVal').innerText = Math.round(stcgTax).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pOldRowSTCGTax').style.display = 'none';
+        }
+
+        if (ltcgTax > 0) {
+            document.getElementById('pOldRowLTCGTax').style.display = 'table-row';
+            document.getElementById('pOldLTCGTaxVal').innerText = Math.round(ltcgTax).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pOldRowLTCGTax').style.display = 'none';
+        }
+
+        var totSlabPlusCap = slabTax + stcgTax + ltcgTax;
+        document.getElementById('pOldTotSlabTax').innerText = Math.round(totSlabPlusCap).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldRebateVal').innerText = Math.round(rebate).toLocaleString('en-IN') + ".00";
+        var taxAfterRebateOld = Math.max(0, slabTax - rebate) + stcgTax + ltcgTax;
+        document.getElementById('pOldTaxAfterRebate').innerText = Math.round(taxAfterRebateOld).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldCessVal').innerText = Math.round(cess).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldTotLiability').innerText = Math.round(totalTaxPayable).toLocaleString('en-IN') + ".00";
+        document.getElementById('pOldAdvDeducted').innerText = Math.round(advTax).toLocaleString('en-IN') + ".00";
+        
+        document.getElementById('pOldSettleMonthName').innerText = lastMonthNameHindi;
+        if (balancePayable >= 0) {
+            document.getElementById('pOldBalTaxVal').innerText = "₹ " + Math.round(balancePayable).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pOldBalTaxVal').innerText = "₹ 0.00 (Refund ₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00)";
+        }
+
+        // Signature for Old Scheme
+        if (document.getElementById('pOldSigEmployer')) {
+            document.getElementById('pOldSigEmployer').innerText = (cycle === 'MIN') ? "Sig. of Principal" : "Sig. of Employer";
+        }
+
     } else {
-        document.getElementById('pRowBus').style.display = 'none';
-    }
+        // ACTIVATE NEW REGIME SHEET ONLY
+        if (sheetOld) sheetOld.classList.remove('active-print');
+        if (sheetNew) sheetNew.classList.add('active-print');
 
-    if (st > 0) {
-        document.getElementById('pRowSTCG').style.display = 'table-row';
-        document.getElementById('pCompSTCG').innerText = "₹ " + Math.round(st).toLocaleString('en-IN') + ".00";
-    } else {
-        document.getElementById('pRowSTCG').style.display = 'none';
-    }
+        document.getElementById('pSheetTitle').innerText = "Anurag Karundia & Co. (New Scheme)";
+        document.getElementById('pFYCell').innerText = fy + " (AY " + nextYear + "-" + String(nextYear + 1).slice(-2) + ")";
+        document.getElementById('pMobCell').innerText = mob || "-";
+        document.getElementById('pNameCell').innerText = name || "-";
+        document.getElementById('pDobCell').innerText = dob || "-";
+        document.getElementById('pPanCell').innerText = pan || "-";
+        document.getElementById('pDistCell').innerText = district || "-";
+        if (org) {
+            document.getElementById('pOrgCell').innerText = org;
+        } else {
+            document.getElementById('pOrgCell').innerHTML = '&nbsp;';
+        }
 
-    var taxableLTCG = Math.max(0, lt - 125000);
-    if (lt > 0) {
-        document.getElementById('pRowLTCG').style.display = 'table-row';
-        document.getElementById('pCompLTCG').innerText = "₹ " + Math.round(taxableLTCG).toLocaleString('en-IN') + ".00";
-    } else {
-        document.getElementById('pRowLTCG').style.display = 'none';
-    }
+        // Populate monthly rows in New print sheet
+        var pTbody = document.getElementById('pMonthRows');
+        pTbody.innerHTML = '';
+        for (var i = 0; i < 12; i++) {
+            var tr = document.createElement('tr');
+            tr.innerHTML = 
+                '<td>' + months[i] + '</td>' +
+                '<td>' + bVals[i].toFixed(2) + '</td>' +
+                '<td>' + dVals[i].toFixed(2) + '</td>' +
+                '<td>' + hVals[i].toFixed(2) + '</td>' +
+                '<td class="fw-bold">' + gVals[i].toFixed(2) + '</td>' +
+                '<td>' + gpfVals[i].toFixed(2) + '</td>' +
+                '<td>' + npsVals[i].toFixed(2) + '</td>' +
+                '<td>' + taxVals[i].toFixed(2) + '</td>';
+            pTbody.appendChild(tr);
+        }
 
-    if (regime === 'OLD' && ded80C > 0) {
-        document.getElementById('pRowDed80C').style.display = 'table-row';
-        document.getElementById('pComp80C').innerText = "₹ " + Math.round(ded80C).toLocaleString('en-IN') + ".00";
-    } else {
+        document.getElementById('pTotBasic').innerText = totB.toFixed(2);
+        document.getElementById('pTotDA').innerText = totD.toFixed(2);
+        document.getElementById('pTotHRA').innerText = totH.toFixed(2);
+        document.getElementById('pTotGross').innerText = Math.round(sal).toFixed(2);
+        document.getElementById('pTotGPF').innerText = totGPF.toFixed(2);
+        document.getElementById('pTotNPS').innerText = totNPS.toFixed(2);
+        document.getElementById('pTotAdvTax').innerText = Math.round(advTax).toFixed(2);
+
+        var netSal = Math.max(0, sal - sd);
+        document.getElementById('pCompGross').innerText = "₹ " + Math.round(sal).toLocaleString('en-IN') + ".00";
+        document.getElementById('pCompSD').innerText = "₹ " + Math.round(sd).toLocaleString('en-IN') + ".00";
+        if (document.getElementById('pCompNetSal')) {
+            document.getElementById('pCompNetSal').innerText = "₹ " + Math.round(netSal).toLocaleString('en-IN') + ".00";
+        }
+
+        if (bus > 0) {
+            document.getElementById('pRowBus').style.display = 'table-row';
+            document.getElementById('pCompBus').innerText = "₹ " + Math.round(bus).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pRowBus').style.display = 'none';
+        }
+
+        if (st > 0) {
+            document.getElementById('pRowSTCG').style.display = 'table-row';
+            document.getElementById('pCompSTCG').innerText = "₹ " + Math.round(st).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pRowSTCG').style.display = 'none';
+        }
+
+        var taxableLTCGNew = Math.max(0, lt - 125000);
+        if (lt > 0) {
+            document.getElementById('pRowLTCG').style.display = 'table-row';
+            document.getElementById('pCompLTCG').innerText = "₹ " + Math.round(taxableLTCGNew).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pRowLTCG').style.display = 'none';
+        }
+
         document.getElementById('pRowDed80C').style.display = 'none';
-    }
-
-    if (regime === 'OLD' && dedOther > 0) {
-        document.getElementById('pRowDedOther').style.display = 'table-row';
-        document.getElementById('pCompOther').innerText = "₹ " + Math.round(dedOther).toLocaleString('en-IN') + ".00";
-    } else {
         document.getElementById('pRowDedOther').style.display = 'none';
-    }
 
-    document.getElementById('pCompNet').innerText = "₹ " + Math.round(netTaxableTotal).toLocaleString('en-IN') + ".00";
+        document.getElementById('pCompNet').innerText = "₹ " + Math.round(netTaxableTotal).toLocaleString('en-IN') + ".00";
 
-    // Populate Detailed Slab Breakdown Table (Matching Photo)
-    var pSlabTbody = document.getElementById('pSlabDetailRows');
-    pSlabTbody.innerHTML = '';
-    detailedSlabs.forEach(function(s) {
-        var str = document.createElement('tr');
-        str.innerHTML = 
-            '<td class="text-left">' + s.label + '</td>' +
-            '<td class="text-right">₹ ' + Math.round(s.amt).toLocaleString('en-IN') + '.00</td>' +
-            '<td class="text-center">' + s.rate + '</td>' +
-            '<td class="text-right">₹ ' + Math.round(s.tax).toLocaleString('en-IN') + '.00</td>';
-        pSlabTbody.appendChild(str);
-    });
+        // Populate Detailed Slab Breakdown Table
+        var pSlabTbody = document.getElementById('pSlabDetailRows');
+        pSlabTbody.innerHTML = '';
+        detailedSlabs.forEach(function(s) {
+            var str = document.createElement('tr');
+            str.innerHTML = 
+                '<td class="text-left">' + s.label + '</td>' +
+                '<td class="text-right">₹ ' + Math.round(s.amt).toLocaleString('en-IN') + '.00</td>' +
+                '<td class="text-center">' + s.rate + '</td>' +
+                '<td class="text-right">₹ ' + Math.round(s.tax).toLocaleString('en-IN') + '.00</td>';
+            pSlabTbody.appendChild(str);
+        });
 
-    document.getElementById('pCompSlabTax').innerText = "₹ " + Math.round(slabTax).toLocaleString('en-IN') + ".00";
+        document.getElementById('pCompSlabTax').innerText = "₹ " + Math.round(slabTax).toLocaleString('en-IN') + ".00";
 
-    if (stcgTax > 0) {
-        document.getElementById('pRowSTCGTax').style.display = 'table-row';
-        document.getElementById('pCompSTCGTax').innerText = "₹ " + Math.round(stcgTax).toLocaleString('en-IN') + ".00";
-    } else {
-        document.getElementById('pRowSTCGTax').style.display = 'none';
-    }
+        if (stcgTax > 0) {
+            document.getElementById('pRowSTCGTax').style.display = 'table-row';
+            document.getElementById('pCompSTCGTax').innerText = "₹ " + Math.round(stcgTax).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pRowSTCGTax').style.display = 'none';
+        }
 
-    if (ltcgTax > 0) {
-        document.getElementById('pRowLTCGTax').style.display = 'table-row';
-        document.getElementById('pCompLTCGTax').innerText = "₹ " + Math.round(ltcgTax).toLocaleString('en-IN') + ".00";
-    } else {
-        document.getElementById('pRowLTCGTax').style.display = 'none';
-    }
+        if (ltcgTax > 0) {
+            document.getElementById('pRowLTCGTax').style.display = 'table-row';
+            document.getElementById('pCompLTCGTax').innerText = "₹ " + Math.round(ltcgTax).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pRowLTCGTax').style.display = 'none';
+        }
 
-    document.getElementById('pCompRebate').innerText = "₹ " + Math.round(rebate).toLocaleString('en-IN') + ".00";
-    
-    if (regime === 'NEW' && marginal > 0) {
-        document.getElementById('pRowMarginal').style.display = 'table-row';
-        document.getElementById('pCompMarginal').innerText = "₹ " + Math.round(marginal).toLocaleString('en-IN') + ".00";
-    } else {
-        document.getElementById('pRowMarginal').style.display = 'none';
-    }
+        document.getElementById('pCompRebate').innerText = "₹ " + Math.round(rebate).toLocaleString('en-IN') + ".00";
+        
+        if (marginal > 0) {
+            document.getElementById('pRowMarginal').style.display = 'table-row';
+            document.getElementById('pCompMarginal').innerText = "₹ " + Math.round(marginal).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pRowMarginal').style.display = 'none';
+        }
 
-    document.getElementById('pCompCess').innerText = "₹ " + Math.round(cess).toLocaleString('en-IN') + ".00";
-    document.getElementById('pCompTotalTax').innerText = "₹ " + Math.round(totalTaxPayable).toLocaleString('en-IN') + ".00";
-    document.getElementById('pCompAdvTax').innerText = "₹ " + Math.round(advTax).toLocaleString('en-IN') + ".00";
-    
-    if (balancePayable >= 0) {
-        document.getElementById('pBalLabel').innerText = "Balance Tax Payable (from " + lastMonthName + " Salary)";
-        document.getElementById('pCompBalTax').innerText = "₹ " + Math.round(balancePayable).toLocaleString('en-IN') + ".00";
-    } else {
-        document.getElementById('pBalLabel').innerText = "Refund Due";
-        document.getElementById('pCompBalTax').innerText = "₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00";
-    }
+        document.getElementById('pCompCess').innerText = "₹ " + Math.round(cess).toLocaleString('en-IN') + ".00";
+        document.getElementById('pCompTotalTax').innerText = "₹ " + Math.round(totalTaxPayable).toLocaleString('en-IN') + ".00";
+        document.getElementById('pCompAdvTax').innerText = "₹ " + Math.round(advTax).toLocaleString('en-IN') + ".00";
+        
+        if (balancePayable >= 0) {
+            document.getElementById('pBalLabel').innerText = "Balance Tax Payable (from " + lastMonthName + " Salary)";
+            document.getElementById('pCompBalTax').innerText = "₹ " + Math.round(balancePayable).toLocaleString('en-IN') + ".00";
+        } else {
+            document.getElementById('pBalLabel').innerText = "Refund Due";
+            document.getElementById('pCompBalTax').innerText = "₹ " + Math.abs(balancePayable).toLocaleString('en-IN') + ".00";
+        }
 
-    // Dynamic Signature: Standard -> Sig. of Employer | Special -> Sig. of Principal
-    if (document.getElementById('pSigEmployer')) {
-        document.getElementById('pSigEmployer').innerText = (cycle === 'MIN') ? "Sig. of Principal" : "Sig. of Employer";
+        if (document.getElementById('pSigEmployer')) {
+            document.getElementById('pSigEmployer').innerText = (cycle === 'MIN') ? "Sig. of Principal" : "Sig. of Employer";
+        }
     }
 }
 
 function downloadOfficialPDF() {
+    var ok = runCalculation();
+    if (!ok) return;
     if (window.AndroidApp && window.AndroidApp.printPDF) {
         window.AndroidApp.printPDF();
     } else {
