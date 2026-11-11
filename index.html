@@ -1034,6 +1034,28 @@
                     <tbody id="monthTbody">
                         <!-- Populated by JS -->
                     </tbody>
+                    <tbody id="specialSalaryTbody">
+                        <tr style="background:#f8fafc; border-top:2px solid #cbd5e1;">
+                            <td style="font-weight:700; color:#0d47a1; white-space:nowrap;">Arrears</td>
+                            <td><input type="number" id="arrBasic" class="arr-input" value="0" onclick="this.select()" oninput="calcSpecialRow('arr')"></td>
+                            <td><input type="number" id="arrDA" class="arr-input" value="0" onclick="this.select()" oninput="calcSpecialRow('arr')"></td>
+                            <td><input type="number" id="arrHRA" class="arr-input" value="0" onclick="this.select()" oninput="calcSpecialRow('arr')"></td>
+                            <td><input type="number" id="arrGross" class="calc-cell arr-input" value="0" onclick="this.select()" oninput="onSpecialGrossDirect('arr')"></td>
+                            <td><input type="number" id="arrGPF" class="arr-input" value="0" onclick="this.select()" oninput="calcSheetTotals()"></td>
+                            <td><input type="number" id="arrNPS" class="arr-input" value="0" onclick="this.select()" oninput="calcSheetTotals()"></td>
+                            <td><input type="number" id="arrTax" class="arr-input" value="0" onclick="this.select()" oninput="calcSheetTotals()"></td>
+                        </tr>
+                        <tr style="background:#f8fafc;">
+                            <td style="font-weight:700; color:#0d47a1; white-space:nowrap;">Others</td>
+                            <td><input type="number" id="othBasic" class="oth-input" value="0" onclick="this.select()" oninput="calcSpecialRow('oth')"></td>
+                            <td><input type="number" id="othDA" class="oth-input" value="0" onclick="this.select()" oninput="calcSpecialRow('oth')"></td>
+                            <td><input type="number" id="othHRA" class="oth-input" value="0" onclick="this.select()" oninput="calcSpecialRow('oth')"></td>
+                            <td><input type="number" id="othGross" class="calc-cell oth-input" value="0" onclick="this.select()" oninput="onSpecialGrossDirect('oth')"></td>
+                            <td><input type="number" id="othGPF" class="oth-input" value="0" onclick="this.select()" oninput="calcSheetTotals()"></td>
+                            <td><input type="number" id="othNPS" class="oth-input" value="0" onclick="this.select()" oninput="calcSheetTotals()"></td>
+                            <td><input type="number" id="othTax" class="oth-input" value="0" onclick="this.select()" oninput="calcSheetTotals()"></td>
+                        </tr>
+                    </tbody>
                     <tfoot>
                         <tr>
                             <td>Total</td>
@@ -1202,6 +1224,28 @@
                 </thead>
                 <tbody id="pMonthRows">
                     <!-- Populated dynamically -->
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:600; text-align:left;">Arrears</td>
+                        <td id="pArrBasic">0.00</td>
+                        <td id="pArrDA">0.00</td>
+                        <td id="pArrHRA">0.00</td>
+                        <td class="fw-bold" id="pArrGross">0.00</td>
+                        <td id="pArrGPF">0.00</td>
+                        <td id="pArrNPS">0.00</td>
+                        <td id="pArrAdvTax">0.00</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600; text-align:left;">Others</td>
+                        <td id="pOthBasic">0.00</td>
+                        <td id="pOthDA">0.00</td>
+                        <td id="pOthHRA">0.00</td>
+                        <td class="fw-bold" id="pOthGross">0.00</td>
+                        <td id="pOthGPF">0.00</td>
+                        <td id="pOthNPS">0.00</td>
+                        <td id="pOthAdvTax">0.00</td>
+                    </tr>
                 </tbody>
                 <tfoot>
                     <tr class="fw-bold">
@@ -1376,23 +1420,23 @@
                 <tbody>
                     <tr>
                         <td style="border:1px solid #000; padding:1.2px 2px; text-align:left; font-weight:bold;">Arrears</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px; font-weight:bold;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrBasic">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrDA">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrHRA">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; font-weight:bold;" id="pOldArrGross">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrGPF">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrNPS">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrAdvTax">0.00</td>
                     </tr>
                     <tr>
                         <td style="border:1px solid #000; padding:1.2px 2px; text-align:left; font-weight:bold;">Others</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px; font-weight:bold;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
-                        <td style="border:1px solid #000; padding:1.2px 2px;">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthBasic">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthDA">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthHRA">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; font-weight:bold;" id="pOldOthGross">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthGPF">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthNPS">0.00</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthAdvTax">0.00</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -1761,6 +1805,26 @@ function calcMonthRow(idx) {
     calcSheetTotals();
 }
 
+function calcSpecialRow(type) {
+    var b = parseFloat(document.getElementById(type + 'Basic').value) || 0;
+    var d = parseFloat(document.getElementById(type + 'DA').value) || 0;
+    var h = parseFloat(document.getElementById(type + 'HRA').value) || 0;
+    var g = b + d + h;
+    document.getElementById(type + 'Gross').value = Math.round(g);
+    calcSheetTotals();
+}
+
+function onSpecialGrossDirect(type) {
+    var b = parseFloat(document.getElementById(type + 'Basic').value) || 0;
+    var d = parseFloat(document.getElementById(type + 'DA').value) || 0;
+    var h = parseFloat(document.getElementById(type + 'HRA').value) || 0;
+    var g = parseFloat(document.getElementById(type + 'Gross').value) || 0;
+    if (b === 0 && d === 0 && h === 0 && g > 0) {
+        document.getElementById(type + 'Basic').value = Math.round(g);
+    }
+    calcSheetTotals();
+}
+
 function calcSheetTotals() {
     var totB = 0, totD = 0, totH = 0, totG = 0, totGPF = 0, totNPS = 0, totTax = 0;
     for (var i = 0; i < 12; i++) {
@@ -1775,6 +1839,35 @@ function calcSheetTotals() {
             totTax += parseFloat(document.querySelectorAll('.m-tax')[i].value) || 0;
         }
     }
+
+    // Arrears row
+    var arrB = parseFloat(document.getElementById('arrBasic') ? document.getElementById('arrBasic').value : 0) || 0;
+    var arrD = parseFloat(document.getElementById('arrDA') ? document.getElementById('arrDA').value : 0) || 0;
+    var arrH = parseFloat(document.getElementById('arrHRA') ? document.getElementById('arrHRA').value : 0) || 0;
+    var arrG = parseFloat(document.getElementById('arrGross') ? document.getElementById('arrGross').value : 0) || 0;
+    if (arrG === 0 && (arrB + arrD + arrH > 0)) arrG = arrB + arrD + arrH;
+    var arrGPF = parseFloat(document.getElementById('arrGPF') ? document.getElementById('arrGPF').value : 0) || 0;
+    var arrNPS = parseFloat(document.getElementById('arrNPS') ? document.getElementById('arrNPS').value : 0) || 0;
+    var arrTax = parseFloat(document.getElementById('arrTax') ? document.getElementById('arrTax').value : 0) || 0;
+
+    // Others row
+    var othB = parseFloat(document.getElementById('othBasic') ? document.getElementById('othBasic').value : 0) || 0;
+    var othD = parseFloat(document.getElementById('othDA') ? document.getElementById('othDA').value : 0) || 0;
+    var othH = parseFloat(document.getElementById('othHRA') ? document.getElementById('othHRA').value : 0) || 0;
+    var othG = parseFloat(document.getElementById('othGross') ? document.getElementById('othGross').value : 0) || 0;
+    if (othG === 0 && (othB + othD + othH > 0)) othG = othB + othD + othH;
+    var othGPF = parseFloat(document.getElementById('othGPF') ? document.getElementById('othGPF').value : 0) || 0;
+    var othNPS = parseFloat(document.getElementById('othNPS') ? document.getElementById('othNPS').value : 0) || 0;
+    var othTax = parseFloat(document.getElementById('othTax') ? document.getElementById('othTax').value : 0) || 0;
+
+    totB += arrB + othB;
+    totD += arrD + othD;
+    totH += arrH + othH;
+    totG += arrG + othG;
+    totGPF += arrGPF + othGPF;
+    totNPS += arrNPS + othNPS;
+    totTax += arrTax + othTax;
+
     document.getElementById('tBasic').innerText = Math.round(totB).toLocaleString('en-IN');
     document.getElementById('tDA').innerText = Math.round(totD).toLocaleString('en-IN');
     document.getElementById('tHRA').innerText = Math.round(totH).toLocaleString('en-IN');
@@ -2008,6 +2101,9 @@ function resetForm() {
         if (document.querySelectorAll('.m-nps')[i]) document.querySelectorAll('.m-nps')[i].value = '0';
         if (document.querySelectorAll('.m-tax')[i]) document.querySelectorAll('.m-tax')[i].value = '0';
     }
+    ['arrBasic','arrDA','arrHRA','arrGross','arrGPF','arrNPS','arrTax','othBasic','othDA','othHRA','othGross','othGPF','othNPS','othTax'].forEach(function(id) {
+        if (document.getElementById(id)) document.getElementById(id).value = '0';
+    });
     if (typeof calcSheetTotals === 'function') calcSheetTotals();
     if (document.getElementById('resDiv')) document.getElementById('resDiv').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2259,6 +2355,33 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         totGPF += gpf; totNPS += nps; totAdv += tax;
     }
 
+    // Collect Arrears & Others if entered
+    var arrB = hasMonthlyData ? (parseFloat(document.getElementById('arrBasic') ? document.getElementById('arrBasic').value : 0) || 0) : 0;
+    var arrD = hasMonthlyData ? (parseFloat(document.getElementById('arrDA') ? document.getElementById('arrDA').value : 0) || 0) : 0;
+    var arrH = hasMonthlyData ? (parseFloat(document.getElementById('arrHRA') ? document.getElementById('arrHRA').value : 0) || 0) : 0;
+    var arrG = hasMonthlyData ? (parseFloat(document.getElementById('arrGross') ? document.getElementById('arrGross').value : 0) || 0) : 0;
+    if (arrG === 0 && (arrB + arrD + arrH > 0)) arrG = arrB + arrD + arrH;
+    var arrGPF = hasMonthlyData ? (parseFloat(document.getElementById('arrGPF') ? document.getElementById('arrGPF').value : 0) || 0) : 0;
+    var arrNPS = hasMonthlyData ? (parseFloat(document.getElementById('arrNPS') ? document.getElementById('arrNPS').value : 0) || 0) : 0;
+    var arrTax = hasMonthlyData ? (parseFloat(document.getElementById('arrTax') ? document.getElementById('arrTax').value : 0) || 0) : 0;
+
+    var othB = hasMonthlyData ? (parseFloat(document.getElementById('othBasic') ? document.getElementById('othBasic').value : 0) || 0) : 0;
+    var othD = hasMonthlyData ? (parseFloat(document.getElementById('othDA') ? document.getElementById('othDA').value : 0) || 0) : 0;
+    var othH = hasMonthlyData ? (parseFloat(document.getElementById('othHRA') ? document.getElementById('othHRA').value : 0) || 0) : 0;
+    var othG = hasMonthlyData ? (parseFloat(document.getElementById('othGross') ? document.getElementById('othGross').value : 0) || 0) : 0;
+    if (othG === 0 && (othB + othD + othH > 0)) othG = othB + othD + othH;
+    var othGPF = hasMonthlyData ? (parseFloat(document.getElementById('othGPF') ? document.getElementById('othGPF').value : 0) || 0) : 0;
+    var othNPS = hasMonthlyData ? (parseFloat(document.getElementById('othNPS') ? document.getElementById('othNPS').value : 0) || 0) : 0;
+    var othTax = hasMonthlyData ? (parseFloat(document.getElementById('othTax') ? document.getElementById('othTax').value : 0) || 0) : 0;
+
+    totB += arrB + othB;
+    totD += arrD + othD;
+    totH += arrH + othH;
+    totG += arrG + othG;
+    totGPF += arrGPF + othGPF;
+    totNPS += arrNPS + othNPS;
+    totAdv += arrTax + othTax;
+
     if (regime === 'OLD') {
         // ACTIVATE OLD REGIME SHEET ONLY
         if (sheetNew) sheetNew.classList.remove('active-print');
@@ -2294,6 +2417,25 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
                 '<td style="border:1px solid #000; padding:1.5px 2px;">' + npsVals[m].toFixed(2) + '</td>' +
                 '<td style="border:1px solid #000; padding:1.5px 2px;">' + taxVals[m].toFixed(2) + '</td>';
             pOldTbody.appendChild(rowTr);
+        }
+
+        // Arrears & Others in Old Sheet
+        if (document.getElementById('pOldArrBasic')) {
+            document.getElementById('pOldArrBasic').innerText = arrB.toFixed(2);
+            document.getElementById('pOldArrDA').innerText = arrD.toFixed(2);
+            document.getElementById('pOldArrHRA').innerText = arrH.toFixed(2);
+            document.getElementById('pOldArrGross').innerText = arrG.toFixed(2);
+            document.getElementById('pOldArrGPF').innerText = arrGPF.toFixed(2);
+            document.getElementById('pOldArrNPS').innerText = arrNPS.toFixed(2);
+            document.getElementById('pOldArrAdvTax').innerText = arrTax.toFixed(2);
+
+            document.getElementById('pOldOthBasic').innerText = othB.toFixed(2);
+            document.getElementById('pOldOthDA').innerText = othD.toFixed(2);
+            document.getElementById('pOldOthHRA').innerText = othH.toFixed(2);
+            document.getElementById('pOldOthGross').innerText = othG.toFixed(2);
+            document.getElementById('pOldOthGPF').innerText = othGPF.toFixed(2);
+            document.getElementById('pOldOthNPS').innerText = othNPS.toFixed(2);
+            document.getElementById('pOldOthAdvTax').innerText = othTax.toFixed(2);
         }
 
         // Monthly Totals
@@ -2437,6 +2579,25 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
                 '<td>' + npsVals[i].toFixed(2) + '</td>' +
                 '<td>' + taxVals[i].toFixed(2) + '</td>';
             pTbody.appendChild(tr);
+        }
+
+        // Arrears & Others in New Sheet
+        if (document.getElementById('pArrBasic')) {
+            document.getElementById('pArrBasic').innerText = arrB.toFixed(2);
+            document.getElementById('pArrDA').innerText = arrD.toFixed(2);
+            document.getElementById('pArrHRA').innerText = arrH.toFixed(2);
+            document.getElementById('pArrGross').innerText = arrG.toFixed(2);
+            document.getElementById('pArrGPF').innerText = arrGPF.toFixed(2);
+            document.getElementById('pArrNPS').innerText = arrNPS.toFixed(2);
+            document.getElementById('pArrAdvTax').innerText = arrTax.toFixed(2);
+
+            document.getElementById('pOthBasic').innerText = othB.toFixed(2);
+            document.getElementById('pOthDA').innerText = othD.toFixed(2);
+            document.getElementById('pOthHRA').innerText = othH.toFixed(2);
+            document.getElementById('pOthGross').innerText = othG.toFixed(2);
+            document.getElementById('pOthGPF').innerText = othGPF.toFixed(2);
+            document.getElementById('pOthNPS').innerText = othNPS.toFixed(2);
+            document.getElementById('pOthAdvTax').innerText = othTax.toFixed(2);
         }
 
         document.getElementById('pTotBasic').innerText = totB.toFixed(2);
@@ -2630,6 +2791,24 @@ function saveCalculationLocally() {
         sal: sal,
         chkMonthly: chkMonthly,
         months: monthsData,
+        arrears: {
+            basic: parseFloat(document.getElementById('arrBasic') ? document.getElementById('arrBasic').value : 0) || 0,
+            da: parseFloat(document.getElementById('arrDA') ? document.getElementById('arrDA').value : 0) || 0,
+            hra: parseFloat(document.getElementById('arrHRA') ? document.getElementById('arrHRA').value : 0) || 0,
+            gross: parseFloat(document.getElementById('arrGross') ? document.getElementById('arrGross').value : 0) || 0,
+            gpf: parseFloat(document.getElementById('arrGPF') ? document.getElementById('arrGPF').value : 0) || 0,
+            nps: parseFloat(document.getElementById('arrNPS') ? document.getElementById('arrNPS').value : 0) || 0,
+            tax: parseFloat(document.getElementById('arrTax') ? document.getElementById('arrTax').value : 0) || 0
+        },
+        others: {
+            basic: parseFloat(document.getElementById('othBasic') ? document.getElementById('othBasic').value : 0) || 0,
+            da: parseFloat(document.getElementById('othDA') ? document.getElementById('othDA').value : 0) || 0,
+            hra: parseFloat(document.getElementById('othHRA') ? document.getElementById('othHRA').value : 0) || 0,
+            gross: parseFloat(document.getElementById('othGross') ? document.getElementById('othGross').value : 0) || 0,
+            gpf: parseFloat(document.getElementById('othGPF') ? document.getElementById('othGPF').value : 0) || 0,
+            nps: parseFloat(document.getElementById('othNPS') ? document.getElementById('othNPS').value : 0) || 0,
+            tax: parseFloat(document.getElementById('othTax') ? document.getElementById('othTax').value : 0) || 0
+        },
         bus: bus,
         sec24b: sec24b,
         ded80C: ded80C,
@@ -2757,6 +2936,24 @@ function checkAndRestoreSavedRecord() {
             if (gpfInputs[i]) gpfInputs[i].value = m.gpf || 0;
             if (npsInputs[i]) npsInputs[i].value = m.nps || 0;
             if (taxInputs[i]) taxInputs[i].value = (i === 11) ? 0 : (m.tax || 0);
+        }
+        if (record.arrears) {
+            if (document.getElementById('arrBasic')) document.getElementById('arrBasic').value = record.arrears.basic || 0;
+            if (document.getElementById('arrDA')) document.getElementById('arrDA').value = record.arrears.da || 0;
+            if (document.getElementById('arrHRA')) document.getElementById('arrHRA').value = record.arrears.hra || 0;
+            if (document.getElementById('arrGross')) document.getElementById('arrGross').value = record.arrears.gross || 0;
+            if (document.getElementById('arrGPF')) document.getElementById('arrGPF').value = record.arrears.gpf || 0;
+            if (document.getElementById('arrNPS')) document.getElementById('arrNPS').value = record.arrears.nps || 0;
+            if (document.getElementById('arrTax')) document.getElementById('arrTax').value = record.arrears.tax || 0;
+        }
+        if (record.others) {
+            if (document.getElementById('othBasic')) document.getElementById('othBasic').value = record.others.basic || 0;
+            if (document.getElementById('othDA')) document.getElementById('othDA').value = record.others.da || 0;
+            if (document.getElementById('othHRA')) document.getElementById('othHRA').value = record.others.hra || 0;
+            if (document.getElementById('othGross')) document.getElementById('othGross').value = record.others.gross || 0;
+            if (document.getElementById('othGPF')) document.getElementById('othGPF').value = record.others.gpf || 0;
+            if (document.getElementById('othNPS')) document.getElementById('othNPS').value = record.others.nps || 0;
+            if (document.getElementById('othTax')) document.getElementById('othTax').value = record.others.tax || 0;
         }
         calcSheetTotals();
     }
