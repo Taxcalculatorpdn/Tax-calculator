@@ -1227,7 +1227,7 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td style="font-weight:600; text-align:left;">Arrears</td>
+                        <td style="font-weight:600; text-align:center;">Arrears</td>
                         <td id="pArrBasic">0.00</td>
                         <td id="pArrDA">0.00</td>
                         <td id="pArrHRA">0.00</td>
@@ -1237,7 +1237,7 @@
                         <td id="pArrAdvTax">0.00</td>
                     </tr>
                     <tr>
-                        <td style="font-weight:600; text-align:left;">Others</td>
+                        <td style="font-weight:600; text-align:center;">Others</td>
                         <td id="pOthBasic">0.00</td>
                         <td id="pOthDA">0.00</td>
                         <td id="pOthHRA">0.00</td>
@@ -1249,7 +1249,7 @@
                 </tbody>
                 <tfoot>
                     <tr class="fw-bold">
-                        <td>Total</td>
+                        <td style="text-align:center;">Total</td>
                         <td id="pTotBasic">0.00</td>
                         <td id="pTotDA">0.00</td>
                         <td id="pTotHRA">0.00</td>
@@ -1419,7 +1419,7 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td style="border:1px solid #000; padding:1.2px 2px; text-align:left; font-weight:bold;">Arrears</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; text-align:center; font-weight:bold;">Arrears</td>
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrBasic">0.00</td>
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrDA">0.00</td>
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrHRA">0.00</td>
@@ -1429,7 +1429,7 @@
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldArrAdvTax">0.00</td>
                     </tr>
                     <tr>
-                        <td style="border:1px solid #000; padding:1.2px 2px; text-align:left; font-weight:bold;">Others</td>
+                        <td style="border:1px solid #000; padding:1.2px 2px; text-align:center; font-weight:bold;">Others</td>
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthBasic">0.00</td>
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthDA">0.00</td>
                         <td style="border:1px solid #000; padding:1.2px 2px;" id="pOldOthHRA">0.00</td>
@@ -1441,7 +1441,7 @@
                 </tbody>
                 <tfoot>
                     <tr style="font-weight:bold; background:#fafafa;">
-                        <td style="border:1px solid #000; padding:1.5px 2px; text-align:left;">TOTAL</td>
+                        <td style="border:1px solid #000; padding:1.5px 2px; text-align:center;">TOTAL</td>
                         <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotBasic">0.00</td>
                         <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotDA">0.00</td>
                         <td style="border:1px solid #000; padding:1.5px 2px;" id="pOldTotHRA">0.00</td>
@@ -1577,24 +1577,24 @@
                             <tr style="font-weight:bold; border-bottom:1px solid #000; background:#f5f5f5;">
                                 <td colspan="3" style="padding:1px 3px;">Computation of Income Tax :-</td>
                             </tr>
-                            <tr>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000; width:65%;">(a) Up to ₹ 2,50,000</td>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000; width:15%; text-align:center;">Nil</td>
-                                <td style="padding:0.8px 3px; width:20%; text-align:right;">₹ 0.00</td>
+                            <tr id="pOldRowSlabA">
+                                <td id="pOldSlabLblA" style="padding:0.8px 3px; border-right:1px solid #000; width:65%;">(a) Up to ₹ 2,50,000</td>
+                                <td id="pOldSlabRateA" style="padding:0.8px 3px; border-right:1px solid #000; width:15%; text-align:center;">Nil</td>
+                                <td id="pOldSlabValA" style="padding:0.8px 3px; width:20%; text-align:right;">₹ 0.00</td>
                             </tr>
-                            <tr>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000;">(b) ₹ 2,50,001 to ₹ 5,00,000 (5%)</td>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">5%</td>
+                            <tr id="pOldRowSlabB">
+                                <td id="pOldSlabLblB" style="padding:0.8px 3px; border-right:1px solid #000;">(b) ₹ 2,50,001 to ₹ 5,00,000 (5%)</td>
+                                <td id="pOldSlabRateB" style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">5%</td>
                                 <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldSlab1">0.00</span></td>
                             </tr>
-                            <tr>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000;">(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)</td>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">20%</td>
+                            <tr id="pOldRowSlabC">
+                                <td id="pOldSlabLblC" style="padding:0.8px 3px; border-right:1px solid #000;">(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)</td>
+                                <td id="pOldSlabRateC" style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">20%</td>
                                 <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldSlab2">0.00</span></td>
                             </tr>
-                            <tr>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000;">(d) Above ₹ 10,00,000 (30%)</td>
-                                <td style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">30%</td>
+                            <tr id="pOldRowSlabD">
+                                <td id="pOldSlabLblD" style="padding:0.8px 3px; border-right:1px solid #000;">(d) Above ₹ 10,00,000 (30%)</td>
+                                <td id="pOldSlabRateD" style="padding:0.8px 3px; border-right:1px solid #000; text-align:center;">30%</td>
                                 <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldSlab3">0.00</span></td>
                             </tr>
                             <!-- STCG Tax Row - Normal Black Text -->
@@ -1614,7 +1614,7 @@
                                 <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldTotSlabTax">0.00</span></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding:0.8px 3px; border-right:1px solid #000; font-size:7px;">Less: Rebate u/s 87A (Up to ₹ 12,500 if income &le; 5 Lakh)</td>
+                                <td id="pOldRebateLabel" colspan="2" style="padding:0.8px 3px; border-right:1px solid #000; font-size:7px;">Less: Rebate u/s 87A (Up to ₹ 12,500 if income &le; 5 Lakh)</td>
                                 <td style="padding:0.8px 3px; text-align:right;">₹ <span id="pOldRebateVal">0.00</span></td>
                             </tr>
                             <tr style="border-top:1px solid #000;">
@@ -2025,7 +2025,9 @@ function renderDatePicker() {
         calView.style.display = 'none';
         yearGrid.style.display = 'grid';
         yearGrid.innerHTML = '';
-        for (var y = 2020; y >= 1950; y--) {
+        var maxYear = (new Date()).getFullYear();
+        if (maxYear < 2026) maxYear = 2026;
+        for (var y = maxYear; y >= 1900; y--) {
             var yItem = document.createElement('div');
             yItem.className = 'dp-year-item' + (y === dpCurrentYear ? ' selected' : '');
             yItem.innerText = y;
@@ -2107,6 +2109,38 @@ function resetForm() {
     if (typeof calcSheetTotals === 'function') calcSheetTotals();
     if (document.getElementById('resDiv')) document.getElementById('resDiv').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getTaxpayerAge(dobStr, fy) {
+    if (!dobStr) return 0;
+    var startYr = parseInt((fy || '2025-2026').split('-')[0], 10) || 2025;
+    var fyEndYear = startYr + 1; // FY 2025-2026 ends on 31st March 2026
+    var bDay = 1, bMonth = 1, bYear = 1990;
+    
+    if (dobStr.includes('/')) {
+        var p = dobStr.split('/');
+        bDay = parseInt(p[0], 10) || 1;
+        bMonth = parseInt(p[1], 10) || 1;
+        bYear = parseInt(p[2], 10) || 1990;
+    } else if (dobStr.includes('-')) {
+        var p = dobStr.split('-');
+        if (p[0].length === 4) {
+            bYear = parseInt(p[0], 10) || 1990;
+            bMonth = parseInt(p[1], 10) || 1;
+            bDay = parseInt(p[2], 10) || 1;
+        } else {
+            bDay = parseInt(p[0], 10) || 1;
+            bMonth = parseInt(p[1], 10) || 1;
+            bYear = parseInt(p[2], 10) || 1990;
+        }
+    }
+    
+    var age = fyEndYear - bYear;
+    // If birthday is after April 1st of fyEndYear, taxpayer has not attained that age during the FY
+    if (bMonth > 4 || (bMonth === 4 && bDay > 1)) {
+        age--;
+    }
+    return Math.max(0, age);
 }
 
 function runCalculation() {
@@ -2211,7 +2245,7 @@ function runCalculation() {
 
     } else {
         // ==========================================
-        // OLD TAX REGIME (ACCURATE IT ACT RULES)
+        // OLD TAX REGIME (ACCURATE AGE-BASED IT ACT RULES)
         // ==========================================
         sd = sal > 0 ? 50000 : 0;
         var input80C = parseFloat(document.getElementById('v80C').value) || 0;
@@ -2222,28 +2256,82 @@ function runCalculation() {
         var normalGross = sal + bus;
         normalIncome = Math.max(0, normalGross - totalDeductions);
 
+        var age = getTaxpayerAge(dob, fy);
         var tmpOld = normalIncome;
-        var oldSlabs = [{l:1000000, r:0.30}, {l:500000, r:0.20}, {l:250000, r:0.05}];
-        oldSlabs.forEach(function(s) {
-            if (tmpOld > s.l) {
-                var tx = (tmpOld - s.l) * s.r; slabTax += tx;
-                rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "%</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
-                tmpOld = s.l;
-            }
-        });
-
-        if (normalIncome <= 500000) {
-            rebate = Math.min(slabTax, 12500);
-        }
-        marginal = 0;
-
         var nOld = normalIncome;
-        detailedSlabs = [
-            { label: "(a) Up to ₹ 2,50,000", amt: Math.min(nOld, 250000), rate: "0%", tax: 0 },
-            { label: "(b) ₹ 2,50,001 to ₹ 5,00,000", amt: Math.max(0, Math.min(nOld - 250000, 250000)), rate: "5%", tax: Math.max(0, Math.min(nOld - 250000, 250000)) * 0.05 },
-            { label: "(c) ₹ 5,00,001 to ₹ 10,00,000", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
-            { label: "(d) Above ₹ 10,00,000", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
-        ];
+
+        if (age >= 80) {
+            // Super Senior Citizen (80 years and above)
+            // Up to 5,00,000: Nil (Exempt)
+            // 5,00,001 to 10,00,000: 20%
+            // Above 10,00,000: 30%
+            var oldSlabs = [{l:1000000, r:0.30}, {l:500000, r:0.20}];
+            oldSlabs.forEach(function(s) {
+                if (tmpOld > s.l) {
+                    var tx = (tmpOld - s.l) * s.r; slabTax += tx;
+                    rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "% (Super Senior 80+)</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
+                    tmpOld = s.l;
+                }
+            });
+            rebate = 0; // Income up to 5L is already exempt at 0%
+            marginal = 0;
+
+            detailedSlabs = [
+                { label: "(a) Up to ₹ 5,00,000 (Super Senior)", amt: Math.min(nOld, 500000), rate: "0%", tax: 0 },
+                { label: "(b) ₹ 5,00,001 to ₹ 10,00,000", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
+                { label: "(c) Above ₹ 10,00,000", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
+            ];
+        } else if (age >= 60) {
+            // Senior Citizen (60 to 79 years)
+            // Up to 3,00,000: Nil (Exempt)
+            // 3,00,001 to 5,00,000: 5%
+            // 5,00,001 to 10,00,000: 20%
+            // Above 10,00,000: 30%
+            var oldSlabs = [{l:1000000, r:0.30}, {l:500000, r:0.20}, {l:300000, r:0.05}];
+            oldSlabs.forEach(function(s) {
+                if (tmpOld > s.l) {
+                    var tx = (tmpOld - s.l) * s.r; slabTax += tx;
+                    rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "% (Senior 60-79)</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
+                    tmpOld = s.l;
+                }
+            });
+            if (normalIncome <= 500000) {
+                rebate = Math.min(slabTax, 10000);
+            }
+            marginal = 0;
+
+            detailedSlabs = [
+                { label: "(a) Up to ₹ 3,00,000 (Senior Citizen)", amt: Math.min(nOld, 300000), rate: "0%", tax: 0 },
+                { label: "(b) ₹ 3,00,001 to ₹ 5,00,000", amt: Math.max(0, Math.min(nOld - 300000, 200000)), rate: "5%", tax: Math.max(0, Math.min(nOld - 300000, 200000)) * 0.05 },
+                { label: "(c) ₹ 5,00,001 to ₹ 10,00,000", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
+                { label: "(d) Above ₹ 10,00,000", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
+            ];
+        } else {
+            // Normal Individual (< 60 years)
+            // Up to 2,50,000: Nil (Exempt)
+            // 2,50,001 to 5,00,000: 5%
+            // 5,00,001 to 10,00,000: 20%
+            // Above 10,00,000: 30%
+            var oldSlabs = [{l:1000000, r:0.30}, {l:500000, r:0.20}, {l:250000, r:0.05}];
+            oldSlabs.forEach(function(s) {
+                if (tmpOld > s.l) {
+                    var tx = (tmpOld - s.l) * s.r; slabTax += tx;
+                    rows = "<tr><td style='color:#777; font-size:11px;'>+ Slab " + (s.r*100) + "%</td><td align='right'>" + Math.round(tx).toLocaleString('en-IN') + "</td></tr>" + rows;
+                    tmpOld = s.l;
+                }
+            });
+            if (normalIncome <= 500000) {
+                rebate = Math.min(slabTax, 12500);
+            }
+            marginal = 0;
+
+            detailedSlabs = [
+                { label: "(a) Up to ₹ 2,50,000", amt: Math.min(nOld, 250000), rate: "0%", tax: 0 },
+                { label: "(b) ₹ 2,50,001 to ₹ 5,00,000", amt: Math.max(0, Math.min(nOld - 250000, 250000)), rate: "5%", tax: Math.max(0, Math.min(nOld - 250000, 250000)) * 0.05 },
+                { label: "(c) ₹ 5,00,001 to ₹ 10,00,000", amt: Math.max(0, Math.min(nOld - 500000, 500000)), rate: "20%", tax: Math.max(0, Math.min(nOld - 500000, 500000)) * 0.20 },
+                { label: "(d) Above ₹ 10,00,000", amt: Math.max(0, nOld - 1000000), rate: "30%", tax: Math.max(0, nOld - 1000000) * 0.30 }
+            ];
+        }
 
         if (document.getElementById('rowSec24b')) {
             document.getElementById('rowSec24b').style.display = sec24b > 0 ? 'table-row' : 'none';
@@ -2498,14 +2586,83 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         document.getElementById('pOldDedCCDVal').innerText = totNPS > 0 ? Math.round(totNPS).toLocaleString('en-IN') + ".00" : "0.00";
         document.getElementById('pOldNetTaxable').innerText = Math.round(netTaxableTotal).toLocaleString('en-IN') + ".00";
 
-        // Old Regime Slabs
+        // Old Regime Slabs (Age-based: Normal <60, Senior 60-79, Super Senior 80+)
+        var age = getTaxpayerAge(dob, fy);
         var normalInc = Math.max(0, netSalOld + bus - ded80C - dedOther);
-        var slab1Amt = Math.max(0, Math.min(normalInc - 250000, 250000));
-        var slab1TaxVal = slab1Amt * 0.05;
-        var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
-        var slab2TaxVal = slab2Amt * 0.20;
-        var slab3Amt = Math.max(0, normalInc - 1000000);
-        var slab3TaxVal = slab3Amt * 0.30;
+        var slab1TaxVal = 0, slab2TaxVal = 0, slab3TaxVal = 0;
+
+        if (age >= 80) {
+            // Super Senior Citizen (80+ Years)
+            if (document.getElementById('pOldSlabLblA')) document.getElementById('pOldSlabLblA').innerText = "(a) Up to ₹ 5,00,000 (Super Senior)";
+            if (document.getElementById('pOldSlabRateA')) document.getElementById('pOldSlabRateA').innerText = "Nil";
+            if (document.getElementById('pOldSlabValA')) document.getElementById('pOldSlabValA').innerText = "₹ 0.00";
+
+            if (document.getElementById('pOldSlabLblB')) document.getElementById('pOldSlabLblB').innerText = "(b) ₹ 2,50,001 to ₹ 5,00,000 (Exempt)";
+            if (document.getElementById('pOldSlabRateB')) document.getElementById('pOldSlabRateB').innerText = "0%";
+            slab1TaxVal = 0;
+
+            if (document.getElementById('pOldSlabLblC')) document.getElementById('pOldSlabLblC').innerText = "(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)";
+            if (document.getElementById('pOldSlabRateC')) document.getElementById('pOldSlabRateC').innerText = "20%";
+            var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
+            slab2TaxVal = slab2Amt * 0.20;
+
+            if (document.getElementById('pOldSlabLblD')) document.getElementById('pOldSlabLblD').innerText = "(d) Above ₹ 10,00,000 (30%)";
+            if (document.getElementById('pOldSlabRateD')) document.getElementById('pOldSlabRateD').innerText = "30%";
+            var slab3Amt = Math.max(0, normalInc - 1000000);
+            slab3TaxVal = slab3Amt * 0.30;
+
+            if (document.getElementById('pOldRebateLabel')) {
+                document.getElementById('pOldRebateLabel').innerText = "Less: Rebate u/s 87A (Nil for 80+ Super Senior)";
+            }
+        } else if (age >= 60) {
+            // Senior Citizen (60 to 79 Years)
+            if (document.getElementById('pOldSlabLblA')) document.getElementById('pOldSlabLblA').innerText = "(a) Up to ₹ 3,00,000 (Senior Citizen)";
+            if (document.getElementById('pOldSlabRateA')) document.getElementById('pOldSlabRateA').innerText = "Nil";
+            if (document.getElementById('pOldSlabValA')) document.getElementById('pOldSlabValA').innerText = "₹ 0.00";
+
+            if (document.getElementById('pOldSlabLblB')) document.getElementById('pOldSlabLblB').innerText = "(b) ₹ 3,00,001 to ₹ 5,00,000 (5%)";
+            if (document.getElementById('pOldSlabRateB')) document.getElementById('pOldSlabRateB').innerText = "5%";
+            var slab1Amt = Math.max(0, Math.min(normalInc - 300000, 200000));
+            slab1TaxVal = slab1Amt * 0.05;
+
+            if (document.getElementById('pOldSlabLblC')) document.getElementById('pOldSlabLblC').innerText = "(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)";
+            if (document.getElementById('pOldSlabRateC')) document.getElementById('pOldSlabRateC').innerText = "20%";
+            var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
+            slab2TaxVal = slab2Amt * 0.20;
+
+            if (document.getElementById('pOldSlabLblD')) document.getElementById('pOldSlabLblD').innerText = "(d) Above ₹ 10,00,000 (30%)";
+            if (document.getElementById('pOldSlabRateD')) document.getElementById('pOldSlabRateD').innerText = "30%";
+            var slab3Amt = Math.max(0, normalInc - 1000000);
+            slab3TaxVal = slab3Amt * 0.30;
+
+            if (document.getElementById('pOldRebateLabel')) {
+                document.getElementById('pOldRebateLabel').innerText = "Less: Rebate u/s 87A (Up to ₹ 10,000 if income \u2264 5 Lakh)";
+            }
+        } else {
+            // Normal Individual (< 60 Years)
+            if (document.getElementById('pOldSlabLblA')) document.getElementById('pOldSlabLblA').innerText = "(a) Up to ₹ 2,50,000";
+            if (document.getElementById('pOldSlabRateA')) document.getElementById('pOldSlabRateA').innerText = "Nil";
+            if (document.getElementById('pOldSlabValA')) document.getElementById('pOldSlabValA').innerText = "₹ 0.00";
+
+            if (document.getElementById('pOldSlabLblB')) document.getElementById('pOldSlabLblB').innerText = "(b) ₹ 2,50,001 to ₹ 5,00,000 (5%)";
+            if (document.getElementById('pOldSlabRateB')) document.getElementById('pOldSlabRateB').innerText = "5%";
+            var slab1Amt = Math.max(0, Math.min(normalInc - 250000, 250000));
+            slab1TaxVal = slab1Amt * 0.05;
+
+            if (document.getElementById('pOldSlabLblC')) document.getElementById('pOldSlabLblC').innerText = "(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)";
+            if (document.getElementById('pOldSlabRateC')) document.getElementById('pOldSlabRateC').innerText = "20%";
+            var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
+            slab2TaxVal = slab2Amt * 0.20;
+
+            if (document.getElementById('pOldSlabLblD')) document.getElementById('pOldSlabLblD').innerText = "(d) Above ₹ 10,00,000 (30%)";
+            if (document.getElementById('pOldSlabRateD')) document.getElementById('pOldSlabRateD').innerText = "30%";
+            var slab3Amt = Math.max(0, normalInc - 1000000);
+            slab3TaxVal = slab3Amt * 0.30;
+
+            if (document.getElementById('pOldRebateLabel')) {
+                document.getElementById('pOldRebateLabel').innerText = "Less: Rebate u/s 87A (Up to ₹ 12,500 if income \u2264 5 Lakh)";
+            }
+        }
 
         document.getElementById('pOldSlab1').innerText = Math.round(slab1TaxVal).toLocaleString('en-IN') + ".00";
         document.getElementById('pOldSlab2').innerText = Math.round(slab2TaxVal).toLocaleString('en-IN') + ".00";
