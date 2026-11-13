@@ -2592,30 +2592,37 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         var slab1TaxVal = 0, slab2TaxVal = 0, slab3TaxVal = 0;
 
         if (age >= 80) {
-            // Super Senior Citizen (80+ Years)
+            // Super Senior Citizen (80+ Years) - 3 Slabs Only (Up to 5L Nil, 5L-10L 20%, Above 10L 30%)
+            if (document.getElementById('pOldRowSlabA')) document.getElementById('pOldRowSlabA').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabB')) document.getElementById('pOldRowSlabB').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabC')) document.getElementById('pOldRowSlabC').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabD')) document.getElementById('pOldRowSlabD').style.display = 'none';
+
             if (document.getElementById('pOldSlabLblA')) document.getElementById('pOldSlabLblA').innerText = "(a) Up to ₹ 5,00,000 (Super Senior)";
             if (document.getElementById('pOldSlabRateA')) document.getElementById('pOldSlabRateA').innerText = "Nil";
             if (document.getElementById('pOldSlabValA')) document.getElementById('pOldSlabValA').innerText = "₹ 0.00";
 
-            if (document.getElementById('pOldSlabLblB')) document.getElementById('pOldSlabLblB').innerText = "(b) ₹ 2,50,001 to ₹ 5,00,000 (Exempt)";
-            if (document.getElementById('pOldSlabRateB')) document.getElementById('pOldSlabRateB').innerText = "0%";
-            slab1TaxVal = 0;
-
-            if (document.getElementById('pOldSlabLblC')) document.getElementById('pOldSlabLblC').innerText = "(c) ₹ 5,00,001 to ₹ 10,00,000 (20%)";
-            if (document.getElementById('pOldSlabRateC')) document.getElementById('pOldSlabRateC').innerText = "20%";
+            if (document.getElementById('pOldSlabLblB')) document.getElementById('pOldSlabLblB').innerText = "(b) ₹ 5,00,001 to ₹ 10,00,000 (20%)";
+            if (document.getElementById('pOldSlabRateB')) document.getElementById('pOldSlabRateB').innerText = "20%";
             var slab2Amt = Math.max(0, Math.min(normalInc - 500000, 500000));
-            slab2TaxVal = slab2Amt * 0.20;
+            slab1TaxVal = slab2Amt * 0.20;
 
-            if (document.getElementById('pOldSlabLblD')) document.getElementById('pOldSlabLblD').innerText = "(d) Above ₹ 10,00,000 (30%)";
-            if (document.getElementById('pOldSlabRateD')) document.getElementById('pOldSlabRateD').innerText = "30%";
+            if (document.getElementById('pOldSlabLblC')) document.getElementById('pOldSlabLblC').innerText = "(c) Above ₹ 10,00,000 (30%)";
+            if (document.getElementById('pOldSlabRateC')) document.getElementById('pOldSlabRateC').innerText = "30%";
             var slab3Amt = Math.max(0, normalInc - 1000000);
-            slab3TaxVal = slab3Amt * 0.30;
+            slab2TaxVal = slab3Amt * 0.30;
+            slab3TaxVal = 0;
 
             if (document.getElementById('pOldRebateLabel')) {
                 document.getElementById('pOldRebateLabel').innerText = "Less: Rebate u/s 87A (Nil for 80+ Super Senior)";
             }
         } else if (age >= 60) {
             // Senior Citizen (60 to 79 Years)
+            if (document.getElementById('pOldRowSlabA')) document.getElementById('pOldRowSlabA').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabB')) document.getElementById('pOldRowSlabB').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabC')) document.getElementById('pOldRowSlabC').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabD')) document.getElementById('pOldRowSlabD').style.display = 'table-row';
+
             if (document.getElementById('pOldSlabLblA')) document.getElementById('pOldSlabLblA').innerText = "(a) Up to ₹ 3,00,000 (Senior Citizen)";
             if (document.getElementById('pOldSlabRateA')) document.getElementById('pOldSlabRateA').innerText = "Nil";
             if (document.getElementById('pOldSlabValA')) document.getElementById('pOldSlabValA').innerText = "₹ 0.00";
@@ -2640,6 +2647,11 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
             }
         } else {
             // Normal Individual (< 60 Years)
+            if (document.getElementById('pOldRowSlabA')) document.getElementById('pOldRowSlabA').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabB')) document.getElementById('pOldRowSlabB').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabC')) document.getElementById('pOldRowSlabC').style.display = 'table-row';
+            if (document.getElementById('pOldRowSlabD')) document.getElementById('pOldRowSlabD').style.display = 'table-row';
+
             if (document.getElementById('pOldSlabLblA')) document.getElementById('pOldSlabLblA').innerText = "(a) Up to ₹ 2,50,000";
             if (document.getElementById('pOldSlabRateA')) document.getElementById('pOldSlabRateA').innerText = "Nil";
             if (document.getElementById('pOldSlabValA')) document.getElementById('pOldSlabValA').innerText = "₹ 0.00";
