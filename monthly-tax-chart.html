@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Tax Deduction Chart</title>
+    <style>
+        :root {
+            --primary: #0A1E3F;
+            --primary-mid: #0D47A1;
+            --primary-light: #1565C0;
+            --text-main: #1E293B;
+            --text-sub: #475569;
+            --bg: #F4F7F9;
+            --card-border: #E2E8F0;
+            --success: #16A34A;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 14px;
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+        }
+
+        @keyframes gentleSlide {
+            from { opacity: 0.88; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #E1E8ED;
+            max-width: 580px;
+            width: 100%;
+            overflow: hidden;
+            animation: gentleSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* ROYAL NAVY HEADER */
+        .brand-header {
+            background: linear-gradient(135deg, #0A1E3F 0%, #0D47A1 50%, #1565C0 100%);
+            color: #ffffff;
+            padding: 22px 20px 20px 20px;
+            text-align: center;
+        }
+
+        .brand-header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+
+        .brand-header .subtitle {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #90CAF9;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .content {
+            padding: 18px 16px;
+        }
+
+        /* SEARCH / SALARY QUICK CHECK */
+        .quick-check-card {
+            background: #F8FAFC;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .quick-check-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .quick-input-wrap span.currency {
+            position: absolute;
+            left: 14px;
+            color: #64748B;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .quick-input {
+            width: 100%;
+            padding: 10px 14px 10px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            border: 1.5px solid #CBD5E1;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.2s;
+            background: #ffffff;
+        }
+
+        .quick-input:focus {
+            border-color: var(--primary-mid);
+            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.12);
+        }
+
+        .quick-result {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #EFF6FF;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-mid);
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* TABLE CONTAINER */
+        .table-wrap {
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 18px;
+        }
+
+        table.tax-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        table.tax-table thead th {
+            background: #0A1E3F;
+            color: #ffffff;
+            padding: 12px 10px;
+            font-weight: 700;
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #0D47A1;
+        }
+
+        table.tax-table thead th:first-child {
+            text-align: center;
+            width: 12%;
+        }
+
+        table.tax-table thead th:last-child {
+            text-align: right;
+            width: 32%;
+            padding-right: 14px;
+        }
+
+        table.tax-table tbody tr {
+            border-bottom: 1px solid #F1F5F9;
+            transition: background 0.15s ease;
+        }
+
+        table.tax-table tbody tr:nth-child(even) {
+            background: #F8FAFC;
+        }
+
+        table.tax-table tbody tr:hover,
+        table.tax-table tbody tr.highlight-row {
+            background: #EBF3FE !important;
+        }
+
+        table.tax-table tbody td {
+            padding: 10px 10px;
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        table.tax-table tbody td.sl-no {
+            text-align: center;
+            font-weight: 600;
+            color: #64748B;
+        }
+
+        table.tax-table tbody td.salary-range {
+            font-weight: 600;
+            color: #1E293B;
+        }
+
+        table.tax-table tbody td.tax-amount {
+            text-align: right;
+            padding-right: 14px;
+        }
+
+        .tax-pill {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12.5px;
+            background: #F1F5F9;
+            color: #0F172A;
+        }
+
+        .tax-pill.nil {
+            background: #DCFCE7;
+            color: #15803D;
+        }
+
+        .tax-pill.slab-active {
+            background: #0D47A1;
+            color: #ffffff;
+        }
+
+        /* NOTES AND EXAMPLE CARDS */
+        .info-card {
+            background: #F8FAFC;
+            border: 1px solid var(--card-border);
+            border-left: 4px solid #0D47A1;
+            border-radius: 12px;
+            padding: 13px 15px;
+            margin-bottom: 12px;
+        }
+
+        .info-card.warning-card {
+            border-left-color: #F59E0B;
+            background: #FFFBEB;
+        }
+
+        .info-card-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-card p {
+            margin: 0;
+            font-size: 12.5px;
+            color: var(--text-sub);
+            line-height: 1.55;
+        }
+
+        .info-card.warning-card p {
+            color: #78350F;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #94A3B8;
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid #E2E8F0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <div class="brand-header">
+        <h1>Monthly Income Tax Deduction Chart</h1>
+        <div class="subtitle">Financial Year: 2026-2027 (Tax Year 2026-27)</div>
+    </div>
+
+    <div class="content">
+        <!-- QUICK FINDER -->
+        <div class="quick-check-card">
+            <div class="quick-check-label">
+                <span>🔍</span> Quick Salary Check
+            </div>
+            <div class="quick-input-wrap">
+                <span class="currency">₹</span>
+                <input type="number" id="salaryInput" class="quick-input" placeholder="Enter Monthly Gross (e.g. 115000)" oninput="checkTaxSlab()">
+            </div>
+            <div id="quickResult" class="quick-result"></div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-wrap">
+            <table class="tax-table" id="slabsTable">
+                <thead>
+                    <tr>
+                        <th>Sl.No.</th>
+                        <th>Gross Salary (Basic + DA + HRA)</th>
+                        <th>Monthly Tax</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-min="0" data-max="106000" data-tax="0">
+                        <td class="sl-no">1.</td>
+                        <td class="salary-range">Up to ₹1,06,000</td>
+                        <td class="tax-amount"><span class="tax-pill nil">Nil (₹0.00)</span></td>
+                    </tr>
+                    <tr data-min="106001" data-max="107000" data-tax="1000">
+                        <td class="sl-no">2.</td>
+                        <td class="salary-range">₹1,06,001 – ₹1,07,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹1,000</span></td>
+                    </tr>
+                    <tr data-min="107001" data-max="108000" data-tax="2000">
+                        <td class="sl-no">3.</td>
+                        <td class="salary-range">₹1,07,001 – ₹1,08,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹2,000</span></td>
+                    </tr>
+                    <tr data-min="108001" data-max="109000" data-tax="3000">
+                        <td class="sl-no">4.</td>
+                        <td class="salary-range">₹1,08,001 – ₹1,09,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹3,000</span></td>
+                    </tr>
+                    <tr data-min="109001" data-max="110000" data-tax="4000">
+                        <td class="sl-no">5.</td>
+                        <td class="salary-range">₹1,09,001 – ₹1,10,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹4,000</span></td>
+                    </tr>
+                    <tr data-min="110001" data-max="111000" data-tax="5000">
+                        <td class="sl-no">6.</td>
+                        <td class="salary-range">₹1,10,001 – ₹1,11,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹5,000</span></td>
+                    </tr>
+                    <tr data-min="111001" data-max="113000" data-tax="6000">
+                        <td class="sl-no">7.</td>
+                        <td class="salary-range">₹1,11,001 – ₹1,13,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹6,000</span></td>
+                    </tr>
+                    <tr data-min="113001" data-max="116000" data-tax="6500">
+                        <td class="sl-no">8.</td>
+                        <td class="salary-range">₹1,13,001 – ₹1,16,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹6,500</span></td>
+                    </tr>
+                    <tr data-min="116001" data-max="118000" data-tax="7000">
+                        <td class="sl-no">9.</td>
+                        <td class="salary-range">₹1,16,001 – ₹1,18,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹7,000</span></td>
+                    </tr>
+                    <tr data-min="118001" data-max="121000" data-tax="7500">
+                        <td class="sl-no">10.</td>
+                        <td class="salary-range">₹1,18,001 – ₹1,21,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹7,500</span></td>
+                    </tr>
+                    <tr data-min="121001" data-max="125000" data-tax="8000">
+                        <td class="sl-no">11.</td>
+                        <td class="salary-range">₹1,21,001 – ₹1,25,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹8,000</span></td>
+                    </tr>
+                    <tr data-min="125001" data-max="130000" data-tax="9000">
+                        <td class="sl-no">12.</td>
+                        <td class="salary-range">₹1,25,001 – ₹1,30,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹9,000</span></td>
+                    </tr>
+                    <tr data-min="130001" data-max="135000" data-tax="10000">
+                        <td class="sl-no">13.</td>
+                        <td class="salary-range">₹1,30,001 – ₹1,35,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹10,000</span></td>
+                    </tr>
+                    <tr data-min="135001" data-max="140000" data-tax="11000">
+                        <td class="sl-no">14.</td>
+                        <td class="salary-range">₹1,35,001 – ₹1,40,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹11,000</span></td>
+                    </tr>
+                    <tr data-min="140001" data-max="145000" data-tax="12000">
+                        <td class="sl-no">15.</td>
+                        <td class="salary-range">₹1,40,001 – ₹1,45,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹12,000</span></td>
+                    </tr>
+                    <tr data-min="145001" data-max="150000" data-tax="13000">
+                        <td class="sl-no">16.</td>
+                        <td class="salary-range">₹1,45,001 – ₹1,50,000</td>
+                        <td class="tax-amount"><span class="tax-pill">₹13,000</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- NOTES -->
+        <div class="info-card warning-card">
+            <div class="info-card-title">
+                <span>📌</span> Important Note
+            </div>
+            <p>Annual increments, DA arrears, and bonus amounts are <b>not included</b> in the gross salary above. Consequently, monthly income tax deductions will adjust whenever there is a variation in your monthly salary.</p>
+        </div>
+
+        <!-- PRACTICAL EXAMPLE -->
+        <div class="info-card">
+            <div class="info-card-title">
+                <span>💡</span> Practical Example
+            </div>
+            <p>If an employee's monthly gross salary in March 2026 is <b>₹1,07,000</b>, the monthly tax deduction is <b>₹1,000</b>. However, if their monthly salary increases to <b>₹1,10,000</b> in any subsequent month, the monthly tax deduction will become <b>₹4,000</b> (or adjusted per slab).</p>
+        </div>
+
+        <div class="footer-note">
+            AKC Tax Calculator • Official Reference & TDS Guidance
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkTaxSlab() {
+        const input = document.getElementById('salaryInput').value.trim();
+        const resBox = document.getElementById('quickResult');
+        const rows = document.querySelectorAll('#slabsTable tbody tr');
+
+        rows.forEach(r => r.classList.remove('highlight-row'));
+
+        if (!input || isNaN(input)) {
+            resBox.style.display = 'none';
+            return;
+        }
+
+        const val = parseFloat(input);
+        let found = false;
+
+        for (let row of rows) {
+            const min = parseFloat(row.getAttribute('data-min'));
+            const max = parseFloat(row.getAttribute('data-max'));
+            const tax = parseFloat(row.getAttribute('data-tax'));
+
+            if (val >= min && val <= max) {
+                row.classList.add('highlight-row');
+                row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                resBox.style.display = 'block';
+                const taxFormatted = tax === 0 ? "Nil (₹0.00)" : "₹" + tax.toLocaleString('en-IN');
+                resBox.innerHTML = `Monthly Gross: <b>₹${val.toLocaleString('en-IN')}</b> &nbsp;|&nbsp; Estimated Monthly Tax: <b style="color:#0D47A1;">${taxFormatted}</b>`;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            resBox.style.display = 'block';
+            if (val > 150000) {
+                resBox.innerHTML = `Gross above ₹1,50,000/month: Subject to regular slab rates with surcharge & 4% cess.`;
+            } else {
+                resBox.innerHTML = `Please enter a valid monthly salary amount.`;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
