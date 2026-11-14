@@ -897,18 +897,18 @@
             </div>
             <button type="button" onclick="document.getElementById('restoreToastBanner').style.display='none'" style="background:none; border:none; color:white; font-size:18px; line-height:1; font-weight:bold; cursor:pointer;">×</button>
         </div>
-        <!-- 1. CUSTOM IN-PAGE FINANCIAL YEAR SELECTOR (NO ANDROID RADIO DIALOG) -->
-        <div class="section-title">Assessment Year & Regime</div>
+        <!-- 1. CUSTOM IN-PAGE FINANCIAL / TAX YEAR SELECTOR -->
+        <div class="section-title" id="secTitleRegime">Tax Year &amp; Regime</div>
         <div class="input-group">
-            <label>Financial Year</label>
+            <label id="lblFY">Tax Year</label>
             <div class="custom-dropdown" id="fyDropdownContainer">
                 <div class="dropdown-trigger" onclick="toggleFYDropdown()">
-                    <span id="selectedFYDisplay">FY 2026-27 (AY 2027-28)</span>
+                    <span id="selectedFYDisplay">TY 2026-27 (Tax Year)</span>
                     <span class="dropdown-arrow" id="dropdownArrow">▼</span>
                 </div>
                 <div class="dropdown-menu" id="fyDropdownMenu">
-                    <div class="dropdown-item selected" id="itemFY26" onclick="chooseFY('2026-27', 'FY 2026-27 (AY 2027-28)')">
-                        <span>FY 2026-27 (AY 2027-28)</span>
+                    <div class="dropdown-item selected" id="itemFY26" onclick="chooseFY('2026-27', 'TY 2026-27 (Tax Year)')">
+                        <span>TY 2026-27 (Tax Year)</span>
                         <span class="check-icon" id="checkFY26">✓</span>
                     </div>
                     <div class="dropdown-item" id="itemFY25" onclick="chooseFY('2025-26', 'FY 2025-26 (AY 2026-27)')">
@@ -1185,8 +1185,8 @@
             <!-- Top Header Metadata Grid -->
             <table class="sheet-table meta-grid" style="margin-top:6px;">
                 <tr>
-                    <td class="meta-label">Financial Year</td>
-                    <td class="meta-val fw-bold" id="pFYCell">2026-27 (AY 2027-28)</td>
+                    <td class="meta-label" id="pFYLabel">Tax Year</td>
+                    <td class="meta-val fw-bold" id="pFYCell">TY 2026-27</td>
                     <td class="meta-label">Mobile No.</td>
                     <td class="meta-val fw-bold" id="pMobCell">-</td>
                 </tr>
@@ -1377,7 +1377,7 @@
             <!-- Top Header Metadata Grid (Structured Clean Table / Bracket) -->
             <table class="sheet-table meta-grid" style="margin-top:4px;">
                 <tr>
-                    <td class="meta-label">Financial Year</td>
+                    <td class="meta-label" id="pOldFYLabel">Financial Year</td>
                     <td class="meta-val fw-bold" id="pOldFYCell">2025-26 (AY 2026-27)</td>
                     <td class="meta-label">Mobile No.</td>
                     <td class="meta-val fw-bold" id="pOldMobCell">-</td>
@@ -1709,11 +1709,15 @@ function chooseFY(val, label) {
         document.getElementById('itemFY26').classList.remove('selected');
         document.getElementById('checkFY25').style.visibility = 'visible';
         document.getElementById('checkFY26').style.visibility = 'hidden';
+        if (document.getElementById('lblFY')) document.getElementById('lblFY').innerText = 'Financial Year';
+        if (document.getElementById('secTitleRegime')) document.getElementById('secTitleRegime').innerText = 'Assessment Year & Regime';
     } else {
         document.getElementById('itemFY26').classList.add('selected');
         document.getElementById('itemFY25').classList.remove('selected');
         document.getElementById('checkFY26').style.visibility = 'visible';
         document.getElementById('checkFY25').style.visibility = 'hidden';
+        if (document.getElementById('lblFY')) document.getElementById('lblFY').innerText = 'Tax Year';
+        if (document.getElementById('secTitleRegime')) document.getElementById('secTitleRegime').innerText = 'Tax Year & Regime';
     }
 
     updateHeader();
@@ -1921,7 +1925,8 @@ function updateHeader() {
     var fy = document.getElementById('selectedFY').value;
     var regime = document.getElementById('selectedRegime').value;
     var regimeName = regime === 'NEW' ? 'New Tax Regime' : 'Old Tax Regime';
-    document.getElementById('headerRegime').innerText = 'FY ' + fy + ' | ' + regimeName;
+    var prefix = (fy === '2026-27') ? 'TY ' : 'FY ';
+    document.getElementById('headerRegime').innerText = prefix + fy + ' | ' + regimeName;
 }
 
 function selectRegime(regime) {
@@ -2476,9 +2481,17 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         if (sheetOld) sheetOld.classList.add('active-print');
 
         // Populate Old Scheme Metadata (Clean Grid Bracket Matching New Scheme)
-        var startYr = parseInt(fy.split('-')[0]);
-        var nextYr = startYr + 1;
-        document.getElementById('pOldFYCell').innerText = fy + " (AY " + nextYr + "-" + String(nextYr + 1).slice(-2) + ")";
+        var isTY = (fy === '2026-27');
+        if (document.getElementById('pOldFYLabel')) {
+            document.getElementById('pOldFYLabel').innerText = isTY ? "Tax Year" : "Financial Year";
+        }
+        if (isTY) {
+            document.getElementById('pOldFYCell').innerText = "TY 2026-27";
+        } else {
+            var startYr = parseInt(fy.split('-')[0]);
+            var nextYr = startYr + 1;
+            document.getElementById('pOldFYCell').innerText = fy + " (AY " + nextYr + "-" + String(nextYr + 1).slice(-2) + ")";
+        }
         document.getElementById('pOldMobCell').innerText = mob || "-";
         document.getElementById('pOldNameCell').innerText = name || "-";
         document.getElementById('pOldDobCell').innerText = dob || "-";
@@ -2721,7 +2734,15 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
         if (sheetNew) sheetNew.classList.add('active-print');
 
         document.getElementById('pSheetTitle').innerText = "Anurag Karundia & Co. (New Scheme)";
-        document.getElementById('pFYCell').innerText = fy + " (AY " + nextYear + "-" + String(nextYear + 1).slice(-2) + ")";
+        var isTY = (fy === '2026-27');
+        if (document.getElementById('pFYLabel')) {
+            document.getElementById('pFYLabel').innerText = isTY ? "Tax Year" : "Financial Year";
+        }
+        if (isTY) {
+            document.getElementById('pFYCell').innerText = "TY 2026-27";
+        } else {
+            document.getElementById('pFYCell').innerText = fy + " (AY " + nextYear + "-" + String(nextYear + 1).slice(-2) + ")";
+        }
         document.getElementById('pMobCell').innerText = mob || "-";
         document.getElementById('pNameCell').innerText = name || "-";
         document.getElementById('pDobCell').innerText = dob || "-";
@@ -3072,7 +3093,7 @@ function checkAndRestoreSavedRecord() {
 
     // 2. FY, Regime, Cycle
     if (record.fy) {
-        var fyLabel = (record.fy === '2026-27') ? 'FY 2026-27 (AY 2027-28)' : 'FY 2025-26 (AY 2026-27)';
+        var fyLabel = (record.fy === '2026-27') ? 'TY 2026-27 (Tax Year)' : 'FY 2025-26 (AY 2026-27)';
         chooseFY(record.fy, fyLabel);
     }
     if (record.regime) selectRegime(record.regime);
