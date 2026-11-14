@@ -1186,7 +1186,7 @@
             <table class="sheet-table meta-grid" style="margin-top:6px;">
                 <tr>
                     <td class="meta-label" id="pFYLabel">Tax Year</td>
-                    <td class="meta-val fw-bold" id="pFYCell">TY 2026-27</td>
+                    <td class="meta-val fw-bold" id="pFYCell">2026-27</td>
                     <td class="meta-label">Mobile No.</td>
                     <td class="meta-val fw-bold" id="pMobCell">-</td>
                 </tr>
@@ -2399,7 +2399,8 @@ function runCalculation() {
         document.getElementById('balTaxLine').innerText = "Refund Claimable: ₹" + Math.abs(balancePayable).toLocaleString('en-IN');
     }
 
-    document.getElementById('resFYLabel').innerText = "FY " + fy + " • " + (regime === 'NEW' ? 'New Tax Regime' : 'Old Tax Regime');
+    var fyPrefix = (fy === '2026-27') ? 'TY ' : 'FY ';
+    document.getElementById('resFYLabel').innerText = fyPrefix + fy + " • " + (regime === 'NEW' ? 'New Tax Regime' : 'Old Tax Regime');
 
     document.getElementById('resDiv').style.display = "block";
     document.getElementById('resDiv').scrollIntoView({ behavior: 'smooth' });
@@ -2486,7 +2487,7 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
             document.getElementById('pOldFYLabel').innerText = isTY ? "Tax Year" : "Financial Year";
         }
         if (isTY) {
-            document.getElementById('pOldFYCell').innerText = "TY 2026-27";
+            document.getElementById('pOldFYCell').innerText = "2026-27";
         } else {
             var startYr = parseInt(fy.split('-')[0]);
             var nextYr = startYr + 1;
@@ -2739,7 +2740,7 @@ function populateOfficialPrintSheet(name, mob, pan, dob, org, district, fy, regi
             document.getElementById('pFYLabel').innerText = isTY ? "Tax Year" : "Financial Year";
         }
         if (isTY) {
-            document.getElementById('pFYCell').innerText = "TY 2026-27";
+            document.getElementById('pFYCell').innerText = "2026-27";
         } else {
             document.getElementById('pFYCell').innerText = fy + " (AY " + nextYear + "-" + String(nextYear + 1).slice(-2) + ")";
         }
